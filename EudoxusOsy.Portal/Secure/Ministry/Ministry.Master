@@ -1,0 +1,80 @@
+﻿<%@ Master Language="C#" MasterPageFile="~/Portal.Master" AutoEventWireup="true" CodeBehind="Ministry.Master.cs" Inherits="EudoxusOsy.Portal.Secure.Ministry.Ministry" %>
+
+<%@ Register Namespace="EudoxusOsy.Portal.Controls" TagPrefix="my" Assembly="EudoxusOsy.Portal" %>
+<%@ Register TagName="LoginBar" TagPrefix="my" Src="~/Secure/UserControls/LoginBar.ascx" %>
+
+<asp:Content runat="server" ContentPlaceHolderID="cphHead">
+    <asp:ContentPlaceHolder ID="cphSecureHead" runat="server" />
+</asp:Content>
+<asp:Content runat="server" ContentPlaceHolderID="cphLoginArea">
+    <div id="login-area">
+        <div id="name">
+            <asp:Label ID="lblName" runat="server" Font-Bold="true" />
+        </div>
+        <div id="username">
+            <my:LoginBar ID="loginBar" runat="server" />
+        </div>
+    </div>
+</asp:Content>
+<asp:Content runat="server" ContentPlaceHolderID="cphMain">
+    <asp:ScriptManagerProxy runat="server">
+        <Scripts>
+            <asp:ScriptReference Path="~/_js/Views/Ministry.js" />
+        </Scripts>
+    </asp:ScriptManagerProxy>
+    <div id="selectedPhaseArea" runat="server" class="selectedPhase" clientidmode="Static" visible="false">
+        <asp:Literal ID="ltSelectedPhase" runat="server" />
+    </div>
+    <div id="alertsArea" runat="server" class="reminder" clientidmode="Static" visible="false">
+        <asp:Literal ID="ltAlerts" runat="server" />
+    </div>
+    <div id="registeredUsersMenu" runat="server" clientidmode="Static">
+        <asp:Repeater ID="repMenu" DataSourceID="siteMapDS" runat="server" OnItemDataBound="repMenu_ItemDataBound">
+            <ItemTemplate>
+                <a class='<%# IsCurrentOrParentNode(Container.DataItem) ? "active" : "" %>' href='<%# Eval("Url") %>'><%# Eval("Title") %></a>
+            </ItemTemplate>
+        </asp:Repeater>
+    </div>
+    <div id="form-container">
+        <asp:SiteMapDataSource ID="siteMapDS" runat="server" SiteMapProvider="Ministry" ShowStartingNode="false" />
+
+        <dx:ASPxPopupControl runat="server" ClientInstanceName="devExPopup" ShowFooter="true" CssClass="iframePopup">
+            <FooterTemplate>
+                <div style="padding: 8px 12px;">
+                    <table style="float: right;">
+                        <tr>
+                            <td>
+                                <dx:ASPxButton runat="server" ClientInstanceName="btnSubmit" Text="Αποθήκευση" Image-Url="~/_img/iconSave.png">
+                                    <ClientSideEvents Click="function() { popUp.getCurrentIFrame().doSubmit(); }" />
+                                </dx:ASPxButton>
+                            </td>                            
+                            <td>
+                                <dx:ASPxButton runat="server" ClientInstanceName="btnExport" Text="Εξαγωγή" Image-Url="~/_img/iconSave.png">
+                                    <ClientSideEvents Click="function() { popUp.getCurrentIFrame().doSubmit(); }" />
+                                </dx:ASPxButton>
+                            </td>                            
+                            <td>
+                                <dx:ASPxButton runat="server" ClientInstanceName="btnCancel" Text="Κλείσιμο" Image-Url="~/_img/iconCancel.png">
+                                    <ClientSideEvents Click="function() { popUp.hideWithoutReset(); }" />
+                                </dx:ASPxButton>
+                            </td>
+                            <td>
+                                <dx:ASPxButton runat="server" ClientInstanceName="btnCancelWithRefresh" Text="Κλείσιμο" Image-Url="~/_img/iconCancel.png">
+                                    <ClientSideEvents Click="function() { popUp.hide(); }" />
+                                </dx:ASPxButton>
+                            </td>
+                        </tr>
+                    </table>
+                    <div style="clear: both;"></div>
+                </div>
+            </FooterTemplate>
+        </dx:ASPxPopupControl>
+
+        <asp:ContentPlaceHolder ID="cphBeforeHeaderTitle" runat="server">
+        </asp:ContentPlaceHolder>
+        <div style="clear: both;"></div>
+        <fieldset class="form">
+            <asp:ContentPlaceHolder ID="cphSecureMain" runat="server" />
+        </fieldset>
+    </div>
+</asp:Content>

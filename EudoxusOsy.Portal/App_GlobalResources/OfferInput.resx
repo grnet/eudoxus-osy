@@ -1,0 +1,207 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Code" xml:space="preserve">
+    <value>Ο κωδικός της Προσφοράς στο κατάστημα του Παρόχου/Προμηθευτή. Μπορεί να αποτελείται μόνο από λατινικούς χαρακτήρες (μικρούς και κεφαλαίους), αριθμούς και τους ειδικούς χαρακτήρες (.-_/). Μέγιστο μήκος 60 χαρακτήρες.</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Η περιγραφή της Προσφοράς [ελεύθερο κείμενο, μέχρι 500 χαρακτήρες]</value>
+  </data>
+  <data name="OfferUrl" xml:space="preserve">
+    <value>Το URL της ιστοσελίδας του Παρόχου όπου παρουσιάζεται αναλυτική περιγραφή της Προσφοράς [έγκυρη διεύθυνση ιστοσελίδας, π.χ. http://www.mypage.gr]</value>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>Η τιμή της προσφοράς σε ευρώ (συμπεριλαμβανομένου ΦΠΑ)</value>
+  </data>
+  <data name="Price_PerMonth" xml:space="preserve">
+    <value>Η τιμή της προσφοράς σε ευρώ ανά μήνα (συμπεριλαμβανομένου ΦΠΑ)</value>
+  </data>
+  <data name="Tablet_Guarantee" xml:space="preserve">
+    <value>Η διάρκεια εγγύησης σε έτη (τουλάχιστον 2 έτη)</value>
+  </data>
+  <data name="Tablet_OfficialSpecsUrl" xml:space="preserve">
+    <value>Το URL της ιστοσελίδας του κατασκευαστή όπου παρουσιάζονται τα Official Specs της συσκευής [έγκυρη διεύθυνση ιστοσελίδας, π.χ. http://www.mypage.gr]</value>
+  </data>
+  <data name="Tablet_Manufacturer" xml:space="preserve">
+    <value>Ο τίτλος του κατασκευαστή του tablet [ελεύθερο κείμενο, μέχρι 50 χαρακτήρες]</value>
+  </data>
+  <data name="Tablet_Model" xml:space="preserve">
+    <value>O τίτλος του μοντέλου του tablet [ελεύθερο κείμενο, μέχρι 50 χαρακτήρες]</value>
+  </data>
+  <data name="Tablet_ProcessorCoreCount" xml:space="preserve">
+    <value>Ο αριθμός των πυρήνων του επεξεργαστή (τουλάχιστον 2 πυρήνες)</value>
+  </data>
+  <data name="Tablet_RamSize" xml:space="preserve">
+    <value>Η χωρητικότητα της Μνήμης RAM σε GB (τουλάχιστον 1GB)</value>
+  </data>
+  <data name="Tablet_ScreenSize" xml:space="preserve">
+    <value>Η διαγώνιος της οθόνης του tablet σε ίντσες (τουλάχιστον 7.9")</value>
+  </data>
+  <data name="Tablet_StorageSize" xml:space="preserve">
+    <value>Ο εσωτερικός αποθηκευτικός χώρος σε GB (τουλάχιστον 16GB), υποχρεωτικά ενσωματωμένος στη συσκευή</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Ο τίτλος της Προσφοράς [ελεύθερο κείμενο, μέχρι 100 χαρακτήρες]</value>
+  </data>
+  <data name="Laptop_Guarantee" xml:space="preserve">
+    <value>Η διάρκεια εγγύησης σε έτη (τουλάχιστον 2 έτη)</value>
+  </data>
+  <data name="Laptop_Manufacturer" xml:space="preserve">
+    <value>Ο τίτλος του κατασκευαστή [ελεύθερο κείμενο, μέχρι 50 χαρακτήρες]</value>
+  </data>
+  <data name="Laptop_Model" xml:space="preserve">
+    <value>O τίτλος του μοντέλου [ελεύθερο κείμενο, μέχρι 50 χαρακτήρες]</value>
+  </data>
+  <data name="Laptop_OfficialSpecsUrl" xml:space="preserve">
+    <value>Το URL της ιστοσελίδας του κατασκευαστή όπου παρουσιάζονται τα Official Specs της συσκευής [έγκυρη διεύθυνση ιστοσελίδας, π.χ. http://www.mypage.gr]</value>
+  </data>
+  <data name="Laptop_OperatingSystem" xml:space="preserve">
+    <value>Ο τίτλος και η έκδοση του λειτουργικού συστήματος [ελεύθερο κείμενο, μέχρι 100 χαρακτήρες]</value>
+  </data>
+  <data name="Laptop_ProcessorCoreCount" xml:space="preserve">
+    <value>Ο αριθμός των πυρήνων του επεξεργαστή (τουλάχιστον 2 πυρήνες)</value>
+  </data>
+  <data name="Laptop_RamSize" xml:space="preserve">
+    <value>Η χωρητικότητα της Μνήμης RAM σε GB (τουλάχιστον 2GB)</value>
+  </data>
+  <data name="Laptop_ScreenSize" xml:space="preserve">
+    <value>Η διαγώνιος της οθόνης σε ίντσες (τουλάχιστον 11.6")</value>
+  </data>
+  <data name="Laptop_StorageSize" xml:space="preserve">
+    <value>Η χωρητικότητα του HDD δίσκου σε GB (τουλάχιστον 320 GB)</value>
+  </data>
+  <data name="MobileInternet_DataPlanSize" xml:space="preserve">
+    <value>Ο μηνιαίος διαθέσιμος όγκος δεδομένων σε GB (τουλάχιστον 5 GB)</value>
+  </data>
+  <data name="ADSLOffer_ADSLDownloadSpeed" xml:space="preserve">
+    <value>Η ονομαστική ταχύτητα Download (τουλάχιστον 4 Mbps)</value>
+  </data>
+  <data name="ADSLOffer_ADSLUploadSpeed" xml:space="preserve">
+    <value>H ονομαστική ταχύτητα Upload (σε Mbps)</value>
+  </data>
+  <data name="SatelliteOffer_DownloadSpeed" xml:space="preserve">
+    <value>Η ονομαστική ταχύτητα Download σε Mbps (τουλάχιστον 4 Mbps)</value>
+  </data>
+  <data name="SatelliteOffer_UploadSpeed" xml:space="preserve">
+    <value>H ονομαστική ταχύτητα Upload σε Mbps</value>
+  </data>
+  <data name="Laptop_StorageSizeSSD" xml:space="preserve">
+    <value>Η χωρητικότητα του SSD δίσκου σε GB (τουλάχιστον 128 GB)</value>
+  </data>
+</root>

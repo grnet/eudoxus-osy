@@ -1,0 +1,41 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Browse.master.cs" Inherits="EudoxusOsy.Portal.Browse.Browse" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="el">
+<head>
+    <meta name="description" content="Ηλεκτρονική Υπηρεσία Απόκτησης Ακαδημαϊκής Ταυτότητας" />
+    <meta name="keywords" content="Φοιτητής, Ψηφιακή Αλληλεγγύη, Υπουργείο Παιδείας" />
+    <meta name="language" content="Modern Greek (1453-)" />
+    <meta http-equiv="Content-Language" content="el" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <%= Html.Css("/_css/EudoxusOsyReset.css") %>
+    <%= Html.Css("/_css/browse.css") %>
+    <%= Html.Css("/_css/jquery-ui/redmond/jquery-ui-1.10.1.custom.min.css", true) %>
+    <%= Html.Css("/_css/jquery.tipsy.css", true) %>
+    <title>Browse</title>
+    <script src="https://maps.google.com/maps/api/js?v=3.exp&libraries=places&sensor=false&language=el&region=GR" type="text/javascript"></script>
+</head>
+<body>
+    <form id="browseForm" runat="server">
+        <asp:ScriptManager runat="server" ID="sm">
+            <CompositeScript>
+                <Scripts>
+                    <asp:ScriptReference Path="~/_js/jquery-2.0.3.min.js" />
+                    <asp:ScriptReference Path="~/_js/jquery-ui-1.10.1.custom.min.js" />
+                    <asp:ScriptReference Path="~/_js/jquery-tag-it.min.js" />
+                    <asp:ScriptReference Path="~/_js/jquery.printElement.js" />
+                    <asp:ScriptReference Path="~/_js/jquery.li-scroller.1.0.js" />
+                    <asp:ScriptReference Path="~/_js/jquery.tipsy.js" />
+                    <asp:ScriptReference Path="~/_js/Imis/Imis.Lib.js" />
+                    <asp:ScriptReference Path="~/_js/popUp.js" />
+                    <asp:ScriptReference Path="~/_js/Imis/DxExtensions.js" />
+                    <asp:ScriptReference Path="~/_js/Terms.js" />
+                    <asp:ScriptReference Path="~/_js/DropDownHelper.js" />
+                    <asp:ScriptReference Path="~/_js/Imis/MessageBox.js" />
+                </Scripts>
+            </CompositeScript>
+        </asp:ScriptManager>
+        <asp:ContentPlaceHolder ID="cphMain" runat="server"></asp:ContentPlaceHolder>
+    </form>
+</body>
+</html>

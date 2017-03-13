@@ -1,0 +1,104 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" Inherits="EudoxusOsy.Portal.Portal" CodeBehind="Portal.Master.cs" %>
+
+<%@ Register TagName="HintPopup" TagPrefix="my" Src="~/UserControls/Popups/HintPopup.ascx" %>
+
+<%@ Import Namespace="EudoxusOsy.BusinessModel" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="el" xml:lang="el">
+<head id="Head1" runat="server">
+    <title runat="server">
+        <asp:Literal runat="server" Text="Σύστημα Πληρωμής Διαθετών Διδακτικών Συγγραμμάτων" />
+        <asp:ContentPlaceHolder ID="title" runat="server"></asp:ContentPlaceHolder>
+    </title>
+    <meta name="description" content="ΓΓΕΤ" />
+    <meta name="keywords" content="" />
+    <meta name="language" content="Modern Greek (1453-)" />
+    <meta http-equiv="Content-Language" content="el" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=9" />
+    <asp:PlaceHolder runat="server">
+        <%= Html.Css("/_css/eudoxusOsyReset.css") %>
+        <%= Html.Css("/_css/eudoxusOsyMain.css") %>
+        <%= Html.Css("/_css/jquery-ui/redmond/jquery-ui-1.10.1.custom.min.css", true) %>
+        <%= Html.Css("/_css/jquery.tagit.css", true) %>
+        <%= Html.Css("/_css/jquery.tipsy.css", true) %>
+    </asp:PlaceHolder>    
+    <asp:ContentPlaceHolder ID="cphHead" runat="server" />
+</head>
+<body>
+    <form runat="server">
+        <asp:Button runat="server" ID="preventSubmit" Enabled="false" Style="display: none;" />
+        <asp:ScriptManager ID="sm" runat="server">
+            <Scripts>
+                <asp:ScriptReference Path="~/_js/jquery-2.0.3.min.js" />
+                <asp:ScriptReference Path="~/_js/jquery-ui-1.10.1.custom.min.js" />
+                <asp:ScriptReference Path="~/_js/jquery-tag-it.min.js" />
+                <asp:ScriptReference Path="~/_js/jquery.printElement.js" />
+                <asp:ScriptReference Path="~/_js/jquery.li-scroller.1.0.js" />
+                <asp:ScriptReference Path="~/_js/jquery.tipsy.js" />
+                <asp:ScriptReference Path="~/_js/Imis/Imis.Lib.js" />
+                <asp:ScriptReference Path="~/_js/Imis.EventBus.js" />
+                <asp:ScriptReference Path="~/_js/popUp.js" />
+                <asp:ScriptReference Path="~/_js/Imis/DxExtensions.js" />
+                <asp:ScriptReference Path="~/_js/Terms.js" />
+                <asp:ScriptReference Path="~/_js/DropDownHelper.js" />
+                <asp:ScriptReference Path="~/_js/Imis/MessageBox.js" />
+                <asp:ScriptReference Path="~/_js/CollapsibleBoxes.js" />
+                <asp:ScriptReference Path="~/_js/Init.js" />
+            </Scripts>
+            <Services>
+                <asp:ServiceReference Path="~/PortalServices/Services.asmx" />
+            </Services>
+        </asp:ScriptManager>
+
+        <div id="body-container">
+            <div id="header">
+                <div id="header-logo">
+                    <a href="/Default.aspx" target="_blank"><img src="/_img/logos/eudoxus.png" alt="ΕΥΔΟΞΟΣ" /></a>                    
+                </div>
+                <div id="header-literal">
+                    <h1>Σύστημα Πληρωμής Διαθετών Διδακτικών Συγγραμμάτων</h1>                    
+                </div>
+                <asp:ContentPlaceHolder ID="cphLoginArea" runat="server" />    
+            </div>
+
+            <asp:PlaceHolder ID="phPilotApplication" runat="server">
+                <div class="globalMessage">
+                    <span>ΠΡΟΣΟΧΗ: Βρίσκεστε στην πιλοτική εφαρμογή του Οικονομικού Υποσυστήματος Ευδόξου</span>
+                </div>
+            </asp:PlaceHolder>
+            <%--<ul id="ticker" runat="server" clientidmode="Static">
+                <li>Η περίοδος υποβολής προτάσεων της 1η Πρόσκλησης για Επιστήμες Μηχανικών και Πληροφορική παρατείνεται μέχρι τις 15/10/2013</li>
+            </ul>--%>
+            <noscript>
+                <div class="globalMessage">
+                    <span>ΠΡΟΣΟΧΗ: Θα πρέπει να ενεργοποιήσετε τη Javascript για τη σωστή λειτουργία της εφαρμογής</span>
+                </div>
+            </noscript>
+
+            <asp:ContentPlaceHolder ID="cpHelpBar" runat="server" />
+
+            <div id="container">
+                <asp:ContentPlaceHolder ID="cphMain" runat="server" />
+                <my:HintPopup ID="ucHintPopup" runat="server" />
+            </div>
+            <%--<div id="footer">                
+                <a href="http://www.grnet.gr/" target="_blank"><img src="/_img/logos/grnet.png" alt="ΕΔΕΤ" /></a>
+                <a href="http://europa.eu/" target="_blank"><img src="/_img/logos/ee.png" alt="Ευρωπαϊκή Ένωση" /></a>
+                <a href="http://www.digitalplan.gov.gr/portal/" target="_blank"><img src="/_img/logos/psifiaki_ellada.png" alt="Ψηφιακή Ελλάδα" /></a>
+                <a href="http://www.espa.gr/" target="_blank"><img src="/_img/logos/espa.png" alt="ΕΣΠΑ" /></a>
+            </div>
+            <div style="text-align: right; height: 2em; margin: 0em 7em 2em 0em; font-weight: bold; font-size: 1em; color: Black">
+                Με τη συγχρηματοδότηση της Ελλάδας & της Ευρωπαϊκής Ένωσης
+            </div>--%>
+        </div>
+
+        <script type="text/javascript">
+            //$(function () {
+            //    $("ul#ticker").liScroll({ travelocity: 0.07 });
+            //});
+        </script>
+    </form>
+</body>
+</html>

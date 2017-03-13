@@ -1,0 +1,92 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EudoxusOsy.BusinessModel", "EudoxusOsy.BusinessModel\EudoxusOsy.BusinessModel.csproj", "{82248BAB-C2C1-4E3A-9713-3220A27258DF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EudoxusOsy.Utils", "EudoxusOsy.Utils\EudoxusOsy.Utils.csproj", "{C7B79885-ACE3-4574-AC38-AA689981EF15}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EudoxusOsy.Portal", "EudoxusOsy.Portal\EudoxusOsy.Portal.csproj", "{4F9F419E-352F-42E1-B7DE-01B3E58C0BD4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EudoxusOsy.BusinessModel.Flow", "EudoxusOsy.BusinessModel.Flow\EudoxusOsy.BusinessModel.Flow.csproj", "{37CE933E-8453-49D5-B5D8-954BDF8CB336}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "EudoxusOsy.Database", "EudoxusOsy.Database\EudoxusOsy.Database.sqlproj", "{8F9BA2F1-1E70-4576-8118-F9143482C769}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EudoxusOsy.Services", "EudoxusOsy.Services\EudoxusOsy.Services.csproj", "{D940964C-AE9C-4159-B34E-41BB59967C1F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Ifestion|Any CPU = Ifestion|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{82248BAB-C2C1-4E3A-9713-3220A27258DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82248BAB-C2C1-4E3A-9713-3220A27258DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82248BAB-C2C1-4E3A-9713-3220A27258DF}.Ifestion|Any CPU.ActiveCfg = Ifestion|Any CPU
+		{82248BAB-C2C1-4E3A-9713-3220A27258DF}.Ifestion|Any CPU.Build.0 = Ifestion|Any CPU
+		{82248BAB-C2C1-4E3A-9713-3220A27258DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82248BAB-C2C1-4E3A-9713-3220A27258DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7B79885-ACE3-4574-AC38-AA689981EF15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7B79885-ACE3-4574-AC38-AA689981EF15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7B79885-ACE3-4574-AC38-AA689981EF15}.Ifestion|Any CPU.ActiveCfg = Release|Any CPU
+		{C7B79885-ACE3-4574-AC38-AA689981EF15}.Ifestion|Any CPU.Build.0 = Release|Any CPU
+		{C7B79885-ACE3-4574-AC38-AA689981EF15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7B79885-ACE3-4574-AC38-AA689981EF15}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F9F419E-352F-42E1-B7DE-01B3E58C0BD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F9F419E-352F-42E1-B7DE-01B3E58C0BD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F9F419E-352F-42E1-B7DE-01B3E58C0BD4}.Ifestion|Any CPU.ActiveCfg = Ifestion|Any CPU
+		{4F9F419E-352F-42E1-B7DE-01B3E58C0BD4}.Ifestion|Any CPU.Build.0 = Ifestion|Any CPU
+		{4F9F419E-352F-42E1-B7DE-01B3E58C0BD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F9F419E-352F-42E1-B7DE-01B3E58C0BD4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37CE933E-8453-49D5-B5D8-954BDF8CB336}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37CE933E-8453-49D5-B5D8-954BDF8CB336}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37CE933E-8453-49D5-B5D8-954BDF8CB336}.Ifestion|Any CPU.ActiveCfg = Release|Any CPU
+		{37CE933E-8453-49D5-B5D8-954BDF8CB336}.Ifestion|Any CPU.Build.0 = Release|Any CPU
+		{37CE933E-8453-49D5-B5D8-954BDF8CB336}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37CE933E-8453-49D5-B5D8-954BDF8CB336}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F9BA2F1-1E70-4576-8118-F9143482C769}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F9BA2F1-1E70-4576-8118-F9143482C769}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F9BA2F1-1E70-4576-8118-F9143482C769}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{8F9BA2F1-1E70-4576-8118-F9143482C769}.Ifestion|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F9BA2F1-1E70-4576-8118-F9143482C769}.Ifestion|Any CPU.Build.0 = Debug|Any CPU
+		{8F9BA2F1-1E70-4576-8118-F9143482C769}.Ifestion|Any CPU.Deploy.0 = Debug|Any CPU
+		{8F9BA2F1-1E70-4576-8118-F9143482C769}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F9BA2F1-1E70-4576-8118-F9143482C769}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F9BA2F1-1E70-4576-8118-F9143482C769}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{D940964C-AE9C-4159-B34E-41BB59967C1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D940964C-AE9C-4159-B34E-41BB59967C1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D940964C-AE9C-4159-B34E-41BB59967C1F}.Ifestion|Any CPU.ActiveCfg = Release|Any CPU
+		{D940964C-AE9C-4159-B34E-41BB59967C1F}.Ifestion|Any CPU.Build.0 = Release|Any CPU
+		{D940964C-AE9C-4159-B34E-41BB59967C1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D940964C-AE9C-4159-B34E-41BB59967C1F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 7
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://ipsyp.visualstudio.com/
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = EudoxusOsy.BusinessModel\\EudoxusOsy.BusinessModel.csproj
+		SccProjectName1 = EudoxusOsy.BusinessModel
+		SccLocalPath1 = EudoxusOsy.BusinessModel
+		SccProjectUniqueName2 = EudoxusOsy.Portal\\EudoxusOsy.Portal.csproj
+		SccProjectName2 = EudoxusOsy.Portal
+		SccLocalPath2 = EudoxusOsy.Portal
+		SccProjectUniqueName3 = EudoxusOsy.Utils\\EudoxusOsy.Utils.csproj
+		SccProjectName3 = EudoxusOsy.Utils
+		SccLocalPath3 = EudoxusOsy.Utils
+		SccProjectUniqueName4 = EudoxusOsy.Database\\EudoxusOsy.Database.sqlproj
+		SccProjectName4 = EudoxusOsy.Database
+		SccLocalPath4 = EudoxusOsy.Database
+		SccProjectUniqueName5 = EudoxusOsy.BusinessModel.Flow\\EudoxusOsy.BusinessModel.Flow.csproj
+		SccProjectName5 = EudoxusOsy.BusinessModel.Flow
+		SccLocalPath5 = EudoxusOsy.BusinessModel.Flow
+		SccProjectUniqueName6 = EudoxusOsy.Services\\EudoxusOsy.Services.csproj
+		SccProjectName6 = EudoxusOsy.Services
+		SccLocalPath6 = EudoxusOsy.Services
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,95 @@
+﻿body
+{
+    color: #716162;
+}
+
+h1
+{
+    color: #01478c;
+}
+ 
+a, a:link, a:visited, a:hover, a:active, a:focus
+{
+    color: #0087ef;
+    text-decoration: underline;
+}
+
+label 
+{
+    color: #01478C;    
+}
+
+a.icon-btn, a.icon-btn:hover, a.icon-btn:focus
+{    
+    color: #fff;
+    text-decoration: none;
+}
+
+a.mask, a.mask:hover, a.mask:focus
+{    
+    color: #fff;
+}
+
+/*.dv th.header, .dv th.popupHeader
+{
+    color: #fff;
+}*/
+
+.dv label
+{
+    color: #716162;
+}
+
+.dv #lblStudentshipType
+{
+    color: #5D7B9D;
+}
+
+.error, #alertsArea
+{
+    color: #f00;
+}
+
+.customCalloutStyle div, .customCalloutStyle td{
+    color: #716162;
+}
+
+#login-area #username
+{
+    color: #555;
+}
+
+input.button, input.button:focus, input.button:hover
+{
+    color: #fff;
+}
+
+div#registeredUsers-menu a
+{
+    color: #000;
+}
+
+div#registeredUsers-menu a:hover, div#registeredUsers-menu a.active, div#registeredUsers-menu span
+{
+    color: #fff
+}
+
+div.jqi .jqiclose
+{
+    color: #bbb;
+}
+
+div.jqi .jqimessage
+{
+    color: #444;
+}
+
+div.jqi button, div.jqi button:hover, div.jqi button:focus, div.jqi button.jqidefaultbutton
+{
+    color: #fff;
+}
+
+#invalidPhoto
+{
+    color: #f00; 
+}

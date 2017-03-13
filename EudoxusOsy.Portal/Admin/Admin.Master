@@ -1,0 +1,102 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" Inherits="EudoxusOsy.Portal.Admin.Admin" CodeBehind="Admin.Master.cs" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+    <asp:PlaceHolder ID="PlaceHolder1" runat="server">
+        <%= Html.Css("~/_css/ggetReset.css") %>
+        <%= Html.Css("~/_css/ggetMain.css") %>
+        <%= Html.Css("~/_css/backOffice.css") %>
+        <%= Html.Css("/_css/jquery-ui/redmond/jquery-ui-1.10.1.custom.min.css", true) %>
+        <%= Html.Css("/_css/jquery.tipsy.css", true) %>
+    </asp:PlaceHolder>
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta name="expires" content="-1" />
+    <title>Ηλεκτρονική Υπηρεσία Απόκτησης Ακαδημαϊκής Ταυτότητας</title>
+    <asp:ContentPlaceHolder ID="cphHead" runat="server" />
+</head>
+<body>
+    <form id="form1" runat="server">
+        <asp:ScriptManager ID="sm" runat="server">
+            <CompositeScript>
+                <Scripts>
+                    <asp:ScriptReference Path="~/_js/jquery-2.0.3.min.js" />
+                    <asp:ScriptReference Path="~/_js/jquery-ui-1.10.1.custom.min.js" />
+                    <asp:ScriptReference Path="~/_js/jquery-tag-it.min.js" />
+                    <asp:ScriptReference Path="~/_js/jquery.tipsy.js" />
+                    <asp:ScriptReference Path="~/_js/Imis/Imis.Lib.js" />
+                    <asp:ScriptReference Path="~/_js/Imis.EventBus.js" />
+                    <asp:ScriptReference Path="~/_js/popUp.js" />
+                    <asp:ScriptReference Path="~/_js/Views/Admin.js" />
+                    <asp:ScriptReference Path="~/_js/DropDownHelper.js" />
+                    <asp:ScriptReference Path="~/_js/Imis/MessageBox.js" />
+                    <asp:ScriptReference Path="~/_js/Init.js" />
+                </Scripts>
+            </CompositeScript>
+            <Services>
+                <asp:ServiceReference Path="~/PortalServices/Services.asmx" />
+            </Services>
+        </asp:ScriptManager>
+        <div id="boHeader">
+            <%--<a id="dg-logo" href="http://www.infosoc.gr" target="_blank">&nbsp;</a> <a id="destinpsifiaka-logo"
+            href="http://www.destinpsifiaka.gr/" target="_blank">&nbsp;</a>--%>
+            <div style="float: left; margin-top: 22px; font-family: Georgia,serif; font-size: 20px;">
+                Ηλεκτρονική Υπηρεσία Απόκτησης Ακαδημαϊκής Ταυτότητας
+            </div>
+            <%-- User services --%>
+            <div id="boUserServices">
+                <table border="0">
+                    <tr>
+                        <td>
+                            <asp:LoginName ID="LoginName1" runat="server" FormatString="Έχετε συνδεθεί ως: [{0}]" />
+                        </td>
+                        <td>
+                            <asp:LoginStatus ID="LoginStatus1" runat="server" LogoutText="Αποσύνδεση" LoginText="Σύνδεση"
+                                OnLoggingOut="LoginStatus1_LoggingOut" CssClass="logout" OnLoggedOut="LoginStatus1_LoggedOut" />                            
+                        </td>
+                        <td>
+                            <a runat="server" href="javascript:void(0)" onclick="showChangePasswordPopup(true)">Αλλαγή Κωδικού Πρόσβασης
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div style="clear: both;">
+            </div>
+        </div>
+        <div style="background-color: #eee; border-bottom: 1px solid #999">
+            <dx:ASPxMenu ID="dxNavigationMenu" runat="server" DataSourceID="smdsAdmin" Border-BorderStyle="None" />
+        </div>
+        <asp:SiteMapDataSource ID="smdsAdmin" runat="server" ShowStartingNode="false"
+            SiteMapProvider="admin" />
+        <dx:ASPxPopupControl runat="server" ClientInstanceName="devExPopup" Height="700" ShowFooter="true" CssClass="iframePopup">
+            <FooterTemplate>
+                <div style="padding: 8px 12px;">
+                    <table style="float: right;">
+                        <tr>
+                            <td>
+                                <dx:ASPxButton ID="ASPxButton14" runat="server" ClientInstanceName="btnSubmit" Text="Αποθήκευση" Image-Url="~/_img/iconSave.png">
+                                    <ClientSideEvents Click="function() { popUp.getCurrentIFrame().doSubmit(); }" />
+                                </dx:ASPxButton>
+                            </td>
+                            <td>
+                                <dx:ASPxButton ID="ASPxButton16" runat="server" ClientInstanceName="btnCancel" Text="Κλείσιμο" Image-Url="~/_img/iconCancel.png">
+                                    <ClientSideEvents Click="function() { popUp.hideWithoutRefresh(); }" />
+                                </dx:ASPxButton>
+                            </td>
+                        </tr>
+                    </table>
+                    <div style="clear: both;"></div>
+                </div>
+            </FooterTemplate>
+        </dx:ASPxPopupControl>
+        <div id="mainContent">
+            <%-- Page's main content --%>
+            <div id="boMain">
+                <asp:ContentPlaceHolder ID="cphMain" runat="server">
+                </asp:ContentPlaceHolder>
+            </div>
+        </div>
+    </form>
+</body>
+</html>

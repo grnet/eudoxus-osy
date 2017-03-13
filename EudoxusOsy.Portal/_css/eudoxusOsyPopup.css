@@ -1,0 +1,26 @@
+﻿body {
+    /*background: none repeat scroll 0 0 #9DACB5;*/    
+    background: none repeat scroll 0 0 white;
+    color: black;
+    font-family: Tahoma, Arial, Sans-Serif;
+    font-size: 0.75em;
+    height: 100%;
+    padding: 6px;
+    margin: 0;
+}
+
+.message {
+    background: none repeat scroll 0 0 #DDDDDD;
+    border: 1px solid #636F21;
+    display: block;
+    font-style: italic;
+    margin-bottom: 8px;
+    margin-top: 20px;
+    padding: 5px;
+    text-align: justify;
+}
+
+.dxgvSelectedRow {
+    background-color: LightGreen;
+    color: black;
+}

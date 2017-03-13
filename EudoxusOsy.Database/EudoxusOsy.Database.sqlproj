@@ -1,0 +1,249 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Name>EudoxusOsy.Database</Name>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>4.1</ProjectVersion>
+    <ProjectGuid>{8f9ba2f1-1e70-4576-8118-f9143482c769}</ProjectGuid>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql110DatabaseSchemaProvider</DSP>
+    <OutputType>Database</OutputType>
+    <RootPath>
+    </RootPath>
+    <RootNamespace>EudoxusOsy.Database</RootNamespace>
+    <AssemblyName>EudoxusOsy.Database</AssemblyName>
+    <ModelCollation>1032,CI</ModelCollation>
+    <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
+    <DeployToDatabase>True</DeployToDatabase>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetLanguage>CS</TargetLanguage>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SqlServerVerification>False</SqlServerVerification>
+    <IncludeCompositeObjects>True</IncludeCompositeObjects>
+    <TargetDatabaseSet>True</TargetDatabaseSet>
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+    <DefaultCollation>Greek_CI_AS</DefaultCollation>
+    <DefaultFilegroup>PRIMARY</DefaultFilegroup>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+    <!-- Default to the v11.0 targets path if the targets file for the current VS version is not found -->
+    <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
+    <VisualStudioVersion Condition="'$(SSDTExists)' == ''">11.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Condition="'$(SQLDBExtensionsRefPath)' != ''" Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <ItemGroup>
+    <Folder Include="Properties" />
+    <Folder Include="dbo\" />
+    <Folder Include="dbo\Tables\" />
+    <Folder Include="dbo\Views\" />
+    <Folder Include="Security\" />
+    <Folder Include="dbo\Stored Procedures\" />
+    <Folder Include="Scripts" />
+    <Folder Include="Scripts\UtitlityScripts" />
+    <Folder Include="Scripts\ChangeScripts" />
+    <Folder Include="Scripts\ChangeScripts\OldScripts" />
+    <Folder Include="report" />
+    <Folder Include="report\Tables" />
+    <Folder Include="report\Stored Procedures" />
+    <Folder Include="report\Views" />
+    <Folder Include="Scripts\ChangeScripts\UpdateDataScripts" />
+    <Folder Include="dbo\Functions" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="dbo\Tables\Invoice.sql" />
+    <Build Include="dbo\Tables\PaymentOrder.sql" />
+    <Build Include="dbo\Tables\BookPriceRequest.sql" />
+    <Build Include="dbo\Tables\Phase.sql" />
+    <Build Include="dbo\Tables\Receipt.sql" />
+    <Build Include="dbo\Tables\SupplierIBAN.sql" />
+    <Build Include="dbo\Tables\SupplierPhase.sql" />
+    <Build Include="dbo\Tables\Supplier.sql" />
+    <Build Include="dbo\Tables\Verify.sql" />
+    <Build Include="dbo\Tables\WelfareRecordEntry.sql" />
+    <Build Include="dbo\Tables\WelfareRecord.sql" />
+    <Build Include="dbo\Tables\Reporter.sql" />
+    <Build Include="dbo\Tables\Role.sql" />
+    <Build Include="dbo\Tables\UsersInRoles.sql" />
+    <Build Include="dbo\Tables\Bank.sql" />
+    <Build Include="dbo\Tables\EmailLog.sql" />
+    <Build Include="dbo\Tables\Department.sql" />
+    <Build Include="dbo\Tables\Institution.sql" />
+    <Build Include="dbo\Tables\SmsLog.sql" />
+    <Build Include="dbo\Tables\KostologisiPrice.sql" />
+    <Build Include="dbo\Tables\Kap_Cities.sql" />
+    <Build Include="dbo\Tables\imis_Log.sql" />
+    <Build Include="dbo\Tables\Kap_Prefectures.sql" />
+    <Build Include="dbo\Tables\QueueEntry.sql" />
+    <Build Include="dbo\Tables\PriceModificationReason.sql" />
+    <Build Include="dbo\Tables\PriceRejectionReason.sql" />
+    <Build Include="dbo\Tables\SupplierDetails.sql" />
+    <Build Include="dbo\Tables\PublicFinancialOffice.sql" />
+    <Build Include="dbo\Tables\Book.sql" />
+    <Build Include="dbo\Tables\BookBlackList.sql" />
+    <Build Include="dbo\Tables\TestCatalog.sql" />
+    <Build Include="dbo\Tables\BookPrice.sql" />
+    <Build Include="dbo\Tables\testReceipt.sql" />
+    <Build Include="dbo\Tables\BookPriceRequestVolume.sql" />
+    <Build Include="dbo\Tables\BookSupplier.sql" />
+    <Build Include="dbo\Tables\Catalog.sql" />
+    <Build Include="dbo\Tables\CatalogLog.sql" />
+    <Build Include="dbo\Tables\Deduction.sql" />
+    <Build Include="dbo\Tables\Discount.sql" />
+    <Build Include="dbo\Tables\File.sql" />
+    <Build Include="dbo\Tables\CatalogGroupLog.sql" />
+    <Build Include="dbo\Tables\FileSelfPublisher.sql" />
+    <Build Include="dbo\Tables\LockedCatalogGroup.sql" />
+    <Build Include="dbo\Tables\CatalogGroup.sql" />
+    <Build Include="dbo\Tables\BankTransfer.sql" />
+    <Build Include="dbo\Stored Procedures\CreateCatalogsForPhase.sql" />
+    <Build Include="dbo\Stored Procedures\GetCoAuthors.sql" />
+    <Build Include="dbo\Stored Procedures\ExportCommitmentsRegistry.sql" />
+    <Build Include="dbo\Stored Procedures\SuppliersNoLogisticBooks.sql" />
+    <None Include="Scripts\ChangeScripts\OldScripts\20160818_ALTER_GetCoAuthors.sql" />
+    <None Include="Scripts\ChangeScripts\OldScripts\20160628_ADD_sp_GetCoAuthors.sql" />
+    <None Include="Scripts\ChangeScripts\OldScripts\20160628_ALTER_PaymentOrder.sql" />
+    <None Include="Scripts\ChangeScripts\OldScripts\20160715_ALTER_sp_CreateCatalogsForPhase.sql" />
+    <None Include="Scripts\ChangeScripts\OldScripts\20160719_ALTER_CatalogLog_CascadeDelete.sql" />
+    <None Include="Scripts\ChangeScripts\OldScripts\20160725_CREATE_spExportCommitmentsRegistry.sql" />
+    <None Include="Scripts\ChangeScripts\OldScripts\20160725_CREATE_spSuppliersNoLogisticBooks.sql" />
+    <None Include="Scripts\ChangeScripts\OldScripts\20160726_ALTER_CatalogLog_Change_Operations_length.sql" />
+    <None Include="Scripts\ChangeScripts\OldScripts\20160727_ALTER_Phase_Add_CatalogsCreated.sql" />
+    <None Include="Scripts\ChangeScripts\OldScripts\20160802_ALTER_Catalog_ADD_OriginalPhase.sql" />
+    <None Include="Scripts\ChangeScripts\OldScripts\20160803_ALTER_sp_CreateCatalogsForPhase.sql" />
+    <None Include="Scripts\ChangeScripts\OldScripts\20160818_ALTER_ExportCommitments.sql" />
+    <None Include="Scripts\ChangeScripts\OldScripts\20160822_ALTER_spExportCommitmentsRegistry.sql" />
+    <None Include="Scripts\ChangeScripts\OldScripts\20160822_ALTER_spSuppliersNoLogisticBooks.sql" />
+    <None Include="Scripts\ChangeScripts\OldScripts\20160902_ALTER_SupplierDetails.sql" />
+    <None Include="Scripts\ChangeScripts\OldScripts\20160905_ALTER_CreateCatalogsForPhase.sql" />
+    <None Include="Scripts\ChangeScripts\OldScripts\20160912_ALTER_spGetCoAuthors.sql" />
+    <Build Include="dbo\Tables\AuditReceipt.sql" />
+    <Build Include="dbo\Tables\ServiceLog.sql" />
+    <Build Include="dbo\Tables\TaskLastRunTime.sql" />
+    <None Include="Scripts\ChangeScripts\20170110_cachePerDepartment.sql" />
+    <None Include="Scripts\ChangeScripts\20170110_cachePerInstitution.sql" />
+    <None Include="Scripts\ChangeScripts\20170110_cacheStatsPerDepartment.sql" />
+    <None Include="Scripts\ChangeScripts\20170110_cacheSupplierStatistics.sql" />
+    <None Include="Scripts\ChangeScripts\20170110_cacheTotalSum.sql" />
+    <None Include="Scripts\ChangeScripts\20170110_spCacheStats.sql" />
+    <Build Include="report\Tables\ViewTotalSum.sql" />
+    <Build Include="report\Tables\ViewStatisticsPerDepartment.sql" />
+    <Build Include="report\Tables\ViewStatisticsPerInstitution.sql" />
+    <Build Include="report\Tables\StatsNotPricedPerDepartment.sql" />
+    <Build Include="report\Tables\StatsPricedPerDepartment.sql" />
+    <Build Include="report\Tables\SuppliersFullStatistics.sql" />
+    <Build Include="report.sql" />
+    <Build Include="report\Stored Procedures\spCachePerDepartment.sql" />
+    <Build Include="report\Stored Procedures\spCachePerInstitution.sql" />
+    <Build Include="report\Stored Procedures\spCacheStatsPerDepartment.sql" />
+    <Build Include="report\Stored Procedures\spCacheSupplierStatistics.sql" />
+    <Build Include="report\Stored Procedures\spCacheTotalSum.sql" />
+    <Build Include="report\Stored Procedures\spCacheStats.sql" />
+    <None Include="Scripts\ChangeScripts\20170110_a_Initial.sql" />
+    <Build Include="report\Stored Procedures\spSuppliersGrid.sql" />
+    <Build Include="report\Stored Procedures\spSuppliersFullStatistics_PP.sql" />
+    <Build Include="report\Stored Procedures\spRest_PP.sql" />
+    <Build Include="report\Stored Procedures\spBasicStats.sql" />
+    <None Include="Scripts\ChangeScripts\20170112_spExtractInstitutionStats.sql" />
+    <Build Include="Scripts\ChangeScripts\20170112_spExtractDepartmentStats.sql" />
+    <None Include="Scripts\ChangeScripts\20160912_ALTER_Catalog_ADD_IsBookActive.sql" />
+    <None Include="Scripts\ChangeScripts\20170112_spSuppliersGrid.sql" />
+    <None Include="Scripts\ChangeScripts\20170112_spBasicStats.sql" />
+    <None Include="Scripts\ChangeScripts\20170112_spRest_PP.sql" />
+    <None Include="Scripts\ChangeScripts\20170112_spSuppliersFullStatistics_PP.sql" />
+    <None Include="Scripts\ChangeScripts\20170113_Add_sp_GetSuppliersFullStatistics.sql" />
+    <Build Include="dbo\Stored Procedures\sp_GetSuppliersFullStatistics.sql" />
+    <Build Include="report\Stored Procedures\sp_GetSuppliersStatsForExport.sql" />
+    <Build Include="dbo\Tables\AuditReceiptXml.sql" />
+    <Build Include="dbo\Stored Procedures\spCompareReceipts.sql" />
+    <Build Include="dbo\Stored Procedures\spInsertToReceiptsFromXml.sql" />
+    <Build Include="dbo\Tables\ApplicationData.sql" />
+    <Build Include="dbo\Stored Procedures\sp_ComplementReceipts.sql" />
+    <Build Include="dbo\Stored Procedures\InsertCorrectedFiles.sql" />
+    <None Include="Scripts\ChangeScripts\20170118_Create_KpsOnly_ReceiptsOnly_Tables_ForCorrectedData.sql" />
+    <Build Include="dbo\Tables\KpsOnly.sql" />
+    <Build Include="dbo\Tables\ReceiptsOnly.sql" />
+    <None Include="Scripts\ChangeScripts\UpdateDataScripts\Update_Files_pdfNotes.sql" />
+    <None Include="Scripts\ChangeScripts\UpdateDataScripts\Update_PublicFinancialOffice_of_Suppliers.sql" />
+    <None Include="Scripts\ChangeScripts\20170208_ALTER_Catalog_Add_HasPendingPriceVerifiation.sql" />
+    <Build Include="dbo\Stored Procedures\spInsertIntoCatalogs.sql" />
+    <Build Include="dbo\Tables\BookPriceChange.sql" />
+    <None Include="Scripts\UtitlityScripts\20170214_ALTER_CreateCatalogsForPhaseTEST.sql" />
+    <None Include="Scripts\ChangeScripts\20170215_ALTER_spInsertToReceiptsFromXml.sql" />
+    <None Include="Scripts\ChangeScripts\20170104_Create_spReceipts.sql" />
+    <Build Include="report\Stored Procedures\spReceipt.sql" />
+    <None Include="Scripts\ChangeScripts\20170224_ALTER_CreateCatalogsForPhase.sql" />
+    <None Include="Scripts\ChangeScripts\20170224_ALTER_spCacheSupplierStatistics.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="EudoxusOsy.Klai.publish.xml" />
+    <None Include="EudoxusOsy.Igiak.publish.xml" />
+    <None Include="Scripts\ChangeScripts\20160905_Insert_Discount_values_for_2016.sql" />
+    <None Include="Scripts\ChangeScripts\20160916_ALTER_GetCommintments.sql" />
+    <None Include="Scripts\ChangeScripts\20160920_ALTER_sp_CreateCatalogsForPhase.sql" />
+    <None Include="Scripts\ChangeScripts\20161005_ALTER_Table_File.sql" />
+    <None Include="Scripts\ChangeScripts\20170102_Create_auditReceipts_table.sql" />
+    <None Include="Scripts\ChangeScripts\20170103_Create_Table_ServiceLog.sql" />
+    <None Include="Scripts\ChangeScripts\20170104_CreateTable_TaskLastRunTime.sql" />
+    <None Include="Scripts\ChangeScripts\20170104_ALTER_Receipt_ADD_Columns.sql" />
+    <None Include="EudoxusOsy.nifragos.publish.xml" />
+    <None Include="Scripts\ChangeScripts\20170111_Fix_SupplierDetails_Dates_columns.sql" />
+    <None Include="report\Stored Procedures\spExtractDepartmentStats.sql" />
+    <None Include="report\Stored Procedures\spExtractInstitutionStats.sql" />
+    <None Include="Scripts\ChangeScripts\20170116_AuditReceiptXml.sql" />
+    <None Include="Scripts\ChangeScripts\20170118_spCompareReceipts.sql" />
+    <None Include="Scripts\ChangeScripts\20170118_spInsertToReceiptsFromXml.sql" />
+    <None Include="Scripts\ChangeScripts\20170118_0_CREATE_TABLE_ApplicationData.sql" />
+    <None Include="Scripts\ChangeScripts\20170118_1_Add_ApplicationData_Default_Values.sql" />
+    <None Include="Scripts\ChangeScripts\20170119_CREATE_spComplementReceipts.sql" />
+    <None Include="Scripts\ChangeScripts\20170119_CREATE_sp_InsertCorrectedFiles.sql" />
+    <None Include="Scripts\ChangeScripts\20170102_ALTER_Table_Book_Add_SupplierCode.sql" />
+    <None Include="Scripts\ChangeScripts\UpdateDataScripts\Update_Book_SupplierCode_Field.sql" />
+    <None Include="Scripts\ChangeScripts\OldScripts\20170207_ALTER_GetCoAuthors_ADD_SupplierCode.sql" />
+    <None Include="Scripts\ChangeScripts\20170208_ALTER_Book_ADD_PendingCommitteePriceVerification.sql" />
+    <None Include="Scripts\ChangeScripts\20170214_ALTER_CreateCatalogsForPhase.sql" />
+    <None Include="dbo\Functions\fnCalculateCatalogAmount.sql" />
+    <None Include="Scripts\ChangeScripts\20170214_CREATE_fnCalculateCatalogAmount.sql" />
+    <None Include="Scripts\ChangeScripts\20170214_CREATE_spInsertIntoCatalogs.sql" />
+    <None Include="Scripts\ChangeScripts\20170216_ALTER_spReceipt.sql" />
+    <None Include="Scripts\ChangeScripts\20170216_CREATE_BookPriceChange_TABLE.sql" />
+    <None Include="Scripts\ChangeScripts\20170302_ALTER_TABLE_BOOK_Add_HasUnexpectedPriceChange.sql" />
+    <None Include="EudoxusOsy.IgiakSql2014.publish.xml" />
+    <None Include="Scripts\ChangeScripts\20170302_ALTER_TABLE_Catalog_Add_HasUnexpectedPRiceChange.sql" />
+    <None Include="Scripts\ChangeScripts\20170303_ALTER_TABLE_BookPriceChange_Approve.sql" />
+    <None Include="Scripts\ChangeScripts\20170308_ALTER_sp_CreateCatalogsForPhase.sql" />
+    <None Include="Scripts\ChangeScripts\20170310_ALTER_BookPriceChanges_NULL.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="EudoxusOsy.Database.refactorlog" />
+  </ItemGroup>
+</Project>

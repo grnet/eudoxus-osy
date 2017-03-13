@@ -1,0 +1,140 @@
+﻿<%--
+Default skin template. The following skins are provided as examples only.
+
+1. Named control skin. The SkinId should be uniquely defined because
+   duplicate SkinId's per control type are not allowed in the same theme.
+
+<asp:GridView runat="server" SkinId="gridviewSkin" BackColor="White" >
+   <AlternatingRowStyle BackColor="Blue" />
+</asp:GridView>
+
+2. Default skin. The SkinId is not defined. Only one default 
+   control skin per control type is allowed in the same theme.
+
+<asp:Image runat="server" ImageUrl="~/images/image1.jpg" />
+--%>
+<%@ Register Namespace="DevExpress.Web" TagPrefix="dxe" Assembly="DevExpress.Web.v14.2, Version=14.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" %>
+<%@ Register Namespace="DevExpress.Web" TagPrefix="dx" Assembly="DevExpress.Web.v14.2, Version=14.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" %>
+<%@ Register Namespace="DevExpress.Web" TagPrefix="dxpc" Assembly="DevExpress.Web.v14.2, Version=14.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" %>
+<%@ Register Namespace="DevExpress.Web" TagPrefix="dxtc" Assembly="DevExpress.Web.v14.2, Version=14.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" %>
+<%@ Register Namespace="DevExpress.Web" TagPrefix="dxw" Assembly="DevExpress.Web.v14.2, Version=14.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" %>
+<%@ Register Namespace="DevExpress.Web" TagPrefix="dxrp" Assembly="DevExpress.Web.v14.2, Version=14.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" %>
+<%@ Register Namespace="DevExpress.Web" TagPrefix="dxnb" Assembly="DevExpress.Web.v14.2, Version=14.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" %>
+
+<dx:ASPxButton runat="server" AutoPostBack="false">    
+</dx:ASPxButton>
+
+<dx:ASPxValidationSummary runat="server" ClientInstanceName="validationSummary" RenderMode="BulletedList" ShowErrorsInEditors="true">
+</dx:ASPxValidationSummary>
+
+<dx:ASPxLabel runat="server" Font-Bold="true" ForeColor="Blue">    
+</dx:ASPxLabel>
+
+<dx:ASPxTextBox runat="server" ValidationSettings-ErrorDisplayMode="ImageWithTooltip" ValidationSettings-Display="Static" Width="100%">
+    <ClientSideEvents GotFocus="dx_Focus" LostFocus="dx_Blur"></ClientSideEvents>
+</dx:ASPxTextBox>
+
+<dx:ASPxMemo runat="server" ValidationSettings-ErrorDisplayMode="ImageWithTooltip" ValidationSettings-Display="Static" Width="100%">
+    <ClientSideEvents GotFocus="dx_Focus" LostFocus="dx_Blur"></ClientSideEvents>    
+</dx:ASPxMemo>
+
+<dx:ASPxSpinEdit runat="server" AllowMouseWheel="false" SpinButtons-ShowIncrementButtons="false" ValidationSettings-ErrorDisplayMode="ImageWithTooltip" ValidationSettings-Display="Static" Width="100px">
+    <ClientSideEvents GotFocus="dx_Focus" LostFocus="dx_Blur"></ClientSideEvents>    
+</dx:ASPxSpinEdit>
+
+<dx:ASPxDateEdit runat="server" ValidationSettings-ErrorDisplayMode="ImageWithTooltip" ValidationSettings-Display="Static" CalendarProperties-TodayButtonText="Σήμερα" CalendarProperties-ClearButtonText="Καθαρισμός" Width="100%">
+    <ClientSideEvents GotFocus="dx_Focus" LostFocus="dx_Blur"></ClientSideEvents>    
+</dx:ASPxDateEdit>
+
+<dx:ASPxComboBox runat="server" DropDownStyle="DropDownList" IncrementalFilteringMode="StartsWith" ValidationSettings-ErrorDisplayMode="ImageWithTooltip" ValidationSettings-Display="Static" Width="100%">
+    <ClientSideEvents GotFocus="dx_Focus" LostFocus="dx_Blur"></ClientSideEvents>
+</dx:ASPxComboBox>
+
+<dx:ASPxCheckBox runat="server" ValidationSettings-ErrorDisplayMode="ImageWithTooltip" ValidationSettings-Display="Static">
+</dx:ASPxCheckBox>
+
+<dx:ASPxCheckBoxList runat="server" ValidationSettings-ErrorDisplayMode="ImageWithTooltip" ValidationSettings-Display="Static" Border-BorderStyle="None" Font-Bold="true">
+</dx:ASPxCheckBoxList>
+
+<dx:ASPxRadioButtonList runat="server" ValidationSettings-ErrorDisplayMode="ImageWithTooltip" ValidationSettings-Display="Static" Border-BorderStyle="None" Font-Bold="true">
+</dx:ASPxRadioButtonList>
+
+<dx:ASPxGridView runat="server" ClientInstanceName="gv" AutoGenerateColumns="False" KeyFieldName="ID" EnableRowsCache="false" EnableCallBacks="true" Width="100%">
+    <SettingsLoadingPanel Text="Παρακαλώ περιμένετε..." />
+    <SettingsPager PageSize="10" Summary-Text="Σελίδα {0} από {1} ({2} εγγραφές)" Summary-Position="Left" />
+    <Templates>
+        <EmptyDataRow>
+            Δεν βρέθηκαν αποτελέσματα
+        </EmptyDataRow>
+    </Templates>
+    <Styles>
+        <Header HorizontalAlign="Left" Font-Size="11px" />
+        <Cell HorizontalAlign="Left" Font-Size="11px" />
+    </Styles>
+</dx:ASPxGridView>
+
+<dx:ASPxPopupControl runat="server" Modal="true" ShowFooter="false" AllowResize="true" AllowDragging="true"
+        Width="920" Height="620" PopupHorizontalAlign="WindowCenter" PopupVerticalAlign="WindowCenter"
+        CloseAction="CloseButton">
+</dx:ASPxPopupControl>
+
+<dx:ASPxPageControl runat="server" CssFilePath="~/App_Themes/Aqua/{0}/styles.css" CssPostfix="Aqua" ImageFolder="~/App_Themes/Aqua/{0}/" TabSpacing="3px">
+    <ContentStyle VerticalAlign="Top">
+        <Border BorderColor="#AECAF0" BorderStyle="Solid" BorderWidth="1px" />
+    </ContentStyle>
+    <Paddings Padding="2px" PaddingLeft="5px" PaddingRight="5px" />
+</dx:ASPxPageControl>
+
+<dx:ASPxTabControl runat="server" CssFilePath="~/App_Themes/Aqua/{0}/styles.css" CssPostfix="Aqua" ImageFolder="~/App_Themes/Aqua/{0}/" TabSpacing="3px">
+    <ContentStyle VerticalAlign="Top">
+        <Border BorderColor="#AECAF0" BorderStyle="Solid" BorderWidth="1px" />
+    </ContentStyle>
+    <Paddings Padding="2px" PaddingLeft="5px" PaddingRight="5px" />
+</dx:ASPxTabControl>
+
+<dxnb:ASPxNavBar runat="server" CssFilePath="~/App_Themes/Soft Orange/{0}/styles.css" CssPostfix="Soft_Orange" GroupSpacing="0px" ImageFolder="~/App_Themes/Soft Orange/{0}/" LoadingPanelText="">
+    <collapseimage height="18px" width="18px" />
+    <expandimage height="18px" width="18px" />
+</dxnb:ASPxNavBar>
+
+<dx:ASPxRoundPanel runat="server" CssFilePath="~/App_Themes/Soft Orange/{0}/styles.css" CssPostfix="Soft_Orange">
+    <TopEdge BackColor="White">
+        <BackgroundImage ImageUrl="~/App_Themes/Soft Orange/Web/rpTopEdge.gif" />
+    </TopEdge>
+    <LeftEdge BackColor="White">
+        <BackgroundImage HorizontalPosition="left" ImageUrl="~/App_Themes/Soft Orange/Web/rpLeftEdge.gif" Repeat="RepeatY" />
+    </LeftEdge>
+    <BottomRightCorner Height="9px" Url="~/App_Themes/Soft Orange/Web/rpBottomRightCorner.png" Width="9px" />
+    <ContentPaddings PaddingBottom="10px" PaddingLeft="12px" PaddingTop="10px" />
+    <NoHeaderTopRightCorner Height="9px" Url="~/App_Themes/Soft Orange/Web/rpNoHeaderTopRightCorner.png" Width="9px" />
+    <RightEdge BackColor="White">
+        <BackgroundImage HorizontalPosition="right" ImageUrl="~/App_Themes/Soft Orange/Web/rpRightEdge.gif" Repeat="RepeatY" />
+    </RightEdge>
+    <HeaderRightEdge>
+        <BackgroundImage ImageUrl="~/App_Themes/Soft Orange/Web/rpHeaderRightEdge.gif" Repeat="NoRepeat" VerticalPosition="bottom" />
+    </HeaderRightEdge>
+    <Border BorderStyle="None" />
+    <Content BackColor="White">
+    </Content>
+    <HeaderLeftEdge>
+        <BackgroundImage ImageUrl="~/App_Themes/Soft Orange/Web/rpHeaderLeftEdge.gif" Repeat="NoRepeat" VerticalPosition="bottom" />
+    </HeaderLeftEdge>
+    <HeaderStyle BackColor="#F9F9F9" Height="24px">
+    <Paddings PaddingBottom="1px" PaddingLeft="12px" PaddingTop="1px" />
+    <BackgroundImage ImageUrl="~/App_Themes/Soft Orange/Web/rpHeaderBack.gif" Repeat="RepeatX" VerticalPosition="bottom" />
+    <Border BorderStyle="None" />
+    </HeaderStyle>
+    <BottomEdge BackColor="White">
+        <BackgroundImage ImageUrl="~/App_Themes/Soft Orange/Web/rpBottomEdge.gif" Repeat="RepeatX" VerticalPosition="bottom" />
+    </BottomEdge>
+    <TopRightCorner Height="9px" Url="~/App_Themes/Soft Orange/Web/rpTopRightCorner.png" Width="9px" />
+    <HeaderContent>
+        <BackgroundImage ImageUrl="~/App_Themes/Soft Orange/Web/rpHeaderBack.gif" Repeat="RepeatX" VerticalPosition="bottom" />
+    </HeaderContent>
+    <NoHeaderTopEdge BackColor="White">
+        <BackgroundImage ImageUrl="~/App_Themes/Soft Orange/Web/rpNoHeaderTopEdge.gif" />
+    </NoHeaderTopEdge>
+    <NoHeaderTopLeftCorner Height="9px" Url="~/App_Themes/Soft Orange/Web/rpNoHeaderTopLeftCorner.png" Width="9px" />
+    <TopLeftCorner Height="9px" Url="~/App_Themes/Soft Orange/Web/rpTopLeftCorner.png" Width="9px" />
+    <BottomLeftCorner Height="9px" Url="~/App_Themes/Soft Orange/Web/rpBottomLeftCorner.png" Width="9px" />
+</dx:ASPxRoundPanel>

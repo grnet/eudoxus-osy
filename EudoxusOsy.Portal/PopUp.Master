@@ -1,0 +1,75 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="PopUp.Master.cs" Inherits="EudoxusOsy.Portal.PopUp" %>
+
+<%@ Register TagPrefix="my" TagName="HintPopup" Src="~/UserControls/Popups/HintPopup.ascx" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+    <asp:PlaceHolder ID="PlaceHolder1" runat="server">
+        <%= Html.Css("/_css/eudoxusOsyReset.css") %>
+        <%= Html.Css("/_css/eudoxusOsyMain.css") %>
+        <%= Html.Css("~/_css/eudoxusOsyPopup.css") %>
+        <%= Html.CssWithMedia("~/_css/jquery-ui.css", false, "all") %>
+        <%= Html.Css("/_css/jquery-ui/redmond/jquery-ui-1.10.1.custom.min.css", true) %>
+        <%= Html.Css("/_css/jquery.tagit.css", true) %>
+        <%= Html.Css("/_css/jquery.tipsy.css", true) %>
+    </asp:PlaceHolder>
+    <title>PopUp</title>    
+    <asp:ContentPlaceHolder ID="cphHead" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <asp:ScriptManager ID="sm" runat="server">
+            <CompositeScript>
+                <Scripts>
+                    <asp:ScriptReference Path="~/_js/jquery-2.0.3.min.js" />
+                    <asp:ScriptReference Path="~/_js/jquery-ui-1.10.1.custom.min.js" />
+                    <asp:ScriptReference Path="~/_js/jquery-tag-it.min.js" />     
+                    <asp:ScriptReference Path="~/_js/jquery.tipsy.js" />               
+                    <asp:ScriptReference Path="~/_js/Imis/Imis.Lib.js" />   
+                    <asp:ScriptReference Path="~/_js/Imis.EventBus.js" />
+                    <asp:ScriptReference Path="~/_js/popUp.js" />
+                    <asp:ScriptReference Path="~/_js/Imis/DxExtensions.js" />
+                    <asp:ScriptReference Path="~/_js/Views/Popup.js" />
+                    <asp:ScriptReference Path="~/_js/DropDownHelper.js" />
+                    <asp:ScriptReference Path="~/_js/Imis/MessageBox.js" />
+                    <asp:ScriptReference Path="~/_js/CollapsibleBoxes.js" />
+                    <asp:ScriptReference Path="~/_js/Init.js" />
+                </Scripts>
+            </CompositeScript>
+            <Services>
+                <asp:ServiceReference Path="~/PortalServices/Services.asmx" />
+            </Services>
+        </asp:ScriptManager>
+        <div>
+            <asp:ContentPlaceHolder ID="cphMain" runat="server">
+            </asp:ContentPlaceHolder>
+            <my:HintPopup ID="ucHintPopup" runat="server" />
+        </div>
+
+        <dx:ASPxPopupControl runat="server" ClientInstanceName="devExPopup" ShowFooter="true" CssClass="iframePopup">
+            <FooterTemplate>
+                <div style="padding: 8px 12px;">
+                    <table style="float: right;">
+                        <tr>
+                            <td>
+                                <dx:ASPxButton runat="server" ClientInstanceName="btnPopupSubmit" Text="Αποθήκευση" Image-Url="~/_img/iconSave.png">
+                                    <ClientSideEvents Click="function() { popUp.getCurrentIFrame().doSubmit(); }" />
+                                </dx:ASPxButton>
+                            </td>                            
+                            <td>
+                                <dx:ASPxButton runat="server" ClientInstanceName="btnPopupCancel" Text="Κλείσιμο" Image-Url="~/_img/iconCancel.png">
+                                    <ClientSideEvents Click="function() { popUp.hideWithoutRefresh(); }" />
+                                </dx:ASPxButton>
+                            </td>
+                        </tr>
+                    </table>
+                    <div style="clear: both;"></div>
+                </div>
+            </FooterTemplate>
+        </dx:ASPxPopupControl>
+
+    </form>
+</body>
+</html>

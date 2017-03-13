@@ -1,0 +1,1 @@
+﻿ALTER TABLE Book ADD [SupplierCode] INT NULL

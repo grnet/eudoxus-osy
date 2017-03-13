@@ -1,0 +1,4 @@
+﻿ALTER TABLE BookPriceChange ALTER COLUMN SuggestedPrice decimal(5,2) NOT NULL 
+ALTER TABLE BookPriceChange ALTER COLUMN Price decimal(5,2) NULL 
+ALTER TABLE BookPriceChange ALTER COLUMN FekYear INT NULL
+ALTER TABLE BookPriceChange ALTER COLUMN Fek NVARCHAR (200) NULL

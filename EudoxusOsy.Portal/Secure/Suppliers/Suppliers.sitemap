@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<siteMap xmlns="http://schemas.microsoft.com/AspNet/SiteMap-File-1.0" >
+  <siteMapNode url="~/Secure/Suppliers" title="Default" roles="Supplier">
+    <siteMapNode url="~/Secure/Suppliers/Default.aspx" title="Στοιχεία Εκδότη" />        
+    <siteMapNode url="~/Secure/Suppliers/CatalogGroups.aspx?t=true" title="Καταστάσεις" />
+    <siteMapNode url="~/Secure/Suppliers/EditFinancialData.aspx" title="Στοιχεία Πληρωμών" />
+  </siteMapNode>
+</siteMap>

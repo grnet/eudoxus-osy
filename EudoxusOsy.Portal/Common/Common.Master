@@ -1,0 +1,18 @@
+﻿<%@ Master MasterPageFile="~/Portal.Master" Language="C#" AutoEventWireup="true" Inherits="EudoxusOsy.Portal.Common.Common" CodeBehind="Common.master.cs" %>
+
+<%@ Import Namespace="EudoxusOsy.BusinessModel" %>
+<%@ Import Namespace="EudoxusOsy.Portal" %>
+
+<asp:Content runat="server" ContentPlaceHolderID="cpHelpBar">
+    <div id="primary-menu">
+        <ul>
+            <li><a class="home" href='/Default.aspx'>Αρχική Σελίδα</a></li>
+            <%--<li><a class="faq" href='https://www.e-inclusion.gr/faqs/'>Συχνές Ερωτήσεις</a></li>
+            <li><a class="contact" href='https://www.e-inclusion.gr/epikoinonia/'>Επικοινωνία</a></li>--%>
+        </ul>
+    </div>
+</asp:Content>
+
+<asp:Content runat="server" ContentPlaceHolderID="cphMain">
+    <asp:ContentPlaceHolder ID="cphCommonMain" runat="server" />
+</asp:Content>

@@ -1,0 +1,244 @@
+﻿.loadingpanel {
+    background-image: url(/_img/iconIndicator.gif) !important;
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    background-repeat: no-repeat !important;
+    background-position: center center !important;
+}
+
+.icon-Pagebtn
+{
+    background-position: 0px 4px;
+    background-repeat: no-repeat;
+    outline-style: none;
+    padding: 5px 5px 5px 20px;
+    text-decoration: none;
+}
+
+.pager
+{
+    padding: 5px;
+    background: none repeat scroll 0 0 #EEEEEE;
+    border: 1px solid #CCCCCC;
+}
+
+.pager .leftDiv
+{
+    width: 75%;
+    position: relative;
+    float: left;
+}
+
+.pager .leftDiv p
+{
+    text-align: left;
+    display: inline;
+}
+
+.pager .rightDiv
+{
+    width: 22%;
+    position: relative;
+    float: right;
+}
+
+.pager .rightDiv p
+{
+    text-align: right;
+}
+
+.groupedContainer
+{
+    width: 100%;
+}
+
+.groupedHeader
+{
+    padding: 5px 0px 2px 10px;
+    margin-bottom: 4px;
+    border-bottom: 2px solid #B1B1B1;
+}
+
+.itemRow
+{
+    background-color: whitesmoke;
+    margin: 10px 0px 10px 0px;
+}
+
+.itemRow .emptyRowText {
+    font-style: italic;
+    text-align: center;
+    padding: 10px;
+}
+
+.itemRow .linkContainer,
+.itemRow .priceContainer
+{
+    float: right;
+    position: relative;
+    width: 10%;
+    padding-right: 10px;
+    text-align: right;
+    margin: 10px 0px 10px 0px;
+}
+
+.itemRow .price
+{
+    font-weight: bold;
+    font-size: 1.5em;
+    margin: 3px 0px 3px 0px;
+    text-align: right;
+}
+
+.itemRow .pricePerMonthTag
+{
+    font-weight: normal;
+    font-size: 0.7em;
+}
+
+.itemRow .typeContainer
+{
+    float: left;
+    position: relative;
+    width: 30%;
+    padding-left: 5px;
+    margin: 10px 0px 10px 0px;
+}
+
+.itemRow .typeContainerShort
+{
+    float: left;
+    position: relative;
+    width: 50px;
+    padding-left: 5px;
+    margin: 10px 0px 10px 0px;
+}
+
+.itemRow .typeImg
+{
+    position: relative;
+    float: left;
+    width: 48px;
+    height: 48px;
+    padding: 0px;
+    margin: 0px;
+    border-radius: 10px;
+}
+
+.itemRow .providerDetails
+{
+    position: relative;
+    float: left;
+    padding: 0px 0px 0px 5px;
+    margin: 0px 0px 0px 5px;
+}
+
+.providerDetails .providerLoc
+{
+    margin-top: 5px;
+}
+
+.itemRow .offerDetails
+{
+    float: left;
+    position: relative;
+    width: 55%;
+    padding: 0px 5px 0px 5px;
+    margin: 10px 0px 10px 0px;
+}
+
+.itemRow .providerDetails,
+.itemRow .offerDetailsLong
+{
+    float: left;
+    position: relative;
+    width: 80%;
+    padding: 0px 5px 0px 5px;
+    margin: 10px 0px 10px 0px;
+}
+
+.providerDetails .providerTitle,
+.offerDetailsLong .offerTitle,
+.offerDetails .offerTitle
+{
+    font-weight: bold;
+    margin: 0px;
+    font-size: 1.23em;
+}
+
+.offerName.showOfferDesc {
+    cursor: pointer;
+}
+
+.providerDetails .providerSpecs,
+.offerDetailsLong, .offerSpecs,
+.offerDetails .offerSpecs
+{
+    margin: 5px 0px 0px 0px;
+}
+
+
+.offerProviderDetails p
+{
+    margin: 0px;
+}
+
+.offerProviderDetails .offerProviderName
+{
+    font-weight: bold;
+}
+
+.connectionImg
+{
+    background-image: url('/_img/offer-types/connection.png');
+    background-color: #6D95E0;
+}
+
+.mobileConnectionImg
+{
+    background-image: url('/_img/offer-types/mobileConnection.png');
+    background-color: #6D95E0;
+}
+
+.laptopImg
+{
+    background-image: url('/_img/offer-types/laptop.png');
+    background-color: #6ACC6A;
+}
+
+.satelliteConnectionImg
+{
+    background-image: url('/_img/offer-types/satelliteConnection.png');
+    background-color: #6D95E0;
+}
+
+.supportImg
+{
+    background-image: url('/_img/offer-types/support.png');
+    background-color: #CC4848;
+}
+
+.tabletImg
+{
+    background-image: url('/_img/offer-types/tablet.png');
+    background-color: #6ACC6A;
+}
+
+.telecomProviderImg
+{
+    background-image: url('/_img/offer-types/antenna.png');
+    background-color: #6D95E0;
+}
+
+.telecomProviderFranchiseeImg
+{
+    background-image: url('/_img/offer-types/antenna.png');
+    background-color: #6D95E0;
+}
+
+.hardwareAndTelecomProviderImg
+{
+    background-image: url('/_img/offer-types/hardware.png');
+    background-color: #6ACC6A;
+}

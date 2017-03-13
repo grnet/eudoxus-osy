@@ -1,0 +1,546 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="enReporterType_Administrator" xml:space="preserve">
+    <value>Διαχειριστής</value>
+  </data>
+  <data name="enEmailType_CustomMessage" xml:space="preserve">
+    <value>Προσαρμοσμένο Μήνυμα</value>
+  </data>
+  <data name="enEmailType_EmailVerification" xml:space="preserve">
+    <value>Email Επιβεβαίωσης</value>
+  </data>
+  <data name="enEmailType_ForgotPassword" xml:space="preserve">
+    <value>Email με κωδικό πρόσβασης</value>
+  </data>
+  <data name="enEmailType_IncidentReportAnswer" xml:space="preserve">
+    <value>Απάντηση σε ερώτημα του χρήστη</value>
+  </data>
+  <data name="enCatalogGroupState_Approved" xml:space="preserve">
+    <value>Εγκεκριμένη για πληρωμή</value>
+  </data>
+  <data name="enCatalogGroupState_New" xml:space="preserve">
+    <value>Μη επιλεχθέν</value>
+  </data>
+  <data name="enCatalogGroupState_Returned" xml:space="preserve">
+    <value>Επιστροφή από ΥΔΕ</value>
+  </data>
+  <data name="enCatalogGroupState_Selected" xml:space="preserve">
+    <value>Επιλεχθέν για πληρωμή</value>
+  </data>
+  <data name="enCatalogGroupState_Sent" xml:space="preserve">
+    <value>Σταλμένη προς ΥΔΕ</value>
+  </data>
+  <data name="enBookApplicationType_ElectronicPricing" xml:space="preserve">
+    <value>Ηλεκτρονική Κοστολόγηση</value>
+  </data>
+  <data name="enBookApplicationType_WelfareCommittee" xml:space="preserve">
+    <value>Επιτροπή Κοστολόγησης</value>
+  </data>
+  <data name="enBookBlackListStatus_Complete" xml:space="preserve">
+    <value>Ολοκληρώθηκε</value>
+  </data>
+  <data name="enBookBlackListStatus_Deleted" xml:space="preserve">
+    <value>Διαγραμμένη εγγραφή</value>
+  </data>
+  <data name="enBookBlackListStatus_Pending" xml:space="preserve">
+    <value>Σε εκκρεμότητα</value>
+  </data>
+  <data name="enBookBlackListStatus_Triggered" xml:space="preserve">
+    <value />
+  </data>
+  <data name="enBookContentType_FromAlreadyPricedBook" xml:space="preserve">
+    <value>Από ήδη κοστολογημένο βιβλίο</value>
+  </data>
+  <data name="enBookContentType_New" xml:space="preserve">
+    <value>Νέο</value>
+  </data>
+  <data name="enBookCoverType_Hard" xml:space="preserve">
+    <value>Σκληρό εξώφυλλο</value>
+  </data>
+  <data name="enBookCoverType_Soft" xml:space="preserve">
+    <value>Μαλακό Εξώφυλλο</value>
+  </data>
+  <data name="enBookPriceRequestState_Accepted" xml:space="preserve">
+    <value>Αποδεκτή</value>
+  </data>
+  <data name="enBookPriceRequestState_Asked" xml:space="preserve">
+    <value>Ζητήθηκε Αντίγραφο</value>
+  </data>
+  <data name="enBookPriceRequestState_New" xml:space="preserve">
+    <value>Νέα</value>
+  </data>
+  <data name="enBookPriceRequestState_Record" xml:space="preserve">
+    <value>Σε πρακτικό</value>
+  </data>
+  <data name="enBookPriceRequestState_Rejected" xml:space="preserve">
+    <value>Μη αποδεκτή</value>
+  </data>
+  <data name="enBookPriceRequestState_Review" xml:space="preserve">
+    <value>Αναθεώρηση</value>
+  </data>
+  <data name="enBookPriceRequestState_Sample" xml:space="preserve">
+    <value>Δείγμα</value>
+  </data>
+  <data name="enBookPriceRequestState_Temporary" xml:space="preserve">
+    <value>Προσωρινή</value>
+  </data>
+  <data name="enBookPriceStatus_Active" xml:space="preserve">
+    <value>Ενεργή</value>
+  </data>
+  <data name="enBookPriceStatus_Deleted" xml:space="preserve">
+    <value>Διαγραμμένη</value>
+  </data>
+  <data name="enBookPriceStatus_Invalid" xml:space="preserve">
+    <value>Ακυρωμένη</value>
+  </data>
+  <data name="enBookType_EPublished" xml:space="preserve">
+    <value>Ηλεκτρονικό</value>
+  </data>
+  <data name="enBookType_Regular" xml:space="preserve">
+    <value>Κανονικό</value>
+  </data>
+  <data name="enBookType_SelfPublished" xml:space="preserve">
+    <value>Αυτο-έκδοση</value>
+  </data>
+  <data name="enCatalogLogAction_Create" xml:space="preserve">
+    <value>Δημιουργία</value>
+  </data>
+  <data name="enCatalogLogAction_Delete" xml:space="preserve">
+    <value>Διαγραφή</value>
+  </data>
+  <data name="enCatalogLogAction_Edit" xml:space="preserve">
+    <value>Επεξεργασία</value>
+  </data>
+  <data name="enCatalogLogAction_Rollback" xml:space="preserve">
+    <value>Επαναφορά</value>
+  </data>
+  <data name="enCatalogState_Canceled" xml:space="preserve">
+    <value>Ακυρωμένη</value>
+  </data>
+  <data name="enCatalogState_FromMove" xml:space="preserve">
+    <value>Από αντιγραφή</value>
+  </data>
+  <data name="enCatalogState_Moved" xml:space="preserve">
+    <value>Αντιγραμμένη</value>
+  </data>
+  <data name="enCatalogState_Normal" xml:space="preserve">
+    <value>Κανονική</value>
+  </data>
+  <data name="enCatalogStatus_Active" xml:space="preserve">
+    <value>Ενεργή</value>
+  </data>
+  <data name="enCatalogStatus_Deleted" xml:space="preserve">
+    <value>Διαγραμμένη</value>
+  </data>
+  <data name="enCatalogStatus_Invalid" xml:space="preserve">
+    <value>Ακυρωμένη</value>
+  </data>
+  <data name="enCatalogStatus_Stock" xml:space="preserve">
+    <value>Σε στοκ</value>
+  </data>
+  <data name="enCatalogType_IncreasedBooksCount" xml:space="preserve">
+    <value>Αύξηση αρ. αντιτύπων</value>
+  </data>
+  <data name="enCatalogType_IncreasedPrice" xml:space="preserve">
+    <value>Αύξηση Τιμής</value>
+  </data>
+  <data name="enCatalogType_Normal" xml:space="preserve">
+    <value>Κανονική</value>
+  </data>
+  <data name="enCatalogType_ReducedBooksCount" xml:space="preserve">
+    <value>Μείωση αρ. αντιτύπων</value>
+  </data>
+  <data name="enCatalogType_ReducedPrice" xml:space="preserve">
+    <value>Μείωση Τιμής</value>
+  </data>
+  <data name="enDeductionVatType_MediumLowered" xml:space="preserve">
+    <value>Μειωμένο νήσων εκτός Κρήτης</value>
+  </data>
+  <data name="enDeductionVatType_High" xml:space="preserve">
+    <value>Κανονικό</value>
+  </data>
+  <data name="enDeductionVatType_HighLowered" xml:space="preserve">
+    <value>Κανονικό νήσων εκτός Κρήτης</value>
+  </data>
+  <data name="enDeductionVatType_Medium" xml:space="preserve">
+    <value>Μειωμένο</value>
+  </data>
+  <data name="enDeductionVatType_Small" xml:space="preserve">
+    <value>Υπερμειωμένο</value>
+  </data>
+  <data name="enDeductionVatType_SmallLowered" xml:space="preserve">
+    <value>Υπερμειωμένο νήσων εκτός Κρήτης</value>
+  </data>
+  <data name="enDeliveryStatus_Failed" xml:space="preserve">
+    <value>Απέτυχε</value>
+  </data>
+  <data name="enDeliveryStatus_Pending" xml:space="preserve">
+    <value>Εκκρεμεί</value>
+  </data>
+  <data name="enDeliveryStatus_Successful" xml:space="preserve">
+    <value>Επιτυχής</value>
+  </data>
+  <data name="enEmailEntityType_IncidentReport" xml:space="preserve">
+    <value>Αναφορά συμβάντος</value>
+  </data>
+  <data name="enEmailEntityType_None" xml:space="preserve">
+    <value>Κανένα</value>
+  </data>
+  <data name="enIdentificationType_ID" xml:space="preserve">
+    <value>Δελτίο Ταυτότητας</value>
+  </data>
+  <data name="enIdentificationType_None" xml:space="preserve">
+    <value>Κανένα</value>
+  </data>
+  <data name="enIdentificationType_Passport" xml:space="preserve">
+    <value>Διαβατήριο</value>
+  </data>
+  <data name="enLegalType_Allocator" xml:space="preserve">
+    <value />
+  </data>
+  <data name="enLegalType_Legal" xml:space="preserve">
+    <value>Νομικό πρόσωπο</value>
+  </data>
+  <data name="enLegalType_Person" xml:space="preserve">
+    <value>Φυσικό Πρόσωπο</value>
+  </data>
+  <data name="enLegalType_Unknown" xml:space="preserve">
+    <value>΄Αγνωστο</value>
+  </data>
+  <data name="enPaymentOrderState_Approved" xml:space="preserve">
+    <value>Εγκρίθηκε</value>
+  </data>
+  <data name="enPaymentOrderState_New" xml:space="preserve">
+    <value>Νέο</value>
+  </data>
+  <data name="enPaymentOrderState_Paid" xml:space="preserve">
+    <value>Ολοκληρώθηκε</value>
+  </data>
+  <data name="enPaymentOrderState_Returned" xml:space="preserve">
+    <value>Έχει επιστραφεί</value>
+  </data>
+  <data name="enPaymentOrderState_Selected" xml:space="preserve">
+    <value>Επιλεγμένο</value>
+  </data>
+  <data name="enPaymentOrderState_Sent" xml:space="preserve">
+    <value>Στάλθηκε</value>
+  </data>
+  <data name="enQueueEntryPriority_Critical" xml:space="preserve">
+    <value>Κρίσιμη</value>
+  </data>
+  <data name="enQueueEntryPriority_High" xml:space="preserve">
+    <value>Υψηλή</value>
+  </data>
+  <data name="enQueueEntryPriority_Low" xml:space="preserve">
+    <value>Χαμηλή</value>
+  </data>
+  <data name="enQueueEntryPriority_Normal" xml:space="preserve">
+    <value>Κανονική</value>
+  </data>
+  <data name="enQueueEntryStatus_Failed" xml:space="preserve">
+    <value>Απέτυχε</value>
+  </data>
+  <data name="enQueueEntryStatus_Running" xml:space="preserve">
+    <value>Εκτελείται</value>
+  </data>
+  <data name="enQueueEntryStatus_Successful" xml:space="preserve">
+    <value>Επιτυχής</value>
+  </data>
+  <data name="enQueueEntryType_DispatchSms" xml:space="preserve">
+    <value>Αποστολή SMS</value>
+  </data>
+  <data name="enQueueEntryType_ServerSync" xml:space="preserve">
+    <value>Συγχρονισμός Server</value>
+  </data>
+  <data name="enReceiptState_Canceled" xml:space="preserve">
+    <value>Ακυρώθηκε</value>
+  </data>
+  <data name="enReceiptState_Deleted" xml:space="preserve">
+    <value>Διαγραμμένη</value>
+  </data>
+  <data name="enReceiptState_Delivered" xml:space="preserve">
+    <value>Παραδόθηκε</value>
+  </data>
+  <data name="enReceiptStatus_Accounted" xml:space="preserve">
+    <value>Υπολογισμένη</value>
+  </data>
+  <data name="enReceiptStatus_New" xml:space="preserve">
+    <value>Νέα</value>
+  </data>
+  <data name="enReceiptStatus_Paid" xml:space="preserve">
+    <value>Ολοκληρωμένη</value>
+  </data>
+  <data name="enReporterType_AdminUser" xml:space="preserve">
+    <value>Διαχειριστής Συστήματος</value>
+  </data>
+  <data name="enReporterType_MinistryPayments" xml:space="preserve">
+    <value>Χρήστη Υποσυστήματος Πληρωμών</value>
+  </data>
+  <data name="enReporterType_MinistryWelfare" xml:space="preserve">
+    <value>Χρήστης Υποσυστήματος Κοστολόγησης</value>
+  </data>
+  <data name="enReporterType_Supplier" xml:space="preserve">
+    <value>Εκδότης</value>
+  </data>
+  <data name="enSMSStatus_CreatedOnly" xml:space="preserve">
+    <value>Δημιουργήθηκε</value>
+  </data>
+  <data name="enSMSStatus_Failed" xml:space="preserve">
+    <value>Απέτυχε</value>
+  </data>
+  <data name="enSMSStatus_Sent" xml:space="preserve">
+    <value>Στάλθηκε</value>
+  </data>
+  <data name="enSMSType_CustomMessage" xml:space="preserve">
+    <value>Προσαρμοσμένο μήνυμα</value>
+  </data>
+  <data name="enSMSType_VerificationCode" xml:space="preserve">
+    <value>Αποστολή κωδικού επιβεβαίωσης</value>
+  </data>
+  <data name="enSupplierStatus_Active" xml:space="preserve">
+    <value>Ενεργός</value>
+  </data>
+  <data name="enSupplierStatus_Inactive" xml:space="preserve">
+    <value>Ανενεργός</value>
+  </data>
+  <data name="enSupplierStatus_Invalid" xml:space="preserve">
+    <value>Ακυρωμένος</value>
+  </data>
+  <data name="enSupplierType_EbookPublisher" xml:space="preserve">
+    <value>Ηλεκτρονικός Εκδότης</value>
+  </data>
+  <data name="enSupplierType_LegalPerson" xml:space="preserve">
+    <value>Νομικό Πρόσωπο</value>
+  </data>
+  <data name="enSupplierType_SelfPublisher" xml:space="preserve">
+    <value>Φυσικό Πρόσωπο</value>
+  </data>
+  <data name="enWelfareRecordEntryState_Approved" xml:space="preserve">
+    <value>Εγκρίθηκε</value>
+  </data>
+  <data name="enWelfareRecordEntryState_Final" xml:space="preserve">
+    <value>Τελική</value>
+  </data>
+  <data name="enWelfareRecordEntryState_Modified" xml:space="preserve">
+    <value>Τροποποιήθηκε</value>
+  </data>
+  <data name="enWelfareRecordEntryState_New" xml:space="preserve">
+    <value>Νέα</value>
+  </data>
+  <data name="enWelfareRecordEntryState_Objection" xml:space="preserve">
+    <value>Ένσταση</value>
+  </data>
+  <data name="enWelfareRecordEntryState_Postponed" xml:space="preserve">
+    <value>Ζητήθηκε Αντίγραφο</value>
+  </data>
+  <data name="enWelfareRecordEntryState_Rejected" xml:space="preserve">
+    <value>Απορρίφθηκε</value>
+  </data>
+  <data name="enWelfareRecordEntryState_Suspended" xml:space="preserve">
+    <value>Σε Εκκρεμότητα</value>
+  </data>
+  <data name="enWelfareRecordState_Approved" xml:space="preserve">
+    <value>Αποδεκτό</value>
+  </data>
+  <data name="enWelfareRecordState_Deleted" xml:space="preserve">
+    <value>Διαγραμμένο</value>
+  </data>
+  <data name="enWelfareRecordState_New" xml:space="preserve">
+    <value>Νέο</value>
+  </data>
+  <data name="enWelfareRecordState_Priced" xml:space="preserve">
+    <value>Ολοκληρωμένο</value>
+  </data>
+  <data name="enWelfareRecordState_Returned" xml:space="preserve">
+    <value>Επιστροφή από Επιτροπή</value>
+  </data>
+  <data name="enWelfareRecordState_Sent" xml:space="preserve">
+    <value>Στάλθηκε</value>
+  </data>
+  <data name="enRole_MinistryPayments" xml:space="preserve">
+    <value>Υπουργείο (Πληρωμές)</value>
+  </data>
+  <data name="enRole_MinistryWelfare" xml:space="preserve">
+    <value>Υπουργείο (Αιτήσεις Κοστολόγησης)</value>
+  </data>
+  <data name="enRole_Supplier" xml:space="preserve">
+    <value>Εκδότης</value>
+  </data>
+  <data name="enRole_SystemAdministrator" xml:space="preserve">
+    <value>Διαχειριστής</value>
+  </data>
+  <data name="enSemesterType_Spring" xml:space="preserve">
+    <value>Εαρινό</value>
+  </data>
+  <data name="enSemesterType_Winter" xml:space="preserve">
+    <value>Χειμερινό</value>
+  </data>
+  <data name="enDeductionVatType_Custom" xml:space="preserve">
+    <value>Χειροκίνητη Εισαγωγή</value>
+  </data>
+  <data name="enCatalogType_Automatic" xml:space="preserve">
+    <value>Αυτόματη</value>
+  </data>
+  <data name="enCatalogType_Manual" xml:space="preserve">
+    <value>Χειροκίνητη</value>
+  </data>
+  <data name="enCatalogType_Reversal" xml:space="preserve">
+    <value>Αντιλογισμός</value>
+  </data>
+  <data name="enCatalogType_Special" xml:space="preserve">
+    <value>Ειδική</value>
+  </data>
+  <data name="enMinistryAuthorization_Admin" xml:space="preserve">
+    <value>Admin</value>
+  </data>
+  <data name="enMinistryAuthorization_None" xml:space="preserve">
+    <value>Καμία</value>
+  </data>
+  <data name="enMinistryAuthorization_ReadOnly" xml:space="preserve">
+    <value>Read-Only</value>
+  </data>
+  <data name="enCatalogGroupLogAction_Create" xml:space="preserve">
+    <value>Δημιουργία</value>
+  </data>
+  <data name="enCatalogGroupLogAction_Delete" xml:space="preserve">
+    <value>Διαγραφή</value>
+  </data>
+  <data name="enCatalogGroupLogAction_Edit" xml:space="preserve">
+    <value>Επεξεργασία</value>
+  </data>
+  <data name="enCatalogGroupLogAction_Lock" xml:space="preserve">
+    <value>Κλείδωμα</value>
+  </data>
+  <data name="enCatalogGroupLogAction_PDFPrint" xml:space="preserve">
+    <value>Εξαγωγή PDF</value>
+  </data>
+  <data name="enCatalogGroupLogAction_Rollback" xml:space="preserve">
+    <value>Επαναφορά</value>
+  </data>
+  <data name="enCatalogGroupLogAction_Unlock" xml:space="preserve">
+    <value>Ξεκλείδωμα</value>
+  </data>
+  <data name="enReceiptState_Canceled_service" xml:space="preserve">
+    <value>CANCELED</value>
+  </data>
+  <data name="enReceiptState_Delivered_service" xml:space="preserve">
+    <value>DELIVERED</value>
+  </data>
+</root>

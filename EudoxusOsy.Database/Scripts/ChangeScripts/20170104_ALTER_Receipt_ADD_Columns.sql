@@ -1,0 +1,3 @@
+﻿ALTER TABLE Receipt ADD RegistrationKpsID INT
+ALTER TABLE Receipt ADD SentByKpsAt DATETIME
+ALTER TABLE Receipt ADD ReceivedAt DATETIME

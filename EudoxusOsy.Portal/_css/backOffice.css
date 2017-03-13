@@ -1,0 +1,57 @@
+﻿html, body, form {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    background: #f8f8f8;
+    height: 100%;
+}
+
+h1 {
+    font-size: 14pt;
+    margin: 8px 0px;
+    padding: 8px 0px;
+    border-bottom: 1px dotted #eeeeee;
+}
+
+.dxmSubMenuItemWithImage a,
+.dxmSubMenuItemWithImage a:link,
+.dxmSubMenuItemWithImage a:visited,
+.dxmSubMenuItemWithImage a:active,
+.dxmSubMenuItemWithImage a:focus {
+    color: black;
+    text-decoration: none;
+}
+
+.dxmMenuItem a,
+.dxmMenuItem a:link,
+.dxmMenuItem a:visited,
+.dxmMenuItem a:active,
+.dxmMenuItem a:focus {
+    color: black;
+    text-decoration: none;
+}
+
+#boHeader {
+    height: 60px;
+    background-color: #9dacb5;
+    background-position: right top;
+    background-repeat: no-repeat;
+    border-bottom: 2px solid DarkOrange;
+    padding-bottom: 5px;
+    padding: 25px 15px 10px 25px;
+    color: #304050;
+}
+
+#boUserServices {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+
+
+#boMain {
+    padding: 10px;
+}
