@@ -24,11 +24,11 @@ namespace EudoxusOsy.Services
         public ServiceResponse SyncPublisher(SyncPublisherDto request)
         {
             try
-            {                
+            {
                 bool? supplierCreated;
                 Supplier supplier = EudoxusSubmitService.SyncPublisher(request, out supplierCreated);
 
-                //LogCall(true, enStatusCode.OK);
+                LogCall(true, enStatusCode.OK);
 
                 if (supplierCreated.Value)
                 {
@@ -41,6 +41,8 @@ namespace EudoxusOsy.Services
             }
             catch (Exception ex)
             {
+                LogException(ex);
+                LogCall(false, enStatusCode.SupplierInsertionFailed);
                 return new ServiceResponse(true, enStatusCode.Errors, ex.InnerException != null ? ex.InnerException.Message : ex.Message);
             }
         }
@@ -66,6 +68,7 @@ namespace EudoxusOsy.Services
             }
             catch (Exception ex)
             {
+                LogException(ex);
                 return new ServiceResponse(true, enStatusCode.Errors, ex.InnerException != null ? ex.InnerException.Message : ex.Message);
             }
         }

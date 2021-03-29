@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+﻿using DevExpress.Web;
 using EudoxusOsy.BusinessModel;
 using EudoxusOsy.Portal.Controls;
+using System;
+using System.Collections.Generic;
 using System.Drawing;
-using Imis.Domain;
-using DevExpress.Web;
+using System.Linq;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 
 namespace EudoxusOsy.Portal.Secure.Ministry
 {
@@ -25,12 +23,12 @@ namespace EudoxusOsy.Portal.Secure.Ministry
             if (int.TryParse(Request.QueryString["gID"], out catalogGroupID))
             {
                 using (UnitOfWork.SingleConnection())
-                {   
+                {
                     LoadEntities(catalogGroupID);
                 }
             }
 
-            int.TryParse(Request.QueryString["pID"], out SelectedPhaseID);            
+            int.TryParse(Request.QueryString["pID"], out SelectedPhaseID);
 
             if (Entity == null || SelectedPhaseID <= 0)
             {
@@ -58,6 +56,7 @@ namespace EudoxusOsy.Portal.Secure.Ministry
             BindGroupInfo();
             BindConnectedCatalogs();
 
+            ucConnectedCatalogSearchFilters.SetInstitution(Entity.InstitutionID);
             ucCatalogSearchFilters.SetInstitution(Entity.InstitutionID);
         }
 
@@ -78,7 +77,6 @@ namespace EudoxusOsy.Portal.Secure.Ministry
 
         private void BindConnectedCatalogs()
         {
-            gvConnectedCatalogs.DataSource = _connectedCatalogs;
             gvConnectedCatalogs.DataBind();
         }
 
@@ -104,7 +102,7 @@ namespace EudoxusOsy.Portal.Secure.Ministry
             catalog.GroupID = Entity.ID;
             UnitOfWork.Commit();
 
-            LoadEntities(Entity.ID);            
+            LoadEntities(Entity.ID);
 
             Bind();
         }
@@ -119,14 +117,17 @@ namespace EudoxusOsy.Portal.Secure.Ministry
 
             LoadEntities(Entity.ID);
 
-            if (_connectedCatalogs.Count() == 0)
+            if (!_connectedCatalogs.Any())
             {
                 var catalogGroup = new CatalogGroupRepository(UnitOfWork).Load(Entity.ID, x => x.CatalogGroupLogs, x => x.Invoices);
 
                 catalogGroup.Invoices.ToList().ForEach(y => { UnitOfWork.MarkAsDeleted(y); });
-                catalogGroup.CatalogGroupLogs.ToList().ForEach(y => UnitOfWork.MarkAsDeleted(y));
-                UnitOfWork.MarkAsDeleted(catalogGroup);
 
+                if (catalogGroup.State == enCatalogGroupState.New || catalogGroup.State == enCatalogGroupState.Selected)
+                {
+                    catalogGroup.CatalogGroupLogs.ToList().ForEach(y => UnitOfWork.MarkAsDeleted(y));
+                    UnitOfWork.MarkAsDeleted(catalogGroup);
+                }
                 UnitOfWork.Commit();
 
                 Response.Redirect(string.Format("PaymentOrders.aspx?sID={0}&pID={1}&t=true", Entity.SupplierID, SelectedPhaseID));
@@ -135,10 +136,45 @@ namespace EudoxusOsy.Portal.Secure.Ministry
             Bind();
         }
 
+        protected void btnSearch_Click(object sender, EventArgs e)
+        {
+            gvNotConnectedCatalogs.DataBind();
+        }
+
+        protected void btnSearchConnected_OnClick(object sender, EventArgs e)
+        {
+            gvConnectedCatalogs.DataBind();
+        }
+
         #endregion
 
         #region [ DataSource Events ]
 
+        protected void odsConnectedCatalogs_OnSelecting(object sender, ObjectDataSourceSelectingEventArgs e)
+        {
+            Criteria<Catalog> criteria = new Criteria<Catalog>();
+
+            criteria.Include(x => x.Book)
+                .Include(x => x.Department);
+
+            var filters = ucConnectedCatalogSearchFilters.GetSearchFilters();
+            criteria.Expression = filters.GetExpression();
+
+            if (criteria.Expression == null)
+            {
+                criteria.Expression = Imis.Domain.EF.Search.Criteria<Catalog>.Empty;
+            }
+
+            criteria.Expression =
+                criteria.Expression.Where(x => x.PhaseID, SelectedPhaseID)
+                    .Where(x => x.SupplierID, Entity.SupplierID)
+                    .Where(x => x.Department.InstitutionID, Entity.InstitutionID)
+                    .Where(x => x.GroupID, Entity.ID)
+                    .Where(x => x.Status, enCatalogStatus.Active)
+                    .Where(string.Format("it.StateInt IN MULTISET ({0}, {1})", enCatalogState.Normal.GetValue(), enCatalogState.FromMove.GetValue()));
+
+            e.InputParameters["criteria"] = criteria;
+        }
         protected void odsNotConnectedCatalogs_Selecting(object sender, ObjectDataSourceSelectingEventArgs e)
         {
             Criteria<Catalog> criteria = new Criteria<Catalog>();
@@ -149,7 +185,7 @@ namespace EudoxusOsy.Portal.Secure.Ministry
             var filters = ucCatalogSearchFilters.GetSearchFilters();
             criteria.Expression = filters.GetExpression();
 
-            if(criteria.Expression == null)
+            if (criteria.Expression == null)
             {
                 criteria.Expression = Imis.Domain.EF.Search.Criteria<Catalog>.Empty;
             }
@@ -192,12 +228,22 @@ namespace EudoxusOsy.Portal.Secure.Ministry
                 _connectedCatalogs = new CatalogRepository(UnitOfWork).FindConnectedCatalogsByGroupID(Entity.ID);
 
                 gvNotConnectedCatalogs.DataBind();
-
-                gvConnectedCatalogs.DataSource = _connectedCatalogs;
                 gvConnectedCatalogs.DataBind();
             }
 
 
+        }
+
+        protected void gvConnectedCatalogs_HtmlRowPrepared(object sender, ASPxGridViewTableRowEventArgs e)
+        {
+            if (e.RowType != GridViewRowType.Data) return;
+
+            Catalog catalog = (Catalog)gvConnectedCatalogs.GetRow(e.VisibleIndex);
+
+            if (catalog != null && (catalog.HasPendingPriceVerification || catalog.HasUnexpectedPriceChange))
+            {
+                e.Row.BackColor = Color.LightSalmon;
+            }
         }
 
         #endregion
@@ -209,14 +255,23 @@ namespace EudoxusOsy.Portal.Secure.Ministry
             if (catalog == null)
                 return false;
 
-            return catalog.IsBookActive;
+            return CatalogGroupHelper.CanAddToGroup(catalog);
         }
 
         #endregion
 
-        protected void btnSearch_Click(object sender, EventArgs e)
+        protected void gvNotConnectedCatalogs_HtmlRowPrepared(object sender, DevExpress.Web.ASPxGridViewTableRowEventArgs e)
         {
-            gvNotConnectedCatalogs.DataBind();
+            if (e.RowType != GridViewRowType.Data) return;
+
+            Catalog catalog = (Catalog)gvNotConnectedCatalogs.GetRow(e.VisibleIndex);
+
+            if (catalog != null && (catalog.HasPendingPriceVerification || catalog.HasUnexpectedPriceChange))
+            {
+                e.Row.BackColor = Color.LightSalmon;
+            }
         }
+
+
     }
 }

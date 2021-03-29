@@ -1,7 +1,8 @@
-﻿<%@ Page Title="Διανομές" Language="C#" MasterPageFile="~/Secure/Ministry/Ministry.master" AutoEventWireup="true" CodeBehind="Catalogs.aspx.cs" Inherits="EudoxusOsy.Portal.Secure.Ministry.Catalogs" %>
+﻿<%@ Page Title="Διανομές" Language="C#" MasterPageFile="~/Secure/Ministry/Ministry.Master" AutoEventWireup="true" CodeBehind="Catalogs.aspx.cs" Inherits="EudoxusOsy.Portal.Secure.Ministry.Catalogs" %>
 
 <%@ Register TagName="CatalogSearchFiltersControl" TagPrefix="my" Src="~/UserControls/SearchFilters/CatalogSearchFiltersControl.ascx" %>
 <%@ Register TagName="EditCatalogsGridView" TagPrefix="my" Src="~/UserControls/GridViews/EditCatalogsGridView.ascx" %>
+<%@ Register TagName="EditCatalogsExportGridView" TagPrefix="my" Src="~/UserControls/ExportGridViews/EditCatalogsExportGridView.ascx" %>
 
 <%@ Import Namespace="EudoxusOsy.BusinessModel" %>
 <%@ Import Namespace="EudoxusOsy.Portal" %>
@@ -67,6 +68,21 @@
 </asp:Content>
 <asp:Content ContentPlaceHolderID="cphSecureMain" runat="server">
     <br />
+    <div class="filterButtons">
+        <table>
+            <tr>
+                <td>
+                    <dx:ASPxButton ID="btnExport" runat="server" Text="Εξαγωγή Επιλεγμένων Διανομών" Image-Url="~/_img/iconExcel.png" OnClick="btnExport_OnClick">                        
+                    </dx:ASPxButton>
+                </td>
+                <td>
+                    <dx:ASPxButton runat="server" ID="btnExportCatalogsReport" Text="Αναφορά διανομών φάσης" ToolTip="Εξαγωγή αναφοράς διανομών ανά περίοδο" Image-Url="~/_img/iconExcel.png">
+                        <ClientSideEvents Click="showExportCatalogsReport" />
+                    </dx:ASPxButton>
+                </td>                
+            </tr>
+        </table>
+    </div>        
     <my:CatalogSearchFiltersControl runat="server" ID="ucCatalogSearchFiltersControl"></my:CatalogSearchFiltersControl>
     <div class="filterButtons">
         <table>
@@ -80,7 +96,7 @@
                     <dx:ASPxButton ID="btnAddCatalog" runat="server" Text="Δημιουργία Νέας Διανομής" Image-Url="~/_img/iconAddNewItem.png">
                         <ClientSideEvents Click="function(s,e) { showAddCatalogPopup(); }" />
                     </dx:ASPxButton>
-                </td>
+                </td>                                
             </tr>
         </table>
     </div>    
@@ -111,6 +127,11 @@
             </dx:GridViewDataTextColumn>
         </Columns>
     </my:EditCatalogsGridView>
+        
+    <my:EditCatalogsExportGridView ID="gvCatalogsExport" GridClientVisible="false" DataSourceForceStandardPaging="false" 
+                        OnExporterRenderBrick="gvCatalogsExport_ExporterRenderBrick"
+                      ClientInstanceName="gvCatalogsExport" runat="server" OnCustomCallback="gvCatalogs_CustomCallback">
+    </my:EditCatalogsExportGridView>
 
     <asp:ObjectDataSource ID="odsCatalogs" runat="server" TypeName="EudoxusOsy.Portal.DataSources.Catalogs"
         SelectMethod="FindWithCriteria" SelectCountMethod="CountWithCriteria" OnSelecting="odsCatalogs_Selecting"

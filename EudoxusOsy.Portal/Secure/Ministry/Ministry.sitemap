@@ -1,19 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <siteMap xmlns="http://schemas.microsoft.com/AspNet/SiteMap-File-1.0" >
-  <siteMapNode url="~/Secure/Ministry" title="Default" roles="SystemAdministrator, MinistryPayments">
+  <siteMapNode url="~/Secure/Ministry" title="Default" roles="SystemAdministrator, MinistryPayments, MinistryAuditor, SuperMinistry">
     <siteMapNode url="~/Secure/Ministry/Default.aspx" title="Αρχική" />
-    <siteMapNode url="~/Secure/Ministry/SearchSuppliers.aspx" title="Διανομείς Συγγραμμάτων" />    
+    <siteMapNode url="~/Secure/Ministry/SearchSuppliers.aspx" title="Διανομείς Συγγραμμάτων" roles="SystemAdministrator, MinistryPayments, MinistryAuditor, SuperMinistry"/>    
     <siteMapNode url="~/Secure/Ministry/PaymentOrders.aspx" title="Καταστάσεις" />
-    <siteMapNode title="Στατιστικά" url="~/Secure/Ministry/SuppliersStats.aspx">
+    <siteMapNode title="Στατιστικά" url="~/Secure/Ministry/SuppliersStats.aspx" roles="SystemAdministrator, MinistryPayments, MinistryAuditor, SuperMinistry">
       <siteMapNode url="~/Secure/Ministry/AcademicsStats.aspx" title="Στατιστικά Ιδρυμάτων"/>
     </siteMapNode>
     <siteMapNode url="~/Secure/Ministry/Transfers.aspx" title="Εκχωρήσεις" />
     <siteMapNode url="~/Secure/Ministry/Books.aspx" title="Συγγράμματα" />
     <siteMapNode url="~/Secure/Ministry/Catalogs.aspx" title="Διανομές" />
-    <siteMapNode url="~/Secure/Ministry/BankManagement.aspx" title="Τράπεζες" />
     <siteMapNode url="~/Secure/Ministry/SelectPhase.aspx" title="Περίοδοι Πληρωμών" />
     <siteMapNode url="~/Secure/Ministry/PriceVerification.aspx" title="Έγκριση τιμών" />
-    <siteMapNode url="~/Secure/Ministry/BookKpsServices.aspx" title="Services ΚΠΣ" />    
-    <siteMapNode title="Στατιστικά" />
+    <siteMapNode url="~/Secure/Ministry/BookKpsServices.aspx" title="Services ΚΠΣ" />
+    <siteMapNode url="~/Secure/Ministry/BusinessLogicErrorsKP.aspx" title="Καταγραφή Σφαλμάτων" />
   </siteMapNode>
 </siteMap>

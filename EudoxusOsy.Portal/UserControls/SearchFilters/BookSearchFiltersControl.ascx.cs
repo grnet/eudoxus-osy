@@ -10,8 +10,17 @@ using EudoxusOsy.BusinessModel;
 
 namespace EudoxusOsy.Portal.UserControls.SearchFilters
 {
+    public enum enBookSearchFiltersControlMode
+    {
+        Normal = 0,
+        BookPriceChanges = 1,
+        UnExpexted = 2
+    }
+
     public partial class BookSearchFiltersControl : BaseSearchFiltersControl<BookSearchFilters>
     {
+        public enBookSearchFiltersControlMode Mode { get; set; }
+
         #region [ Control Inits ]
 
         protected void ddlIsActive_Init(object sender, EventArgs e)
@@ -19,6 +28,14 @@ namespace EudoxusOsy.Portal.UserControls.SearchFilters
             ddlIsActive.FillTrueFalse();
         }
 
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+                ddlIsActive.Visible = Mode == enBookSearchFiltersControlMode.Normal;
+                spanIsActive.Visible = Mode == enBookSearchFiltersControlMode.Normal;
+                ddlHasBookPriceChanges.Visible = Mode == enBookSearchFiltersControlMode.BookPriceChanges;
+                spanHasBookPriceChanges.Visible = Mode == enBookSearchFiltersControlMode.BookPriceChanges;
+        }
         #endregion
 
         #region [ Search Filters ]
@@ -32,7 +49,16 @@ namespace EudoxusOsy.Portal.UserControls.SearchFilters
             filters.Publisher = txtPublisher.Text;
             filters.ISBN = txtISBN.Text;
             filters.Title = txtTitle.Text;
-            filters.IsActive = ddlIsActive.GetSelectedBoolean();
+
+            if (Mode == enBookSearchFiltersControlMode.Normal)
+            {
+                filters.IsActive = ddlIsActive.GetSelectedBoolean();
+            }
+            else if(Mode == enBookSearchFiltersControlMode.BookPriceChanges)
+            {
+                filters.HasBookPriceChanges = ddlHasBookPriceChanges.GetSelectedBoolean();
+            }
+
 
             return filters;
         }
@@ -48,9 +74,16 @@ namespace EudoxusOsy.Portal.UserControls.SearchFilters
             txtTitle.Text = filters.Title;
 
             if (filters.IsActive.HasValue)            
-                ddlIsActive.SelectedItem = ddlIsActive.Items.FindByValue((filters.IsActive.Value ? 1 : 0));            
+                ddlIsActive.SelectedItem = ddlIsActive.Items.FindByValue((filters.IsActive.Value ? 1 : 0));
+            if (filters.HasBookPriceChanges.HasValue)
+                ddlHasBookPriceChanges.SelectedItem = ddlHasBookPriceChanges.Items.FindByValue((filters.HasBookPriceChanges.Value ? 1 : 0));
         }
 
         #endregion
+
+        protected void ddlHasBookPriceChanges_Init(object sender, EventArgs e)
+        {
+            ddlHasBookPriceChanges.FillTrueFalse();
+        }
     }
 }

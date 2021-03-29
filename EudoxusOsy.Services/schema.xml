@@ -1,0 +1,51 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+xmlns:sql="urn:schemas-microsoft-com:mapping-schema">
+  <xs:element name="pricingRegistration" sql:is-constant="1">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element type="xs:short" name="year" sql:is-constant="1"/>
+        <xs:element type="xs:string" name="period" sql:is-constant="1"/>
+        <xs:element type="xs:long" name="creationDate" sql:is-constant="1"/>
+        <xs:element name="registrations" sql:is-constant="1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="registration" sql:relation="AuditReceiptXml" maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:int" name="kpsregistration_id" sql:field="RegistrationKpsID"/>
+                    <xs:element type="xs:int" name="kpsBook_id" sql:field="BookKpsID"/>
+                    <xs:element type="xs:long" name="deliveryDate" />
+                    <xs:element type="xs:short" name="secretariat_id" sql:field="SecretaryKpsID"/>
+                    <xs:element type="xs:string" name="reason" sql:field="Reason"/>
+                    <xs:element type="xs:long" name="timestamp" sql:field="Timestamp"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="libraryRegistrations" sql:is-constant="1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="libraryregistration" sql:relation="AuditReceiptXml" maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:int" name="kpsregistration_id" sql:field="RegistrationKpsID"/>
+                    <xs:element type="xs:int" name="academic_id" sql:field="AcademicKpsID"/>
+                    <xs:element type="xs:int" name="library_id" sql:field="LibraryKpsID"/>
+                    <xs:element type="xs:int" name="kpsBook_id" sql:field="BookKpsID"/>
+                    <xs:element type="xs:int" name="amount" sql:field="BookCount"/>
+                    <xs:element type="xs:string" name="reason" sql:field="Reason"/>
+                    <xs:element type="xs:long" name="reasonDate" sql:field="ReasonDate"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
+
+

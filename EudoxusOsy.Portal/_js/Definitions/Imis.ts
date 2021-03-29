@@ -100,8 +100,9 @@ module Imis {
             var eventBus: IEventBus = w.EventBus;
             if (!w.EventBus) {
                 eventBus = new EventBus(w._wId, this);
+                var self = this;
                 w.onunload = function (e) {
-                    this._clearWindowHandlers(w._wId);
+                    self._clearWindowHandlers(w._wId);
                 }
             }
 

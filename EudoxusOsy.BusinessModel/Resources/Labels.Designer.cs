@@ -250,7 +250,16 @@ namespace EudoxusOsy.BusinessModel.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ηλεκτρονικό.
+        ///   Looks up a localized string similar to Ηλεκτρονικό βιβλίο.
+        /// </summary>
+        internal static string enBookType_eBook {
+            get {
+                return ResourceManager.GetString("enBookType_eBook", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ηλεκτρονικό Σύγγραμμα.
         /// </summary>
         internal static string enBookType_EPublished {
             get {
@@ -259,7 +268,25 @@ namespace EudoxusOsy.BusinessModel.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Κανονικό.
+        ///   Looks up a localized string similar to Άλλο.
+        /// </summary>
+        internal static string enBookType_Other {
+            get {
+                return ResourceManager.GetString("enBookType_Other", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Σημειώσεις.
+        /// </summary>
+        internal static string enBookType_ProfessorNotes {
+            get {
+                return ResourceManager.GetString("enBookType_ProfessorNotes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Σύγγραμμα.
         /// </summary>
         internal static string enBookType_Regular {
             get {
@@ -268,7 +295,7 @@ namespace EudoxusOsy.BusinessModel.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Αυτο-έκδοση.
+        ///   Looks up a localized string similar to Σύγγραμμα.
         /// </summary>
         internal static string enBookType_SelfPublished {
             get {
@@ -349,7 +376,7 @@ namespace EudoxusOsy.BusinessModel.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Μη επιλεχθέν.
+        ///   Looks up a localized string similar to Μη επιλεχθείσα.
         /// </summary>
         internal static string enCatalogGroupState_New {
             get {
@@ -367,7 +394,7 @@ namespace EudoxusOsy.BusinessModel.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Επιλεχθέν για πληρωμή.
+        ///   Looks up a localized string similar to Επιλεχθείσα για πληρωμή.
         /// </summary>
         internal static string enCatalogGroupState_Selected {
             get {
@@ -714,6 +741,33 @@ namespace EudoxusOsy.BusinessModel.Resources {
         internal static string enEmailType_IncidentReportAnswer {
             get {
                 return ResourceManager.GetString("enEmailType_IncidentReportAnswer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Το βιβλίο βρίσκεται υπό έλεγχο από την επιτροπή αλλά σημειώθηκε αλλαγή τιμής που δεν ήταν ελεγμένη.
+        /// </summary>
+        internal static string enErrorCode_BookHasPendingPriceVerificationButUnCheckedPriceChangeReceived {
+            get {
+                return ResourceManager.GetString("enErrorCode_BookHasPendingPriceVerificationButUnCheckedPriceChangeReceived", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Η τιμή του βιβλίου στο ΟΣΥ έχει το &quot;Έχει Ελεγχθεί&quot; TRUE αλλά από το ΚΠΣ ήρθε αλλαγή με το &quot;Ελέγχθηκε&quot; κενό.
+        /// </summary>
+        internal static string enErrorCode_BookIsCheckedInOsyButNotCheckedPriceFromKpsService {
+            get {
+                return ResourceManager.GetString("enErrorCode_BookIsCheckedInOsyButNotCheckedPriceFromKpsService", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Στάλθηκε Τιμή Υπουργείου από το ΚΠΣ αλλά το πεδίο &quot;Ελέγχθηκε&quot; είναι κενό.
+        /// </summary>
+        internal static string enErrorCode_PriceCheckedFalseButMinistryPrice {
+            get {
+                return ResourceManager.GetString("enErrorCode_PriceCheckedFalseButMinistryPrice", resourceCulture);
             }
         }
         

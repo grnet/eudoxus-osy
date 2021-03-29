@@ -27,6 +27,8 @@ namespace EudoxusOsy.BusinessModel
         public DateTime? OfficeSlipDate { get; set; }
         public enDeductionVatType? DeductionVatType { get; set; }
 
+        public bool IsCatalogGroupInvoicePDFAvailable { get; set; }
+
         public bool CanBePaid
         {
             get

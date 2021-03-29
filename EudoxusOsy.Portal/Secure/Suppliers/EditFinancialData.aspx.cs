@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+﻿using DevExpress.Web;
 using EudoxusOsy.BusinessModel;
 using EudoxusOsy.Portal.Controls;
-using DevExpress.Web;
+using System;
+using System.Linq;
+using System.Web.UI;
 
 namespace EudoxusOsy.Portal.Secure.Suppliers
 {
@@ -39,7 +36,6 @@ namespace EudoxusOsy.Portal.Secure.Suppliers
                                                                         x => x.SupplierIBANs);
             Entity.SaveToCurrentContext();
         }
-
         #endregion
 
         #region [ Page Inits ]
@@ -58,9 +54,15 @@ namespace EudoxusOsy.Portal.Secure.Suppliers
                     }
                 }
 
-                txtIBAN.Text = Entity.SupplierIBANs.OrderByDescending(x => x.CreatedAt).FirstOrDefault() != null
-                                ? Entity.SupplierIBANs.OrderByDescending(x => x.CreatedAt).FirstOrDefault().IBAN
+                txtIBAN.Text = Entity.SupplierIBANs.OrderByDescending(x => x.ID).FirstOrDefault() != null
+                                ? Entity.SupplierIBANs.OrderByDescending(x => x.ID).FirstOrDefault().IBAN
                                 : null;
+                                       
+            }
+
+            if (CurrentIBAN != null && CurrentIBAN.IBANCertificateID != null)
+            {
+                ucFileUpload.BindFile(CurrentIBAN.IBANCertificateID.Value);
             }
 
             if (Entity.PaymentPfoID.HasValue)
@@ -75,10 +77,14 @@ namespace EudoxusOsy.Portal.Secure.Suppliers
 
         protected void btnSavePaymentPfo_Click(object sender, EventArgs e)
         {
-            if (!ASPxEdit.ValidateEditorsInContainer(Page, "vgPaymentPfo"))
+            var selectedInteger = ddlPaymentPfo.GetSelectedInteger();
+
+            if (!((selectedInteger != null && selectedInteger.Value == -1 && ASPxEdit.ValidateEditorsInContainer(Page, "vgForeignPfo")) ||
+                                                                ASPxEdit.ValidateEditorsInContainer(Page, "vgPaymentPfo")))
                 return;
 
-            var pfoID = ddlPaymentPfo.GetSelectedInteger().Value;
+            int? pfoID = selectedInteger != null ? (int?)selectedInteger.Value : null;
+
             Entity.PaymentPfoID = pfoID;
 
             if (Entity.PaymentPfoID == EudoxusOsyConstants.FOREIGN_PFO_ID)
@@ -96,7 +102,7 @@ namespace EudoxusOsy.Portal.Secure.Suppliers
         }
 
         protected void btnSaveIBAN_Click(object sender, EventArgs e)
-        {
+        {           
             if (!ASPxEdit.ValidateEditorsInContainer(Page, "vgIBAN"))
                 return;
 
@@ -116,20 +122,25 @@ namespace EudoxusOsy.Portal.Secure.Suppliers
                 return;
             }
 
-            var currentIBAN = Entity.SupplierIBANs.OrderByDescending(x => x.CreatedAt).FirstOrDefault();
+            int? fileID = (int?) ucFileUpload.ExtractValue();
 
-            if (currentIBAN == null || currentIBAN.IBAN != iban)
+            if (CurrentIBAN != null)
+            {
+                CurrentIBAN.IBANCertificateID = fileID;
+            }
+
+            if (CurrentIBAN == null || CurrentIBAN.IBAN != iban)
             {
                 var supplierIBAN = new SupplierIBAN()
                 {
                     SupplierID = Entity.ID,
                     IBAN = iban,
+                    IBANCertificateID = fileID,
                     CreatedAt = DateTime.Now,
                     CreatedBy = Page.User.Identity.Name
                 };
 
-                UnitOfWork.MarkAsNew(supplierIBAN);
-                UnitOfWork.Commit();
+                UnitOfWork.MarkAsNew(supplierIBAN);                
 
                 if (Entity.SupplierIBANs.Count > 1)
                 {
@@ -141,13 +152,34 @@ namespace EudoxusOsy.Portal.Secure.Suppliers
                     }
 
                     var email = EmailFactory.GetIBANChanges(Entity.Reporter, ibanChanges);
-                    UnitOfWork.MarkAsNew(email);
-                    UnitOfWork.Commit();
+                    UnitOfWork.MarkAsNew(email);                    
 
                     EmailQueueWorker.Current.AddEmailDispatchToQueue(email.ID);
-                }
+                }            
+            }
 
-                RedirectAndNotify(Request.RawUrl, "Η ενημέρωση του IBAN πραγματοποιήθηκε επιτυχώς");
+            UnitOfWork.Commit();
+
+            if (fileID != null)
+            {
+                ucFileUpload.BindFile(fileID.Value);
+            }            
+            
+            RedirectAndNotify(Request.RawUrl, "Η ενημέρωση πραγματοποιήθηκε επιτυχώς");
+            
+        }
+
+        private SupplierIBAN _supplierIBAN;
+        private SupplierIBAN CurrentIBAN
+        {
+            get
+            {                
+                if (_supplierIBAN == null && Entity.SupplierIBANs != null)
+                {
+                    _supplierIBAN = Entity.SupplierIBANs.OrderByDescending(x => x.ID).FirstOrDefault();
+                }
+                
+                return _supplierIBAN;
             }
         }
 

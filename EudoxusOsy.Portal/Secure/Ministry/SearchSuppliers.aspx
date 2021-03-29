@@ -39,7 +39,7 @@
     <my:SuppliersGridView ID="gvSuppliers" runat="server" DataSourceID="odsSuppliers" OnCustomCallback="gvSuppliers_CustomCallback">
         <ClientSideEvents EndCallback="gvCallbackEnd" />
         <Columns>
-            <dx:GridViewDataTextColumn Name="SupplierIBANs" Caption="Αλλαγές IBAN" Width="50px">
+            <dx:GridViewDataTextColumn Name="SupplierIBANs" Caption="Αλλαγές IBAN" Width="60px">
                 <HeaderStyle HorizontalAlign="Center" Wrap="True" />
                 <CellStyle HorizontalAlign="Right" />
                 <DataItemTemplate>
@@ -47,15 +47,20 @@
                         onclick='<%# string.Format("showViewIbanChangesPopup({0}, \"{1}\")", Eval("ID"), Eval("Name")) %>'><%# GetIbanChangeCount((Supplier)Container.Grid.GetRow(Container.VisibleIndex)) %></a>
                     <a runat="server" class="img-btn tooltip" title="Αλλαγή IBAN"
                         href='javascript:void(0);'
-                        onclick='<%# string.Format("showChangeIbanPopup({0}, \"{1}\")", Eval("ID"), Eval("Name")) %>'>                        
+                        onclick='<%# string.Format("showChangeIbanPopup({0}, \"{1}\")", Eval("ID"), Eval("Name")) %>'                        
+                        visible='<%# CanChangeIBAN((Supplier)Container.DataItem) %>'>                                          
                         <img src="/_img/iconReportEdit.png" alt="Αλλαγή IBAN" /></a>
+                    <a runat="server" class="img-btn tooltip" title="Αποδεικτικό IBAN"
+                       href='<%# string.Format("~/Secure/IBANCertificate.ashx?ID={0}", Eval("ID")) %>'                           
+                       visible='<%# HasIBANCertificate((Supplier)Container.DataItem) %>'>                                          
+                        <img src="/_img/iconPdf.gif" alt="Αποδεικτικό IBAN" /></a>
                 </DataItemTemplate>
             </dx:GridViewDataTextColumn>
             <dx:GridViewDataTextColumn Name="Actions" Caption="Ενέργειες" Width="50px" VisibleIndex="7">
                 <HeaderStyle HorizontalAlign="Center" Wrap="true" />
                 <CellStyle HorizontalAlign="Left" Wrap="false" />
                 <DataItemTemplate>
-                    <a class="img-btn tooltip" runat="server" href="javascript:void(0);" title="Προβολή Εκδότη"
+                    <a class="img-btn tooltip" runat="server" href="javascript:void(0);" title="Προβολή Εκδότη" 
                         onclick='<%# string.Format("showViewSupplierPopup({0});return false;", Eval("ID")) %>'>
                         <img src="/_img/iconView.png" alt="Προβολή Εκδότη" /></a>
                     <a class="img-btn tooltip" runat="server" href="javascript:void(0);" title="Δικαιολογητικά"

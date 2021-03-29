@@ -6,6 +6,7 @@
     [FekYear]   INT            NULL,
     [Fek]       NVARCHAR (200) NULL,
     [Status]    INT            NOT NULL,
+	[IsChecked] BIT NOT NULL DEFAULT 0,
     [CreatedAt] DATETIME2 (7)  NOT NULL,
     [CreatedBy] NVARCHAR (256) NOT NULL,
     [UpdatedAt] DATETIME2 (7)  NULL,

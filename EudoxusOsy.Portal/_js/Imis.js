@@ -5,7 +5,7 @@ var Imis;
         }
         EventArgs.Empty = {};
         return EventArgs;
-    })();
+    }());
     Imis.EventArgs = EventArgs;
     var EventList = (function () {
         function EventList() {
@@ -40,7 +40,7 @@ var Imis;
             return invocationList;
         };
         return EventList;
-    })();
+    }());
     var EventBus = (function () {
         function EventBus(windowId, eventSink) {
             this._windowId = windowId;
@@ -56,7 +56,7 @@ var Imis;
             this._eventSink.publish(eventName, args);
         };
         return EventBus;
-    })();
+    }());
     var EventSink = (function () {
         function EventSink() {
             this._idSeed = 1;
@@ -76,8 +76,9 @@ var Imis;
             var eventBus = w.EventBus;
             if (!w.EventBus) {
                 eventBus = new EventBus(w._wId, this);
+                var self = this;
                 w.onunload = function (e) {
-                    this._clearWindowHandlers(w._wId);
+                    self._clearWindowHandlers(w._wId);
                 };
             }
             return eventBus;
@@ -104,6 +105,6 @@ var Imis;
             return eventSink.ensureBus(window);
         };
         return EventSink;
-    })();
+    }());
     window.EventBus = EventSink.init();
 })(Imis || (Imis = {}));

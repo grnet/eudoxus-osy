@@ -16,12 +16,22 @@ namespace EudoxusOsy.Portal.Secure.Ministry
     {
         Ministry _Master;
         List<Catalog> PageCatalogs = new List<Catalog>();
+        List<EditCatalogsGridV> CatalogsToExport;
 
         protected int? CriterionPhaseID
         {
             get
             {
                 return Convert.ToInt32(Request.QueryString["fpID"]);
+            }
+        }
+
+
+        protected int? CriterionBookID
+        {
+            get
+            {
+                return Convert.ToInt32(Request.QueryString["bID"]);
             }
         }
 
@@ -34,14 +44,26 @@ namespace EudoxusOsy.Portal.Secure.Ministry
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            var hasQueryStringCriteria = false;
 
             var filters = new CatalogSearchFilters();
-            filters.PhaseID = CriterionPhaseID;
 
             if (CriterionPhaseID.HasValue && CriterionPhaseID > 0)
             {
-                ucCatalogSearchFiltersControl.SetSearchFilters(filters);
+                filters.PhaseID = CriterionPhaseID;
+                hasQueryStringCriteria = true;
                 ClientScript.RegisterStartupScript(GetType(), "catalogsCreated", "window.showAlertBox('Οι διανομές δημιουργήθηκαν επιτυχώς');", true);
+            }
+
+            if (CriterionBookID.HasValue && CriterionBookID > 0)
+            {
+                filters.BookKpsID = CriterionBookID;
+                hasQueryStringCriteria = true;
+            }
+
+            if (hasQueryStringCriteria)
+            {
+                ucCatalogSearchFiltersControl.SetSearchFilters(filters);
             }
         }
 
@@ -65,6 +87,7 @@ namespace EudoxusOsy.Portal.Secure.Ministry
                 .Include(x => x.Discount)
                 .Include(x => x.CatalogGroup);
 
+
             criteria.Sort.OrderByDescending(x => x.ID);
 
             criteria.Expression = ucCatalogSearchFiltersControl.GetSearchFilters().GetExpression();
@@ -74,6 +97,7 @@ namespace EudoxusOsy.Portal.Secure.Ministry
                 criteria.Expression = Imis.Domain.EF.Search.Criteria<Catalog>.Empty;
             }
 
+            criteria.Expression = criteria.Expression.Where(x => x.Phase.IsActive, true);
             e.InputParameters["criteria"] = criteria;
         }
 
@@ -127,7 +151,7 @@ namespace EudoxusOsy.Portal.Secure.Ministry
                     UnitOfWork.MarkAsNew(catalogLog);
                     UnitOfWork.Commit();
 
-                    var message = string.Format("Η διανομή με ID  {0}  διαγράφηκε επιτυχώς και η ενέργεια καταγράφηκε με κωδικό {1}.",selectedCatalog.ID,catalogLog.ID);
+                    var message = string.Format("Η διανομή με ID  {0}  διαγράφηκε επιτυχώς και η ενέργεια καταγράφηκε με κωδικό {1}.", selectedCatalog.ID, catalogLog.ID);
 
                     ClientScript.RegisterStartupScript(GetType(), "closePopup", "window.parent.showAlertBox('" + message + "');window.parent.popUp.hide();", true);
                     gvCatalogs.Grid.JSProperties["cperrors"] = message;
@@ -144,7 +168,6 @@ namespace EudoxusOsy.Portal.Secure.Ministry
 
                 if (selectedCatalog == null || selectedCatalog.Status != enCatalogStatus.Active)
                 {
-                    ClientScript.RegisterStartupScript(GetType(), "alertError", "window.showAlertBox('Σφάλμα κατά τον αντιλογισμό, δεν βρέθηκε ενεργή διανομή με το επιλεγμένο ID')", true);
                     gvCatalogs.Grid.JSProperties["cperrors"] = "Σφάλμα κατά τον αντιλογισμό, δεν βρέθηκε ενεργή διανομή με το επιλεγμένο ID";
                 }
                 else
@@ -154,12 +177,10 @@ namespace EudoxusOsy.Portal.Secure.Ministry
 
                     if (selectedCatalog.GroupID == null || selectedCatalog.CatalogGroup.State != enCatalogGroupState.Sent)
                     {
-                        ClientScript.RegisterStartupScript(GetType(), "alertError", "window.showAlertBox('Δεν μπορείτε να προχωρήσετε σε αντιλογισμό της διανομής γιατί δεν έχει αποσταλεί προς ΥΔΕ.')", true);
                         gvCatalogs.Grid.JSProperties["cperrors"] = "Δεν μπορείτε να προχωρήσετε σε αντιλογισμό της διανομής γιατί δεν έχει αποσταλεί προς ΥΔΕ.";
                     }
                     else if (!selectedCatalog.Amount.HasValue)
                     {
-                        ClientScript.RegisterStartupScript(GetType(), "alertError", "window.showAlertBox('Δεν μπορείτε να προχωρήσετε σε αντιλογισμό της διανομής γιατί δεν έχει κανένα ποσό.')", true);
                         gvCatalogs.Grid.JSProperties["cperrors"] = "Δεν μπορείτε να προχωρήσετε σε αντιλογισμό της διανομής γιατί δεν έχει κανένα ποσό.";
                     }
                     else
@@ -167,7 +188,6 @@ namespace EudoxusOsy.Portal.Secure.Ministry
                         var possibleReversedCatalogs = new CatalogRepository(UnitOfWork).GetPossibleReversedCatalogs(selectedCatalog.SupplierID, selectedCatalog.BookID, selectedCatalog.DepartmentID, selectedCatalog.Amount.Value);
                         if (possibleReversedCatalogs.Count > 0)
                         {
-                            ClientScript.RegisterStartupScript(GetType(), "alertError", "window.showAlertBox('Πιθανόν έχει γίνει αντιλογισμός σε αυτή την διανομή. Δείτε IDs: " + String.Join(",", possibleReversedCatalogs.Select(x => x.ID.ToString()).ToArray()) + "')", true);
                             gvCatalogs.Grid.JSProperties["cperrors"] = "Πιθανόν έχει γίνει αντιλογισμός σε αυτή την διανομή. Δείτε τις διανομές με ID: " + String.Join(",", possibleReversedCatalogs.Select(x => x.ID.ToString()).ToArray());
                         }
                         else
@@ -185,7 +205,6 @@ namespace EudoxusOsy.Portal.Secure.Ministry
 
                             var message = string.Format("Ο αντιλογισμός της διανομής με ID  {0}  έγινε επιτυχώς και η ενέργεια καταγράφηκε με κωδικό {1}. Η νέα διανομή έχει ID {2}.", selectedCatalog.ID, catalogLog.ID, newCatalog.ID);
 
-                            ClientScript.RegisterStartupScript(GetType(), "closePopup", "window.showAlertBox('" + message + "');window.parent.popUp.hide();", true);
                             gvCatalogs.Grid.JSProperties["cperrors"] = message;
                         }
                     }
@@ -193,6 +212,111 @@ namespace EudoxusOsy.Portal.Secure.Ministry
             }
             gvCatalogs.DataBind();
 
+        }
+
+        protected void btnExport_OnClick(object sender, EventArgs e)
+        {
+            var criteria = new Criteria<EditCatalogsGridV>();
+            var searchFilters = new EditCatalogSearchFilters();
+
+            var uiFilters = ucCatalogSearchFiltersControl.GetSearchFilters();
+
+            searchFilters.ID = uiFilters.ID;
+            searchFilters.GroupID = uiFilters.GroupID;
+            searchFilters.PhaseID = uiFilters.PhaseID;
+            searchFilters.BookKpsID = uiFilters.BookKpsID;
+            searchFilters.SupplierKpsID = uiFilters.SupplierKpsID;
+            searchFilters.SecretaryKpsID = uiFilters.SecretaryKpsID;
+            searchFilters.CreatedAt = uiFilters.CreatedAt;
+            searchFilters.DiscountPercentage = uiFilters.DiscountPercentage;
+            searchFilters.BookCount = uiFilters.BookCount;
+            searchFilters.Percentage = uiFilters.Percentage;
+            searchFilters.Amount = uiFilters.Amount;
+            searchFilters.IsInGroup = uiFilters.IsInGroup;
+            searchFilters.IsLocked = uiFilters.IsLocked;
+            searchFilters.State = uiFilters.State;
+            searchFilters.GroupState = uiFilters.GroupState;
+            searchFilters.InstitutionID = uiFilters.InstitutionID;
+            searchFilters.DepartmentID = uiFilters.DepartmentID;
+            searchFilters.CatalogType = uiFilters.CatalogType;
+            searchFilters.CatalogStatus = uiFilters.CatalogStatus;
+            searchFilters.IsForLibrary = uiFilters.IsForLibrary;
+
+            criteria.Expression = searchFilters.GetExpression();
+
+            if (criteria.Expression == null)
+            {
+                criteria.Expression = Imis.Domain.EF.Search.Criteria<EditCatalogsGridV>.Empty;
+            }            
+
+            int count = 0;
+            criteria.UsePaging = false;                      
+
+            CatalogsToExport = new EditCatalogsGridVRepository(UnitOfWork).FindWithCriteria(criteria, out count);
+
+            if (CatalogsToExport.Count < 100000)
+            {
+                gvCatalogsExport.Export(CatalogsToExport, "catalogs" + DateTime.Today);
+            }
+            else
+            {
+                ClientScript.RegisterStartupScript(GetType(), "showErrorMsg", "alert('Περιορίστε τα αποτελέσματα της αναζήτσης.');", true);
+            }
+
+        }
+
+        protected void gvCatalogsExport_ExporterRenderBrick(object sender, ASPxGridViewExportRenderingEventArgs e)
+        {
+            EditCatalogsGridV gridV = gvCatalogsExport.GetRow(e.VisibleIndex) as EditCatalogsGridV;
+
+            if (gridV == null)
+                return;
+            
+            if (e.Column.Name == "GroupState")
+            {
+                if (gridV.GroupState != null)
+                {
+                    e.Text = ((enCatalogGroupState) gridV.GroupState).GetLabel();
+                }
+                else
+                {
+                    e.Text = string.Empty;
+                }
+            }
+            else if (e.Column.Name == "State")
+            {
+                e.Text = ((enCatalogState) gridV.State).GetLabel();
+            }
+            else if (e.Column.Name == "Status")
+            {
+                e.Text = ((enCatalogStatus)gridV.Status).GetLabel();
+            }
+            else if (e.Column.Name == "CatalogType")
+            {
+                e.Text = ((enCatalogType)gridV.CatalogType).GetLabel();
+            }
+            else if (e.Column.Name == "Discount")
+            {
+                e.Text = ((decimal?) gridV.DiscountPercentage).HasValue
+                    ? (100 - (gridV.DiscountPercentage) * 100) + "%"
+                    : string.Empty;
+            }
+            else if (e.Column.Name == "IsForLibrary")
+            {
+                e.Text = gridV.SecretaryKpsID != null ? "Φοιτητές" : "Βιβλιοθήκη";
+            }
+            else if (e.Column.Name == "Percentage")
+            {
+                e.Text = (gridV.Percentage).HasValue ? (gridV.Percentage) + "%" : string.Empty;
+            }
+            else if (e.Column.Name == "CreatedAt")
+            {
+                e.Text = gridV.CreatedAt > new DateTime(1970, 1, 2)
+                    ? gridV.CreatedAt.ToShortDateString()
+                    : string.Empty;
+            }
+             
+            e.TextValue = e.Text;
         }
     }
 }

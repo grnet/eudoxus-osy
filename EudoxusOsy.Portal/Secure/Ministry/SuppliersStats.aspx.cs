@@ -13,69 +13,45 @@ namespace EudoxusOsy.Portal.Secure.Ministry
 {
     public partial class SuppliersStats : BaseEntityPortalPage
     {
+        #region [ Page inits ]
+
+        protected void cmbPhases_Init(object sender, EventArgs e)
+        {
+            cmbPhases.FillPhases(true);
+            if (cmbPhases.SelectedIndex == -1)
+            {
+                var currentPhase = new PhaseRepository(UnitOfWork).GetCurrentPhase();
+                cmbPhases.Items.FindByValue(currentPhase.ID.ToString()).Selected = true;
+                bsView.PhaseID = currentPhase.ID;
+                bsView.Bind();
+            }
+        }
+
+        #endregion
+
         #region [ Button Handlers ]
 
-        protected void btnExportSuppliers_Click(object sender, EventArgs e)
+
+        protected void cmbPhases_ValueChanged(object sender, EventArgs e)
         {
-            //var criteria = new Criteria<Supplier>();
-            //criteria.Expression = ucSearchFilters.GetSearchFilters().GetExpression();
-
-            //if (criteria.Expression == null)
-            //{
-            //    criteria.Expression = Imis.Domain.EF.Search.Criteria<Supplier>.Empty;
-            //}
-
-            //int count = 0;
-            //criteria.UsePaging = false;
-            //criteria.Include(x => x.Reporter);
-            //criteria.Include(x => x.SupplierDetail);
-            //criteria.Include(x => x.SupplierIBANs);
-            //var suppliers = new SupplierRepository(UnitOfWork).FindWithCriteria(criteria, out count);
-
-            //var suppliersExport = suppliers.Select(x => new SupplierExportInfo()
-            //{
-            //    SupplierKpsID = x.SupplierKpsID,
-            //    Name = x.Name,
-            //    TradeName = x.TradeName,
-            //    AFM = x.AFM,
-            //    ContactName = x.Reporter.ContactName,
-            //    SupplierType = x.SupplierType.GetLabel(),
-            //    SupplierStatus = x.Status.GetLabel(),
-            //    Address = x.SupplierDetail.PublisherAddress,
-            //    DOY = x.DOY,
-            //    PaymentDOY = x.PaymentPfoID.HasValue ? EudoxusOsyCacheManager<PublicFinancialOffice>.Current.Get(x.PaymentPfoID.Value).Name : x.PaymentPfo,
-            //    Telephone = x.SupplierDetail.PublisherPhone,
-            //    Email = x.SupplierDetail.PublisherEmail,
-            //    Fax = x.SupplierDetail.PublisherFax,
-            //    ZipCode = x.SupplierDetail.PublisherZipCode,
-            //    IBAN = x.SupplierIBANs != null && x.SupplierIBANs.Count > 0 ? x.SupplierIBANs.OrderByDescending(y => y.CreatedAt).First().IBAN : string.Empty,
-            //    Url = x.SupplierDetail.PublisherUrl,
-            //    NoLogisticBooks = x.SupplierType != enSupplierType.SelfPublisher ? "ΟΧΙ" : (x.HasLogisticBooks == true ? "ΟΧΙ" : "ΝΑΙ")
-            //});
-            //gvSuppliersExport.Export(suppliersExport, "suppliers_stats");
+            bsView.PhaseID = Convert.ToInt32(cmbPhases.SelectedItem.Value);
+            bsView.Bind();
+            gvSuppliersStats.DataBind();
         }
 
         #endregion
 
         #region [ DataSource Events ]
+        protected void odsSuppliers_Selecting(object sender, ObjectDataSourceSelectingEventArgs e)
+        {
+            var filters = ucSearchFilters.GetSearchFilters();
 
-        //protected void odsSuppliers_Selecting(object sender, ObjectDataSourceSelectingEventArgs e)
-        //{
-        //    Criteria<Supplier> criteria = new Criteria<Supplier>();
-
-        //    criteria.Include(x => x.Reporter)
-        //            .Include(x => x.SupplierDetail)
-        //            .Include(x => x.SupplierIBANs);
-
-        //    criteria.Sort.OrderBy(x => x.ID);
-
-        //    var filters = ucSearchFilters.GetSearchFilters();
-        //    var exp = filters.GetExpression();
-        //    if (exp != null)
-        //        criteria.Expression = criteria.Expression.And(exp);
-
-        //    e.InputParameters["criteria"] = criteria;
-        //}
+            e.InputParameters["supplierKpsID"] = filters.SupplierKpsID;
+            e.InputParameters["afm"] = filters.SupplierAFM;
+            e.InputParameters["supplierType"] = (int?)filters.SupplierType;
+            e.InputParameters["name"] = filters.SupplierName;
+            e.InputParameters["phaseID"] = Convert.ToInt32(cmbPhases.SelectedItem.Value);
+        }
 
         #endregion
 
@@ -101,14 +77,6 @@ namespace EudoxusOsy.Portal.Secure.Ministry
 
         #endregion
 
-        protected void odsSuppliers_Selecting(object sender, ObjectDataSourceSelectingEventArgs e)
-        {
-            var filters = ucSearchFilters.GetSearchFilters();
 
-            e.InputParameters["supplierKpsID"] = filters.SupplierKpsID;
-            e.InputParameters["afm"] = filters.SupplierAFM;
-            e.InputParameters["supplierType"] = (int?)filters.SupplierType;
-            e.InputParameters["name"] = filters.SupplierName;
-        }
     }
 }

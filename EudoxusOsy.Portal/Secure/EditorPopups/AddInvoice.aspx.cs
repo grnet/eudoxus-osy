@@ -1,22 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using Imis.Domain;
-using EudoxusOsy.Portal.Controls;
-using System.Web.Security;
+﻿using DevExpress.Web;
 using EudoxusOsy.BusinessModel;
-using EudoxusOsy.Utils;
-using EudoxusOsy.Portal.Utils;
-using DevExpress.Web;
+using EudoxusOsy.Portal.Controls;
+using System;
 
 namespace EudoxusOsy.Portal.Secure.EditorPopups
 {
-    public partial class AddInvoice : BaseEntityPortalPage<Invoice>
+    public partial class AddInvoice : BaseSecureEntityPortalPage<Invoice>
     {
         #region [ Entity Fill ]
+
+        protected CatalogGroup CurrentGroup;
 
         protected override void Fill()
         {
@@ -28,10 +21,26 @@ namespace EudoxusOsy.Portal.Secure.EditorPopups
                     GroupID = groupID,
                     IsActive = true
                 };
+
+                CurrentGroup = new CatalogGroupRepository(UnitOfWork).Load(groupID, x => x.Supplier);
             }
             else
             {
                 ClientScript.RegisterStartupScript(GetType(), "hidePopup", "window.parent.popUp.hide();", true);
+            }
+        }
+
+        protected override bool Authorize()
+        {
+            return CurrentGroup.Supplier.ReporterID == User.Identity.ReporterID
+                || EudoxusOsyRoleProvider.IsAuthorizedEditorUser();
+        }
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (!IsAuthorized)
+            {
+                ClientScript.RegisterStartupScript(GetType(), "refreshParent", "window.parent.popUp.hide();", true);
             }
         }
 
@@ -44,12 +53,15 @@ namespace EudoxusOsy.Portal.Secure.EditorPopups
             if (!ASPxEdit.ValidateEditorsInContainer(Page, "vgInvoice"))
                 return;
 
-            ucInvoiceInput.Fill(Entity);
+            if (CatalogGroupHelper.CanAddInvoice(CurrentGroup, User) && IsAuthorized)
+            {
+                ucInvoiceInput.Fill(Entity);
 
-            UnitOfWork.MarkAsNew(Entity);
-            UnitOfWork.Commit();
+                UnitOfWork.MarkAsNew(Entity);
+                UnitOfWork.Commit();
 
-            ClientScript.RegisterStartupScript(GetType(), "refreshParent", "window.parent.popUp.hide();", true);    
+                ClientScript.RegisterStartupScript(GetType(), "refreshParent", "window.parent.popUp.hide();", true);
+            }
         }
 
         #endregion

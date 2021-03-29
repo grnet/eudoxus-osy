@@ -27,5 +27,24 @@ namespace EudoxusOsy.BusinessModel
                     StatusInt = (int)value;
             }
         }
+
+        public bool ZeroVatEligible
+        {
+            get
+            {                
+                return (!HasLogisticBooks.HasValue || HasLogisticBooks == false) && SupplierType == enSupplierType.SelfPublisher;
+            }            
+        }
+
+        public SupplierIBAN CurrentIBAN
+        {
+            get{
+                if (SupplierIBANs != null)
+                {
+                    return SupplierIBANs.OrderByDescending(x => x.ID).FirstOrDefault();
+                }
+                return null;
+            }
+        }
     }
 }

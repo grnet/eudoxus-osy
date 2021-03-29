@@ -49,13 +49,13 @@ namespace EudoxusOsy.Portal.Secure.Suppliers {
         protected global::DevExpress.Web.ASPxTextBox txtForeignPfo;
         
         /// <summary>
-        /// btnSavePaymentPfo control.
+        /// btnSubmitPaymentPfo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxButton btnSavePaymentPfo;
+        protected global::DevExpress.Web.ASPxButton btnSubmitPaymentPfo;
         
         /// <summary>
         /// txtIBAN control.
@@ -65,6 +65,15 @@ namespace EudoxusOsy.Portal.Secure.Suppliers {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txtIBAN;
+        
+        /// <summary>
+        /// ucFileUpload control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EudoxusOsy.Portal.Controls.ScriptControls.FileUpload ucFileUpload;
         
         /// <summary>
         /// btnSaveIBAN control.

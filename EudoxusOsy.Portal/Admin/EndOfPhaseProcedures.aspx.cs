@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using EudoxusOsy.Portal.Controls;
 using EudoxusOsy.BusinessModel;
+using EudoxusOsy.Services;
 using EudoxusOsy.Utils;
+using log4net;
 
 namespace EudoxusOsy.Portal.Admin
 {
@@ -58,6 +61,19 @@ namespace EudoxusOsy.Portal.Admin
             }
 
             Notify("Η διαδικασία σύγκρισης των παραδόσεων ολοκληρώθηκε επιτυχώς");
+        }
+
+        protected void btnInsertXml_OnClick(object sender, EventArgs e)
+        {            
+            if (string.IsNullOrEmpty(txtXmlPath.Text))
+            {
+                string kpsFileName = Path.Combine(Config.XmlFilesPath, "KpsReceiptsOnly.xml");
+                SQLXMLBulkLoad.doBulkLoad(kpsFileName);
+            }
+            else
+            {
+                SQLXMLBulkLoad.doBulkLoad(txtXmlPath.Text);
+            }            
         }
     }
 }

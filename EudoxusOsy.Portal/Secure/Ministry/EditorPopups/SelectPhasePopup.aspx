@@ -4,6 +4,7 @@
 <%@ Register TagPrefix="my" TagName="NoLogisticBooksExportGridView" Src="~/UserControls/ExportGridViews/SuppliersNoLogisticBooksExportGridView.ascx" %>
 <%@ Register TagPrefix="my" TagName="CoAuthorExportGridView" Src="~/UserControls/ExportGridViews/CoAuthorExportGridView.ascx" %>
 <%@ Register TagPrefix="my" TagName="SupplierStatsExportGridView" Src="~/UserControls/ExportGridViews/SuppliersStatsExportGridView.ascx" %>
+<%@ Register TagPrefix="my" TagName="CatalogsReportExportGridView" Src="~/UserControls/ExportGridViews/CatalogsReportExportGridView.ascx" %>
 
 
 
@@ -21,16 +22,17 @@
     <div runat="server" id="divSelectPhase">
         <table>
             <tr>
-                <th>Εισάγετε τη φάση πληρωμών*:
+                <th>
+                    <asp:Label ID="lblPhase" runat="server">Εισάγετε τη φάση πληρωμών*:</asp:Label>
                 </th>
                 <td>
                     <dx:ASPxSpinEdit runat="server" ID="txtPhaseID">
-                        <ValidationSettings RequiredField-IsRequired="true" RequiredField-ErrorText="Το πεδίο 'Περίοδος' είναι υποχρεωτικό"></ValidationSettings>
+                        <ValidationSettings RequiredField-IsRequired="true" RequiredField-ErrorText="Το πεδίο 'Φάση Πληρωμών' είναι υποχρεωτικό"></ValidationSettings>
                     </dx:ASPxSpinEdit>
                 </td>
             </tr>
         </table>
-        <span>(*) 0 για όλες τις φάσεις πληρωμών</span>
+        <asp:Label ID="lblAllPhases" runat="server">(*) 0 για όλες τις φάσεις πληρωμών</asp:Label>
     </div>
     <div runat="server" id="divSelectYear">
         <table class="dv">
@@ -71,6 +73,7 @@
     </my:NoLogisticBooksExportGridView>
     <my:CoAuthorExportGridView runat="server" ID="ucCoAuthorExport" DataSourceForceStandardPaging="false" Visible="false"></my:CoAuthorExportGridView>
     <my:SupplierStatsExportGridView runat="server" ID="ucSupplierStats" DataSourceForceStandardPaging="false" Visible="false"></my:SupplierStatsExportGridView>
+    <my:CatalogsReportExportGridView runat="server" ID="ucCatalogsReport" DataSourceForceStandardPaging="false" Visible="false"></my:CatalogsReportExportGridView>
 
 
     <script type="text/javascript">

@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using Imis.Domain.EF;
+﻿using Imis.Domain.EF;
 using Imis.Domain.EF.Extensions;
-using System.Data.Objects;
+using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 
 namespace EudoxusOsy.BusinessModel
 {
-    public class CatalogGroupRepository : DomainRepository<DBEntities, CatalogGroup, int>
+    public class CatalogGroupRepository : DomainRepository<DBEntities, CatalogGroup, int>, ICatalogGroupRepository
     {
         #region [ Base .ctors ]
 
@@ -34,6 +31,12 @@ namespace EudoxusOsy.BusinessModel
         {
             return BaseQuery
                     .Where(x => x.SupplierID == supplierID).ToList();
+        }
+
+        public CatalogGroup FindByIDandSupplierID(int id, int supplierID)
+        {
+            return BaseQuery
+                    .FirstOrDefault(x => x.ID == id && x.SupplierID == supplierID);
         }
 
         public List<CatalogGroup> FindBySupplierIDAndPhaseIDWithCatalogs(int supplierID, int phaseID)
@@ -93,8 +96,8 @@ namespace EudoxusOsy.BusinessModel
         public IList<CatalogGroupInfo> GetBySupplierAndPhase(int supplierID, int phaseID, int? groupID, int startRowIndex, int maximumRows, string sortExpression, out int recordCount)
         {
             var query = groupID.HasValue
-                            ? BaseQuery.Include(x => x.Deduction).Where(x => x.SupplierID == supplierID && x.PhaseID == phaseID && x.ID == groupID && x.IsActive)
-                            : BaseQuery.Include(x => x.Deduction).Where(x => x.SupplierID == supplierID && x.PhaseID == phaseID && x.IsActive);
+                            ? BaseQuery.Include(x => x.Deduction).Include(x => x.CatalogGroupLogs).Where(x => x.SupplierID == supplierID && x.PhaseID == phaseID && x.ID == groupID && x.IsActive)
+                            : BaseQuery.Include(x => x.Deduction).Include(x => x.CatalogGroupLogs).Where(x => x.SupplierID == supplierID && x.PhaseID == phaseID && x.IsActive);
 
             recordCount = query.Count();
 
@@ -116,7 +119,8 @@ namespace EudoxusOsy.BusinessModel
                 DeductionVatType = x.Deduction != null ? (enDeductionVatType?)x.Deduction.VatTypeInt : null,
                 Vat = x.Vat,
                 IsTransfered = x.IsTransfered,
-                TransferedBankID = x.BankID
+                TransferedBankID = x.BankID//,
+                //IsCatalogGroupInvoicePDFAvailable = x.CatalogGroupLogs
             })
                     .OrderBy(sortExpression)
                     .Skip(startRowIndex)

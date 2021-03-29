@@ -28,7 +28,7 @@ namespace EudoxusOsy.Portal.Secure.Ministry {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EudoxusOsy.Portal.UserControls.SearchFilters.BookSearchFiltersControl ucSearchFilters;
+        protected global::EudoxusOsy.Portal.UserControls.SearchFilters.BookPriceVerificationFiltersControl ucSearchFilters;
         
         /// <summary>
         /// btnSearch control.
@@ -40,6 +40,15 @@ namespace EudoxusOsy.Portal.Secure.Ministry {
         protected global::DevExpress.Web.ASPxButton btnSearch;
         
         /// <summary>
+        /// btnExport control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxButton btnExport;
+        
+        /// <summary>
         /// gvBooks control.
         /// </summary>
         /// <remarks>
@@ -49,12 +58,12 @@ namespace EudoxusOsy.Portal.Secure.Ministry {
         protected global::EudoxusOsy.Portal.UserControls.GridViews.PriceVerificationGridView gvBooks;
         
         /// <summary>
-        /// odsBooks control.
+        /// odsBookPriceChangeGrid control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ObjectDataSource odsBooks;
+        protected global::System.Web.UI.WebControls.ObjectDataSource odsBookPriceChangeGrid;
     }
 }

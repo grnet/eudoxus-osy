@@ -22,6 +22,15 @@ namespace EudoxusOsy.Portal.Secure.Ministry.EditorPopups {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divSelectPhase;
         
         /// <summary>
+        /// lblPhase control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblPhase;
+        
+        /// <summary>
         /// txtPhaseID control.
         /// </summary>
         /// <remarks>
@@ -29,6 +38,15 @@ namespace EudoxusOsy.Portal.Secure.Ministry.EditorPopups {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxSpinEdit txtPhaseID;
+        
+        /// <summary>
+        /// lblAllPhases control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblAllPhases;
         
         /// <summary>
         /// divSelectYear control.
@@ -110,5 +128,14 @@ namespace EudoxusOsy.Portal.Secure.Ministry.EditorPopups {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::EudoxusOsy.Portal.UserControls.ExportGridViews.SuppliersStatsExportGridView ucSupplierStats;
+        
+        /// <summary>
+        /// ucCatalogsReport control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EudoxusOsy.Portal.UserControls.ExportGridViews.CatalogsReportExportGridView ucCatalogsReport;
     }
 }

@@ -9,7 +9,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>ΥΠΟΥΡΓΕΙΟ ΠΑΙΔΕΙΑΣ, ΕΡΕΥΝΑΣ ΚΑΙ ΘΡΗΣΚΕΥΜΑΤΩΝ</Value>
+                <Value>ΥΠΟΥΡΓΕΙΟ ΠΑΙΔΕΙΑΣ ΚΑΙ ΘΡΗΣΚΕΥΜΑΤΩΝ</Value>
                 <Style>
                   <FontSize>11pt</FontSize>
                   <FontWeight>Bold</FontWeight>
@@ -23,22 +23,14 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>ΓΕΝΙΚΗ ΔΙΕΥΘΥΝΣΗ ΟΙΚΟΝΟΜΙΚΩΝ ΥΠΗΡΕΣΙΩΝ</Value>
+                <Value />
                 <Style>
+                  <FontStyle>Normal</FontStyle>
+                  <FontFamily>Times New Roman</FontFamily>
+                  <FontSize>9pt</FontSize>
                   <FontWeight>Bold</FontWeight>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Left</TextAlign>
-            </Style>
-          </Paragraph>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>ΔΙΕΥΘΥΝΣΗ ΟΙΚΟΝΟΜΙΚΗΣ ΔΙΑΧΕΙΡΙΣΗΣ-ΤΜΗΜΑ Β'</Value>
-                <Style>
-                  <FontWeight>Bold</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                  <Color>#000000</Color>
                 </Style>
               </TextRun>
             </TextRuns>
@@ -48,9 +40,9 @@
           </Paragraph>
         </Paragraphs>
         <Top>0.5048cm</Top>
-        <Left>0.635cm</Left>
-        <Height>2.0166cm</Height>
-        <Width>10.80386cm</Width>
+        <Left>0.44188cm</Left>
+        <Height>1.41494cm</Height>
+        <Width>11.20865cm</Width>
         <Style>
           <Border>
             <Color>White</Color>
@@ -120,21 +112,21 @@
               <TextRun>
                 <Value>Πληρωμής του αντιτίμου των συγγραμμάτων που διανεμήθηκαν δωρεάν στους φοιτητές, για το ακαδημαϊκό έτος </Value>
                 <Style>
-                  <FontSize>11pt</FontSize>
+                  <FontSize>9pt</FontSize>
                   <FontWeight>Bold</FontWeight>
                 </Style>
               </TextRun>
               <TextRun>
                 <Value>=Parameters!YearFromToLiteral.Value</Value>
                 <Style>
-                  <FontSize>11pt</FontSize>
+                  <FontSize>9pt</FontSize>
                   <FontWeight>Bold</FontWeight>
                 </Style>
               </TextRun>
               <TextRun>
-                <Value> (KAE:1123, Ειδ.Φορέας: 19-250)</Value>
+                <Value> (Α.Λ.Ε.: 2410905001, Ειδ. Φορέας: 1019-208-0000000)</Value>
                 <Style>
-                  <FontSize>11pt</FontSize>
+                  <FontSize>9pt</FontSize>
                   <FontWeight>Bold</FontWeight>
                 </Style>
               </TextRun>
@@ -143,10 +135,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox7</rd:DefaultName>
-        <Top>3.06729cm</Top>
-        <Left>1.93145cm</Left>
+        <Top>2.87354cm</Top>
+        <Left>0.44188cm</Left>
         <Height>0.6cm</Height>
-        <Width>26.06885cm</Width>
+        <Width>27.25177cm</Width>
         <ZIndex>2</ZIndex>
         <Style>
           <Border>
@@ -177,8 +169,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox7</rd:DefaultName>
-        <Top>4.26758cm</Top>
-        <Left>3.99075cm</Left>
+        <Top>3.95008cm</Top>
+        <Left>2.40325cm</Left>
         <Height>0.56825cm</Height>
         <Width>2.50758cm</Width>
         <ZIndex>3</ZIndex>
@@ -209,7 +201,7 @@
         </Paragraphs>
         <rd:DefaultName>Textbox7</rd:DefaultName>
         <Top>4.72119cm</Top>
-        <Left>3.99075cm</Left>
+        <Left>2.40325cm</Left>
         <Height>0.6cm</Height>
         <Width>2.50758cm</Width>
         <ZIndex>4</ZIndex>
@@ -243,8 +235,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox7</rd:DefaultName>
-        <Top>5.18007cm</Top>
-        <Left>3.99075cm</Left>
+        <Top>5.49757cm</Top>
+        <Left>2.40325cm</Left>
         <Height>0.6cm</Height>
         <Width>2.50758cm</Width>
         <ZIndex>5</ZIndex>
@@ -278,8 +270,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox7</rd:DefaultName>
-        <Top>5.6125cm</Top>
-        <Left>3.99075cm</Left>
+        <Top>6.2475cm</Top>
+        <Left>2.40325cm</Left>
         <Height>0.6cm</Height>
         <Width>2.50758cm</Width>
         <ZIndex>6</ZIndex>
@@ -313,8 +305,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox7</rd:DefaultName>
-        <Top>6.07139cm</Top>
-        <Left>3.99075cm</Left>
+        <Top>7.02389cm</Top>
+        <Left>2.40325cm</Left>
         <Height>0.6cm</Height>
         <Width>2.50758cm</Width>
         <ZIndex>7</ZIndex>
@@ -347,7 +339,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox7</rd:DefaultName>
-        <Top>7.27854cm</Top>
+        <Top>8.23104cm</Top>
         <Left>0.44188cm</Left>
         <Height>0.6cm</Height>
         <Width>6.05645cm</Width>
@@ -382,10 +374,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox7</rd:DefaultName>
-        <Top>4.23583cm</Top>
-        <Left>6.88671cm</Left>
+        <Top>3.91833cm</Top>
+        <Left>5.29921cm</Left>
         <Height>0.6cm</Height>
-        <Width>9.29239cm</Width>
+        <Width>22.06609cm</Width>
         <ZIndex>9</ZIndex>
         <Style>
           <Border>
@@ -418,7 +410,7 @@
         </Paragraphs>
         <rd:DefaultName>Textbox7</rd:DefaultName>
         <Top>4.72119cm</Top>
-        <Left>6.88671cm</Left>
+        <Left>5.29921cm</Left>
         <Height>0.6cm</Height>
         <Width>3.65037cm</Width>
         <ZIndex>10</ZIndex>
@@ -452,8 +444,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox7</rd:DefaultName>
-        <Top>5.18007cm</Top>
-        <Left>6.88671cm</Left>
+        <Top>5.49757cm</Top>
+        <Left>5.29921cm</Left>
         <Height>0.6cm</Height>
         <Width>6.1525cm</Width>
         <ZIndex>11</ZIndex>
@@ -487,8 +479,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox7</rd:DefaultName>
-        <Top>5.61251cm</Top>
-        <Left>6.88671cm</Left>
+        <Top>6.24751cm</Top>
+        <Left>5.29921cm</Left>
         <Height>0.6cm</Height>
         <Width>6.1525cm</Width>
         <ZIndex>12</ZIndex>
@@ -522,8 +514,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox7</rd:DefaultName>
-        <Top>6.0714cm</Top>
-        <Left>6.88671cm</Left>
+        <Top>7.0239cm</Top>
+        <Left>5.29921cm</Left>
         <Height>0.6cm</Height>
         <Width>6.1525cm</Width>
         <ZIndex>13</ZIndex>
@@ -576,9 +568,9 @@
         </Paragraphs>
         <rd:DefaultName>Textbox7</rd:DefaultName>
         <Top>5.18007cm</Top>
-        <Left>13.92997cm</Left>
+        <Left>15.51747cm</Left>
         <Height>0.6cm</Height>
-        <Width>11.95602cm</Width>
+        <Width>11.84783cm</Width>
         <ZIndex>14</ZIndex>
         <Visibility>
           <Hidden>=IsNothing(Parameters!BankName.Value)</Hidden>
@@ -615,7 +607,7 @@
               <Width>2.14722cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.88806cm</Width>
+              <Width>2.5814cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -1187,14 +1179,16 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!TotalAmount.Value)</Value>
+                              <Value>=Sum(Fields!TotalAmount.Value) &amp; " €"</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox61</rd:DefaultName>
@@ -1272,6 +1266,9 @@
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox69</rd:DefaultName>
+                      <Visibility>
+                        <Hidden>=Parameters!HideVAT.Value</Hidden>
+                      </Visibility>
                       <Style>
                         <Border>
                           <Color>LightGrey</Color>
@@ -1298,6 +1295,7 @@
                               <Value>=Parameters!TotalVatAmount.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -1307,6 +1305,9 @@
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox70</rd:DefaultName>
+                      <Visibility>
+                        <Hidden>=Parameters!HideVAT.Value</Hidden>
+                      </Visibility>
                       <Style>
                         <Border>
                           <Color>LightGrey</Color>
@@ -1368,7 +1369,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Συνολικό Ποσό</Value>
+                              <Value>Συνολικό ποσό</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -1381,6 +1382,9 @@
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox78</rd:DefaultName>
+                      <Visibility>
+                        <Hidden>=Parameters!HideVAT.Value</Hidden>
+                      </Visibility>
                       <Style>
                         <Border>
                           <Color>LightGrey</Color>
@@ -1417,6 +1421,9 @@
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox79</rd:DefaultName>
+                      <Visibility>
+                        <Hidden>=Parameters!HideVAT.Value</Hidden>
+                      </Visibility>
                       <Style>
                         <Border>
                           <Color>LightGrey</Color>
@@ -1465,10 +1472,10 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>BookInCatalogInfo</DataSetName>
-        <Top>8.54287cm</Top>
+        <Top>9.49537cm</Top>
         <Left>0.44188cm</Left>
         <Height>4.4464cm</Height>
-        <Width>23.66056cm</Width>
+        <Width>23.3539cm</Width>
         <ZIndex>15</ZIndex>
         <Style>
           <Border>
@@ -1496,8 +1503,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox7</rd:DefaultName>
-        <Top>8.54287cm</Top>
-        <Left>24.10243cm</Left>
+        <Top>9.49537cm</Top>
+        <Left>23.79578cm</Left>
         <Height>0.99688cm</Height>
         <Width>3.89787cm</Width>
         <ZIndex>16</ZIndex>
@@ -1521,21 +1528,21 @@
               <TextRun>
                 <Value>Φόρος εισ/τος (</Value>
                 <Style>
-                  <FontSize>8pt</FontSize>
+                  <FontSize>7pt</FontSize>
                   <FontWeight>Bold</FontWeight>
                 </Style>
               </TextRun>
               <TextRun>
                 <Value>=Parameters!IncomeTaxPerc.Value</Value>
                 <Style>
-                  <FontSize>8pt</FontSize>
+                  <FontSize>7pt</FontSize>
                   <FontWeight>Bold</FontWeight>
                 </Style>
               </TextRun>
               <TextRun>
                 <Value>%)</Value>
                 <Style>
-                  <FontSize>8pt</FontSize>
+                  <FontSize>7pt</FontSize>
                   <FontWeight>Bold</FontWeight>
                 </Style>
               </TextRun>
@@ -1546,8 +1553,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox7</rd:DefaultName>
-        <Top>9.53974cm</Top>
-        <Left>24.10243cm</Left>
+        <Top>12.32725cm</Top>
+        <Left>23.79577cm</Left>
         <Height>0.9175cm</Height>
         <Width>1.9135cm</Width>
         <ZIndex>17</ZIndex>
@@ -1583,8 +1590,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox7</rd:DefaultName>
-        <Top>10.45724cm</Top>
-        <Left>24.10243cm</Left>
+        <Top>13.24475cm</Top>
+        <Left>23.79577cm</Left>
         <Height>0.6cm</Height>
         <Width>1.9135cm</Width>
         <ZIndex>18</ZIndex>
@@ -1620,8 +1627,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox7</rd:DefaultName>
-        <Top>11.05724cm</Top>
-        <Left>24.10243cm</Left>
+        <Top>13.84475cm</Top>
+        <Left>23.79577cm</Left>
         <Height>0.93514cm</Height>
         <Width>1.9135cm</Width>
         <ZIndex>19</ZIndex>
@@ -1657,8 +1664,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox7</rd:DefaultName>
-        <Top>9.53974cm</Top>
-        <Left>26.01593cm</Left>
+        <Top>12.32725cm</Top>
+        <Left>25.70927cm</Left>
         <Height>0.9175cm</Height>
         <Width>1.98438cm</Width>
         <ZIndex>20</ZIndex>
@@ -1680,7 +1687,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=Parameters!TotalDeductionsAmount.Value</Value>
+                <Value>=Parameters!TotalDeductionsAmount.Value + " €"</Value>
                 <Style>
                   <FontSize>8pt</FontSize>
                   <FontWeight>Bold</FontWeight>
@@ -1693,8 +1700,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox7</rd:DefaultName>
-        <Top>10.45724cm</Top>
-        <Left>26.01593cm</Left>
+        <Top>13.24475cm</Top>
+        <Left>25.70927cm</Left>
         <Height>0.6cm</Height>
         <Width>1.98438cm</Width>
         <ZIndex>21</ZIndex>
@@ -1729,8 +1736,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox7</rd:DefaultName>
-        <Top>11.05724cm</Top>
-        <Left>26.01593cm</Left>
+        <Top>13.84475cm</Top>
+        <Left>25.70927cm</Left>
         <Height>0.93514cm</Height>
         <Width>1.98438cm</Width>
         <ZIndex>22</ZIndex>
@@ -1764,7 +1771,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox7</rd:DefaultName>
-        <Top>7.27854cm</Top>
+        <Top>8.23104cm</Top>
         <Left>6.88671cm</Left>
         <Height>0.6cm</Height>
         <Width>8.86906cm</Width>
@@ -1807,9 +1814,9 @@
         </Paragraphs>
         <rd:DefaultName>Textbox48</rd:DefaultName>
         <Top>5.94995cm</Top>
-        <Left>13.92997cm</Left>
-        <Height>0.6cm</Height>
-        <Width>11.74812cm</Width>
+        <Left>15.51747cm</Left>
+        <Height>1.67395cm</Height>
+        <Width>11.84783cm</Width>
         <ZIndex>24</ZIndex>
         <Style>
           <Border>
@@ -1840,9 +1847,9 @@
         </Paragraphs>
         <rd:DefaultName>Textbox2</rd:DefaultName>
         <Top>1.31974cm</Top>
-        <Left>11.61525cm</Left>
+        <Left>13.87312cm</Left>
         <Height>0.6cm</Height>
-        <Width>14.90896cm</Width>
+        <Width>12.65109cm</Width>
         <ZIndex>25</ZIndex>
         <Visibility>
           <Hidden>=Parameters!StateLabel.Value="ΑΠΕΣΤΑΛΜΕΝΗ ΠΡΟΣ ΥΔΕ"</Hidden>
@@ -1897,6 +1904,162 @@
           <PaddingBottom>2pt</PaddingBottom>
         </Style>
       </Textbox>
+      <Textbox Name="Textbox34">
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>Χαρτόσημο 3%</Value>
+                <Style>
+                  <FontSize>7pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Center</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox7</rd:DefaultName>
+        <Top>10.49225cm</Top>
+        <Left>23.79577cm</Left>
+        <Height>0.9175cm</Height>
+        <Width>1.9135cm</Width>
+        <ZIndex>27</ZIndex>
+        <Visibility>
+          <Hidden>= Not(Parameters!HideVAT.Value)</Hidden>
+        </Visibility>
+        <Style>
+          <Border>
+            <Style>Solid</Style>
+          </Border>
+          <BackgroundColor>Silver</BackgroundColor>
+          <VerticalAlign>Middle</VerticalAlign>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="Textbox35">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=Parameters!StampAmount.Value</Value>
+                <Style>
+                  <FontSize>8pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Center</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox7</rd:DefaultName>
+        <Top>10.49225cm</Top>
+        <Left>25.70927cm</Left>
+        <Height>0.9175cm</Height>
+        <Width>1.98438cm</Width>
+        <ZIndex>28</ZIndex>
+        <Visibility>
+          <Hidden>= Not(Parameters!HideVAT.Value)</Hidden>
+        </Visibility>
+        <Style>
+          <Border>
+            <Style>Solid</Style>
+          </Border>
+          <VerticalAlign>Middle</VerticalAlign>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="Textbox39">
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>ΟΓΑ 20% (επί χαρτοσήμου)</Value>
+                <Style>
+                  <FontSize>7pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Center</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox7</rd:DefaultName>
+        <Top>11.40975cm</Top>
+        <Left>23.79577cm</Left>
+        <Height>0.9175cm</Height>
+        <Width>1.9135cm</Width>
+        <ZIndex>29</ZIndex>
+        <Visibility>
+          <Hidden>= Not(Parameters!HideVAT.Value)</Hidden>
+        </Visibility>
+        <Style>
+          <Border>
+            <Style>Solid</Style>
+          </Border>
+          <BackgroundColor>Silver</BackgroundColor>
+          <VerticalAlign>Middle</VerticalAlign>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="Textbox40">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=Parameters!OgaAmount.Value</Value>
+                <Style>
+                  <FontSize>8pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Center</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox7</rd:DefaultName>
+        <Top>11.40975cm</Top>
+        <Left>25.70927cm</Left>
+        <Height>0.9175cm</Height>
+        <Width>1.98438cm</Width>
+        <ZIndex>30</ZIndex>
+        <Visibility>
+          <Hidden>= Not(Parameters!HideVAT.Value)</Hidden>
+        </Visibility>
+        <Style>
+          <Border>
+            <Style>Solid</Style>
+          </Border>
+          <VerticalAlign>Middle</VerticalAlign>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
     </ReportItems>
     <Height>15.86708cm</Height>
     <Style />
@@ -1944,7 +2107,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>Σημείωση: Η παρούσα κατάσταση συντάχθηκε με βάση τα στοιχεί από το πληροφοριακό σύστημα 'ΕΥΔΟΞΟΣ' </Value>
+                  <Value>Σημείωση: Η παρούσα κατάσταση συντάχθηκε με βάση τα στοιχεία από το πληροφοριακό σύστημα 'ΕΥΔΟΞΟΣ' </Value>
                   <Style>
                     <FontStyle>Italic</FontStyle>
                     <FontSize>9pt</FontSize>
@@ -2125,6 +2288,8 @@
     </ReportParameter>
     <ReportParameter Name="DOY">
       <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
     <ReportParameter Name="IBAN">
@@ -2135,6 +2300,8 @@
     </ReportParameter>
     <ReportParameter Name="Email">
       <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
     <ReportParameter Name="BankName">
@@ -2151,6 +2318,8 @@
     </ReportParameter>
     <ReportParameter Name="AcademicInstitution">
       <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
     <ReportParameter Name="IncomeTax">
@@ -2189,6 +2358,22 @@
     </ReportParameter>
     <ReportParameter Name="CatalogGroupID">
       <DataType>String</DataType>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="HideVAT">
+      <DataType>Boolean</DataType>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="StampAmount">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="OgaAmount">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
   </ReportParameters>

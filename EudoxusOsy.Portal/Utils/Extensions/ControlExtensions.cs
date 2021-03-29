@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
@@ -34,7 +35,7 @@ namespace EudoxusOsy.Portal
         public static int? GetInteger(this ITextControl tc)
         {
             int value;
-            if (int.TryParse(tc.Text.ToNull(), out value))
+            if (Int32.TryParse(tc.Text.ToNull(), out value))
                 return value;
             else
                 return null;
@@ -43,7 +44,7 @@ namespace EudoxusOsy.Portal
         public static double? GetDouble(this ITextControl tc)
         {
             double value;
-            if (double.TryParse(tc.Text.ToNull(), out value))
+            if (Double.TryParse(tc.Text.ToNull(), out value))
                 return value;
             else
                 return null;
@@ -52,7 +53,7 @@ namespace EudoxusOsy.Portal
         public static decimal? GetDecimal(this ITextControl tc)
         {
             decimal value;
-            if (decimal.TryParse(tc.Text.ToNull(), out value))
+            if (Decimal.TryParse(tc.Text.ToNull(), out value))
                 return value;
             else
                 return null;
@@ -66,7 +67,7 @@ namespace EudoxusOsy.Portal
         public static int? GetInteger(this HtmlInputText tb)
         {
             int value;
-            if (int.TryParse(tb.Value.ToNull(), out value))
+            if (Int32.TryParse(tb.Value.ToNull(), out value))
                 return value;
             else
                 return null;
@@ -87,7 +88,7 @@ namespace EudoxusOsy.Portal
         public static int? GetSelectedInteger(this ASPxComboBox cb)
         {
             int value;
-            if (cb.Value != null && int.TryParse(cb.Value.ToString(), out value))
+            if (cb.Value != null && Int32.TryParse(cb.Value.ToString(), out value))
                 return value;
             else
                 return null;
@@ -96,7 +97,7 @@ namespace EudoxusOsy.Portal
         public static int? GetSelectedInteger(this ASPxRadioButtonList cb)
         {
             int value;
-            if (cb.Value != null && int.TryParse(cb.Value.ToString(), out value))
+            if (cb.Value != null && Int32.TryParse(cb.Value.ToString(), out value))
                 return value;
             else
                 return null;
@@ -162,7 +163,7 @@ namespace EudoxusOsy.Portal
         public static int? GetSelectedInteger(this ListControl cb)
         {
             int value;
-            if (!string.IsNullOrWhiteSpace(cb.SelectedValue) && int.TryParse(cb.SelectedValue, out value))
+            if (!String.IsNullOrWhiteSpace(cb.SelectedValue) && Int32.TryParse(cb.SelectedValue, out value))
                 return value;
             else
                 return null;
@@ -172,7 +173,7 @@ namespace EudoxusOsy.Portal
         {
             bool? value = null;
 
-            if (!string.IsNullOrWhiteSpace(cb.SelectedValue))
+            if (!String.IsNullOrWhiteSpace(cb.SelectedValue))
             {
                 if (cb.SelectedValue == "1")
                     value = true;
@@ -186,7 +187,7 @@ namespace EudoxusOsy.Portal
         public static TEnum? GetSelectedEnum<TEnum>(this ListControl cb) where TEnum : struct
         {
             TEnum value;
-            if (!string.IsNullOrWhiteSpace(cb.SelectedValue) && Enum.TryParse<TEnum>(cb.SelectedValue, out value))
+            if (!String.IsNullOrWhiteSpace(cb.SelectedValue) && Enum.TryParse<TEnum>(cb.SelectedValue, out value))
                 return value;
             else
                 return null;
@@ -219,7 +220,7 @@ namespace EudoxusOsy.Portal
         public static int? GetIntegerValue(this ASPxDropDownEdit ddx)
         {
             int value;
-            if (ddx.Value != null && int.TryParse(ddx.Value.ToString(), out value))
+            if (ddx.Value != null && Int32.TryParse(ddx.Value.ToString(), out value))
                 return value;
             else
                 return null;
@@ -232,12 +233,34 @@ namespace EudoxusOsy.Portal
         public static int? GetInteger(this HiddenField hf)
         {
             int value;
-            if (int.TryParse(hf.Value, out value))
+            if (Int32.TryParse(hf.Value, out value))
                 return value;
             else
                 return null;
         }
 
         #endregion
+
+        public static string GetDOY(this Supplier supplier)
+        {
+            string doy = String.Empty;
+
+            if (supplier.PaymentPfoID == EudoxusOsyConstants.FOREIGN_PFO_ID)
+            {
+                doy = supplier.PaymentPfo;
+            }
+            else if(supplier.PaymentPfoID.HasValue)
+            {
+                var pfo = CacheManager.GetOrderedPublicFinancialOffices()
+                    .FirstOrDefault(x => x.ID == supplier.PaymentPfoID.Value);
+
+                if (pfo != null)
+                {
+                    doy =  pfo.Name;
+                }                
+            }
+
+            return doy;
+        }
     }
 }

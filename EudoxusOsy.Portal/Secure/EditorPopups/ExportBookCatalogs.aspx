@@ -21,7 +21,7 @@
             </th>
             <td>
                 <dx:ASPxSpinEdit runat="server" ID="txtKpsID">
-                    <ValidationSettings RequiredField-IsRequired="true" RequiredField-ErrorText="Το πεδίο 'ΚΠΣ ID Βιβλίου' είναι υποχρεωτικό"></ValidationSettings>
+                    <ValidationSettings RequiredField-IsRequired="true" RequiredField-ErrorText="Το πεδίο 'ΚΠΣ ID Βιβλίου' είναι υποχρεωτικό" ValidationGroup="vgFormErrors"></ValidationSettings>
                 </dx:ASPxSpinEdit>
             </td>
         </tr>
@@ -31,7 +31,7 @@
             </th>
             <td>
                 <dx:ASPxSpinEdit runat="server" ID="txtPhaseID">
-                    <ValidationSettings RequiredField-IsRequired="true" RequiredField-ErrorText="Το πεδίο 'Περίοδος' είναι υποχρεωτικό"></ValidationSettings>
+                    <ValidationSettings RequiredField-IsRequired="true" RequiredField-ErrorText="Το πεδίο 'Περίοδος' είναι υποχρεωτικό" ValidationGroup="vgFormErrors"></ValidationSettings>
                 </dx:ASPxSpinEdit>
             </td>
         </tr>

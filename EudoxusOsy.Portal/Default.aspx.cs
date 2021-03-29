@@ -33,14 +33,23 @@ namespace EudoxusOsy.Portal
                 var roles = Roles.GetRolesForUser(User.Identity.Name);
 
                 if (roles.Contains(RoleNames.Supplier))
-                {   
-                    redirectUrl = ResolveClientUrl("~/Secure/Suppliers/Default.aspx");
+                {
+                    if (Entity.VerificationStatus == enVerificationStatus.Verified)
+                    {
+                        redirectUrl = ResolveClientUrl("~/Secure/Suppliers/Default.aspx");
+                    }
+                    else
+                    {
+                        redirectUrl = ResolveClientUrl("~/Common/AccessDenied.aspx");
+                    }
                 }
                 else if (roles.Contains(RoleNames.MinistryWelfare))
                 {
                     redirectUrl = ResolveClientUrl("~/Secure/Welfare/Default.aspx");
                 }
-                else if (roles.Contains(RoleNames.MinistryPayments))
+                else if (roles.Contains(RoleNames.MinistryPayments) || 
+                        roles.Contains(RoleNames.MinistryAuditor) || 
+                        roles.Contains(RoleNames.SuperMinistry))
                 {
                     redirectUrl = ResolveClientUrl("~/Secure/Ministry/Default.aspx");
                 }

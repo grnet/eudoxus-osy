@@ -18,6 +18,7 @@ namespace EudoxusOsy.Portal.Secure.Ministry
 
         }
 
+
         #region [ Button Handlers ]
 
 
@@ -56,6 +57,10 @@ namespace EudoxusOsy.Portal.Secure.Ministry
 
             if (action == "refresh")
             {
+                SqlDataSource.SelectCommand =
+                    "SELECT vs.Debt AS Debt, vs.InstName AS Name, DepartmentCount, vs.InstitutionID AS ID " +
+                    "FROM report.ViewStatisticsPerInstitution" + Get_PP() + " vs WHERE PhaseID = @phaseId AND vs.InstName like @Name";
+
                 gvAcademics.DataBind();
                 return;
             }
@@ -63,6 +68,18 @@ namespace EudoxusOsy.Portal.Secure.Ministry
         }
 
         #endregion
+
+        private string Get_PP()
+        {
+            var currenPhase = new PhaseRepository().GetCurrentPhase();
+
+            if (dllPhase.GetSelectedInteger() > 0)
+            {
+                return (currenPhase.ID == dllPhase.GetSelectedInteger() ? "" : "_PP");
+            }
+
+            return "";
+        }
 
         protected void gvAcademics_OnInit(object sender, EventArgs e)
         {
@@ -89,6 +106,9 @@ namespace EudoxusOsy.Portal.Secure.Ministry
         {
             string fileName = string.Format("ExportIntitutions_{0}", DateTime.Now.ToString("yyyyMMdd"));
 
+            SqlDataSourceInstitution.SelectCommand =
+                "SELECT * FROM report.ViewStatisticsPerInstitution" + Get_PP() + " WHERE PhaseID = @phaseId";
+
             gvInstExport.Grid.DataBind();
             gvInstExport.Exporter.WriteXlsxToResponse(fileName);
         }
@@ -96,7 +116,9 @@ namespace EudoxusOsy.Portal.Secure.Ministry
         protected void btnExportDepartments_Click(object sender, EventArgs e)
         {
             string fileName = string.Format("ExportDepartments_{0}", DateTime.Now.ToString("yyyyMMdd"));
-            
+
+            SqlDataSourceDepartment.SelectCommand = "SELECT * FROM report.ViewStatisticsPerDepartment" + Get_PP() + " WHERE PhaseID = @phaseId";
+
             gvDepExport.Grid.DataBind();
             gvDepExport.Exporter.WriteXlsxToResponse(fileName);
         }
@@ -133,6 +155,11 @@ namespace EudoxusOsy.Portal.Secure.Ministry
         protected void gvDepExport_OnInit(object sender, EventArgs e)
         {
             SqlDataSourceDepartment.ConnectionString = ConfigurationManager.ConnectionStrings["LocalSqlServer"].ConnectionString;
+        }
+
+        protected void btnReturn_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("SuppliersStats.aspx");
         }
     }
 }

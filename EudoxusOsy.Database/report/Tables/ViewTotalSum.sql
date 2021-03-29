@@ -1,4 +1,4 @@
 ﻿CREATE TABLE report.ViewTotalSum (
-		phase_id INT NOT NULL,
-		totalSum FLOAT NOT NULL		
+		[PhaseID] [int] NOT NULL,
+		[TotalSum] [decimal](10, 2) NULL
 	) 

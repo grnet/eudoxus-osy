@@ -291,6 +291,8 @@ namespace EudoxusOsy.Portal._rdlc {
             
             private global::System.Data.DataColumn columnAmountString;
             
+            private global::System.Data.DataColumn columnDeduction;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public OfficeSlipDataTable() {
@@ -374,6 +376,14 @@ namespace EudoxusOsy.Portal._rdlc {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn DeductionColumn {
+                get {
+                    return this.columnDeduction;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -409,7 +419,7 @@ namespace EudoxusOsy.Portal._rdlc {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public OfficeSlipRow AddOfficeSlipRow(string SupplierName, int GroupID, string AFM, string PaymentOffice, decimal Amount, string AmountString) {
+            public OfficeSlipRow AddOfficeSlipRow(string SupplierName, int GroupID, string AFM, string PaymentOffice, decimal Amount, string AmountString, string Deduction) {
                 OfficeSlipRow rowOfficeSlipRow = ((OfficeSlipRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         SupplierName,
@@ -417,7 +427,8 @@ namespace EudoxusOsy.Portal._rdlc {
                         AFM,
                         PaymentOffice,
                         Amount,
-                        AmountString};
+                        AmountString,
+                        Deduction};
                 rowOfficeSlipRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowOfficeSlipRow);
                 return rowOfficeSlipRow;
@@ -446,6 +457,7 @@ namespace EudoxusOsy.Portal._rdlc {
                 this.columnPaymentOffice = base.Columns["PaymentOffice"];
                 this.columnAmount = base.Columns["Amount"];
                 this.columnAmountString = base.Columns["AmountString"];
+                this.columnDeduction = base.Columns["Deduction"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -463,6 +475,8 @@ namespace EudoxusOsy.Portal._rdlc {
                 base.Columns.Add(this.columnAmount);
                 this.columnAmountString = new global::System.Data.DataColumn("AmountString", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnAmountString);
+                this.columnDeduction = new global::System.Data.DataColumn("Deduction", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDeduction);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -701,6 +715,22 @@ namespace EudoxusOsy.Portal._rdlc {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Deduction {
+                get {
+                    try {
+                        return ((string)(this[this.tableOfficeSlip.DeductionColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Deduction\' in table \'OfficeSlip\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableOfficeSlip.DeductionColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsSupplierNameNull() {
                 return this.IsNull(this.tableOfficeSlip.SupplierNameColumn);
             }
@@ -769,6 +799,18 @@ namespace EudoxusOsy.Portal._rdlc {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetAmountStringNull() {
                 this[this.tableOfficeSlip.AmountStringColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsDeductionNull() {
+                return this.IsNull(this.tableOfficeSlip.DeductionColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetDeductionNull() {
+                this[this.tableOfficeSlip.DeductionColumn] = global::System.Convert.DBNull;
             }
         }
         

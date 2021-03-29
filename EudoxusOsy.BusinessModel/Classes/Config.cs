@@ -127,6 +127,18 @@ namespace EudoxusOsy.BusinessModel
             }
         }
 
+        private static bool? _enableKPSUpdate = null;
+        public static bool EnableKPSUpdate
+        {
+            get
+            {
+                if (_enableKPSUpdate == null)
+                    _enableKPSUpdate = Convert.ToBoolean(ConfigurationManager.AppSettings["EnableKPSUpdate"]);
+
+                return _enableKPSUpdate.Value;
+            }
+        }
+
         private static int? _lockWindow = null;
         public static int LockWindow
         {
@@ -188,6 +200,7 @@ namespace EudoxusOsy.BusinessModel
         }
 
         private static string _localReceiptsOnlyFileName = null;
+
         public static string LocalReceiptsOnlyFileName
         {
             get
@@ -196,6 +209,106 @@ namespace EudoxusOsy.BusinessModel
                     _localReceiptsOnlyFileName = ConfigurationManager.AppSettings["LocalReceiptsOnlyFileName"];
 
                 return _localReceiptsOnlyFileName;
+            }
+        }
+
+        private static string _updateBookStatusKPSMethod = null;
+
+        public static string UpdateBookStatusKPSMethod
+        {
+            get
+            {
+                if (_updateBookStatusKPSMethod == null)
+                    _updateBookStatusKPSMethod = ConfigurationManager.AppSettings["UpdateBookStatusKPSMethod"];
+
+                return _updateBookStatusKPSMethod;
+            }
+        }
+
+        private static string _manualNewBooksFile = null;
+
+        public static string ManualNewBooksFile
+        {
+            get
+            {
+                if (_manualNewBooksFile == null)
+                    _manualNewBooksFile = ConfigurationManager.AppSettings["ManualNewBooksFile"];
+
+                return _manualNewBooksFile;
+            }
+        }
+
+        private static string _manualModifiedBooksFile = null;
+
+        public static string ManualModifiedBooksFile
+        {
+            get
+            {
+                if (_manualModifiedBooksFile == null)
+                    _manualModifiedBooksFile = ConfigurationManager.AppSettings["ManualModifiedBooksFile"];
+
+                return _manualModifiedBooksFile;
+            }
+        }
+
+        private static string _setMoneyCheckFile = null;
+        public static string SetMoneyCheckFile
+        {
+            get
+            {
+                if (_setMoneyCheckFile == null)
+                    _setMoneyCheckFile = ConfigurationManager.AppSettings["SetMoneyCheckFile"];
+
+                return _setMoneyCheckFile;
+            }
+        }
+
+        private static string _systemModifiedBooksFile = null;
+
+        public static string SystemModifiedBooksFile
+        {
+            get
+            {
+                if (_systemModifiedBooksFile == null)
+                    _systemModifiedBooksFile = ConfigurationManager.AppSettings["SystemModifiedBooksFile"];
+
+                return _systemModifiedBooksFile;
+            }
+        }
+
+        private static string _systemNewBooksFile = null;
+        public static string SystemNewBooksFile
+        {
+            get
+            {
+                if (_systemNewBooksFile == null)
+                    _systemNewBooksFile = ConfigurationManager.AppSettings["SystemNewBooksFile"];
+
+                return _systemNewBooksFile;
+            }
+        }
+
+        private static bool? _enableMoneyDiffRecalculation = null;
+        public static bool? EnableMoneyDiffRecalculation
+        {
+            get
+            {
+                if (_enableMoneyDiffRecalculation == null)
+                    _enableMoneyDiffRecalculation = Convert.ToBoolean(ConfigurationManager.AppSettings["EnableMoneyDiffRecalculation"]);
+
+                return _enableMoneyDiffRecalculation;
+            }
+        }
+
+        private static int? _hideGroupCreationForPhase = null;
+        public static int HideGroupCreationForPhase
+        {
+            get
+            {
+                if (_hideGroupCreationForPhase == null)
+                    _hideGroupCreationForPhase = int.Parse(ConfigurationManager.AppSettings["HideGroupCreationForPhase"]);
+
+                return _hideGroupCreationForPhase.Value;
             }
         }
 

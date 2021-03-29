@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Mails>
+
+  <Mail Category="IbanChanges">
+    <Subject>
+      <![CDATA[[Σύστημα Πληρωμής Διαθετών Διδακτικών Συγγραμμάτων] Αλλαγές IBAN]]>
+    </Subject>
+    <Body>
+      <![CDATA[%IBANCHANGES%]]>
+    </Body>
+  </Mail>  
+
+  <Mail Category="CustomMessage">
+    <Subject>
+      <![CDATA[[Σύστημα Πληρωμής Διαθετών Διδακτικών Συγγραμμάτων] %SUBJECT%]]>
+    </Subject>
+    <Body>
+      <![CDATA[%MESSAGE%]]>
+    </Body>
+  </Mail>
+
+  <Mail Category="DailyAuditReceiptsProcessReport">
+    <Subject>
+      <![CDATA[[Σύστημα Πληρωμής Διαθετών Διδακτικών Συγγραμμάτων] %SUBJECT%]]>
+    </Subject>
+    <Body>
+      <![CDATA[%MESSAGE%]]>
+    </Body>
+  </Mail>
+
+  <Mail Category="ServiceBookChangesReport">
+    <Subject>
+      <![CDATA[[Σύστημα Πληρωμής Διαθετών Διδακτικών Συγγραμμάτων] %SUBJECT%]]>
+    </Subject>
+    <Body>
+      <![CDATA[%MESSAGE%]]>
+    </Body>
+  </Mail>
+
+  <Footer>
+    <![CDATA[
+ΠΡΟΣΟΧΗ:
+Το email αυτό σας αποστέλλεται από το Online HelpDesk του Συστήματος Πληρωμής Διαθετών Διδακτικών Συγγραμμάτων
+Παρακαλούμε MHN απαντήσετε σε αυτό το email.
+Εάν έχετε απορίες, μπορείτε να επικοινωνήσετε με το Γραφείο Αρωγής Χρηστών.
+    ]]>
+  </Footer>
+</Mails>

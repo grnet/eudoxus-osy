@@ -155,5 +155,14 @@ namespace EudoxusOsy.Portal.UserControls.SearchFilters {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxComboBox ddlCatalogState;
+        
+        /// <summary>
+        /// ddlIsLocked control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxComboBox ddlIsLocked;
     }
 }

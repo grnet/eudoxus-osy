@@ -1,12 +1,10 @@
 ﻿using DevExpress.Web;
-using Imis.Domain;
 using EudoxusOsy.BusinessModel;
+using Imis.Domain;
 using System;
-using System.Web;
-using System.Linq;
-using EudoxusOsy.Portal.DataSources;
 using System.Collections.Generic;
-using System.Xml.Linq;
+using System.Linq;
+using System.Web;
 
 namespace EudoxusOsy.Portal
 {
@@ -226,19 +224,36 @@ namespace EudoxusOsy.Portal
 
         public static void FillPfos(this ASPxComboBox ddlPfo, string promptValue = "-- επιλέξτε Δ.Ο.Υ. Πληρωμών --")
         {
-            ddlPfo.Items.Add(new ListEditItem(promptValue, null));
+            ddlPfo.Items.Add(new ListEditItem(promptValue, 0));
 
-            foreach (var item in CacheManager.GetOrderedPublicFinancialOffices())
+            List<PublicFinancialOffice> list = CacheManager.GetOrderedPublicFinancialOffices();
+
+            if (list != null && list.Count > 0)
             {
-                ddlPfo.Items.Add(new ListEditItem(item.Name, item.ID));
+                PublicFinancialOffice foreign = list.Find(x => x.ID == -1);
+
+                if (foreign != null)
+                {
+                    ddlPfo.Items.Add(new ListEditItem(foreign.Name, foreign.ID));
+                }
+
+                foreach (var item in list)
+                {
+                    if (item.ID == -1)
+                    {
+                        continue;
+                    }
+                    ddlPfo.Items.Add(new ListEditItem(item.Name, item.ID));
+                }
             }
+
         }
 
         public static void FillBanks(this ASPxComboBox ddlBank, bool isBank, string promptValue = "-- επιλέξτε τράπεζα --")
         {
             ddlBank.Items.Add(new ListEditItem(promptValue, null));
 
-            var banks = new BankRepository().LoadAll().OrderBy(x=> x.Name);
+            var banks = new BankRepository().LoadAll().OrderBy(x => x.Name);
 
             foreach (var item in banks.Where(x => x.IsBank == isBank && x.IsActive))
             {
@@ -250,7 +265,7 @@ namespace EudoxusOsy.Portal
         {
             ddlPhase.Items.Add(new ListEditItem(promptValue, null));
 
-            var phases = new PhaseRepository().LoadAll().OrderByDescending(x => x.ID);
+            var phases = new PhaseRepository().GetAllActive().OrderByDescending(x => x.ID);
 
             foreach (var item in phases.Where(x => x.IsActive))
             {
@@ -262,7 +277,7 @@ namespace EudoxusOsy.Portal
         {
             ddlPhase.Items.Add(new ListEditItem(promptValue, null));
 
-            var phases = new PhaseRepository().LoadAll().Where(x => x.CatalogsCreated).OrderByDescending(x => x.ID);
+            var phases = new PhaseRepository().GetAllActive().Where(x => x.CatalogsCreated).OrderByDescending(x => x.ID);
 
             foreach (var item in phases.Where(x => x.IsActive))
             {
@@ -274,7 +289,7 @@ namespace EudoxusOsy.Portal
         {
             ddlPhase.Items.Add(new ListEditItem(promptValue, null));
 
-            var phases = new PhaseRepository().LoadAll().OrderByDescending(x => x.ID);
+            var phases = new PhaseRepository().GetAllActive().OrderByDescending(x => x.ID);
 
             foreach (var item in phases.Where(x => x.IsActive))
             {
@@ -289,7 +304,7 @@ namespace EudoxusOsy.Portal
         {
             ddlPhase.Items.Add(new ListEditItem(promptValue, null));
 
-            var phases = new PhaseRepository().LoadAll().OrderByDescending(x => x.ID);
+            var phases = new PhaseRepository().GetAllActive().OrderByDescending(x => x.ID);
 
             foreach (var item in phases.Where(x => x.IsActive))
             {

@@ -83,6 +83,7 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("DBEntitiesModel", "FK_Catalog_OriginalPhase", "Phase", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(EudoxusOsy.BusinessModel.Phase), "Catalog", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(EudoxusOsy.BusinessModel.Catalog), true)]
 [assembly: EdmRelationshipAttribute("DBEntitiesModel", "FK_Supplier_PaymentPfo", "PublicFinancialOffice", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(EudoxusOsy.BusinessModel.PublicFinancialOffice), "Supplier", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(EudoxusOsy.BusinessModel.Supplier), true)]
 [assembly: EdmRelationshipAttribute("DBEntitiesModel", "FK_BookPriceChanges_Book", "Book", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(EudoxusOsy.BusinessModel.Book), "BookPriceChange", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(EudoxusOsy.BusinessModel.BookPriceChange), true)]
+[assembly: EdmRelationshipAttribute("DBEntitiesModel", "FK_SupplierIBAN_File", "File", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(EudoxusOsy.BusinessModel.File), "SupplierIBAN", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(EudoxusOsy.BusinessModel.SupplierIBAN), true)]
 
 #endregion
 
@@ -902,6 +903,118 @@ namespace EudoxusOsy.BusinessModel
             }
         }
         private ObjectSet<BookPriceChange> _BookPriceChanges;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<BusinessLogicErrorsKP> BusinessLogicErrorsKPS
+        {
+            get
+            {
+                if ((_BusinessLogicErrorsKPS == null))
+                {
+                    _BusinessLogicErrorsKPS = base.CreateObjectSet<BusinessLogicErrorsKP>("BusinessLogicErrorsKPS");
+                }
+                return _BusinessLogicErrorsKPS;
+            }
+        }
+        private ObjectSet<BusinessLogicErrorsKP> _BusinessLogicErrorsKPS;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Archive> Archives
+        {
+            get
+            {
+                if ((_Archives == null))
+                {
+                    _Archives = base.CreateObjectSet<Archive>("Archives");
+                }
+                return _Archives;
+            }
+        }
+        private ObjectSet<Archive> _Archives;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<TempArchive> TempArchives
+        {
+            get
+            {
+                if ((_TempArchives == null))
+                {
+                    _TempArchives = base.CreateObjectSet<TempArchive>("TempArchives");
+                }
+                return _TempArchives;
+            }
+        }
+        private ObjectSet<TempArchive> _TempArchives;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<BookPricesV> BookPricesVs
+        {
+            get
+            {
+                if ((_BookPricesVs == null))
+                {
+                    _BookPricesVs = base.CreateObjectSet<BookPricesV>("BookPricesVs");
+                }
+                return _BookPricesVs;
+            }
+        }
+        private ObjectSet<BookPricesV> _BookPricesVs;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<BookPricesGridV> BookPricesGridVs
+        {
+            get
+            {
+                if ((_BookPricesGridVs == null))
+                {
+                    _BookPricesGridVs = base.CreateObjectSet<BookPricesGridV>("BookPricesGridVs");
+                }
+                return _BookPricesGridVs;
+            }
+        }
+        private ObjectSet<BookPricesGridV> _BookPricesGridVs;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<EditCatalogsGridV> EditCatalogsGridVs
+        {
+            get
+            {
+                if ((_EditCatalogsGridVs == null))
+                {
+                    _EditCatalogsGridVs = base.CreateObjectSet<EditCatalogsGridV>("EditCatalogsGridVs");
+                }
+                return _EditCatalogsGridVs;
+            }
+        }
+        private ObjectSet<EditCatalogsGridV> _EditCatalogsGridVs;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<TempAmountDiff> TempAmountDiffs
+        {
+            get
+            {
+                if ((_TempAmountDiffs == null))
+                {
+                    _TempAmountDiffs = base.CreateObjectSet<TempAmountDiff>("TempAmountDiffs");
+                }
+                return _TempAmountDiffs;
+            }
+        }
+        private ObjectSet<TempAmountDiff> _TempAmountDiffs;
 
         #endregion
 
@@ -1290,6 +1403,62 @@ namespace EudoxusOsy.BusinessModel
         {
             base.AddObject("BookPriceChanges", bookPriceChange);
         }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the BusinessLogicErrorsKPS EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToBusinessLogicErrorsKPS(BusinessLogicErrorsKP businessLogicErrorsKP)
+        {
+            base.AddObject("BusinessLogicErrorsKPS", businessLogicErrorsKP);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Archives EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToArchives(Archive archive)
+        {
+            base.AddObject("Archives", archive);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the TempArchives EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToTempArchives(TempArchive tempArchive)
+        {
+            base.AddObject("TempArchives", tempArchive);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the BookPricesVs EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToBookPricesVs(BookPricesV bookPricesV)
+        {
+            base.AddObject("BookPricesVs", bookPricesV);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the BookPricesGridVs EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToBookPricesGridVs(BookPricesGridV bookPricesGridV)
+        {
+            base.AddObject("BookPricesGridVs", bookPricesGridV);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the EditCatalogsGridVs EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToEditCatalogsGridVs(EditCatalogsGridV editCatalogsGridV)
+        {
+            base.AddObject("EditCatalogsGridVs", editCatalogsGridV);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the TempAmountDiffs EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToTempAmountDiffs(TempAmountDiff tempAmountDiff)
+        {
+            base.AddObject("TempAmountDiffs", tempAmountDiff);
+        }
 
         #endregion
 
@@ -1369,78 +1538,6 @@ namespace EudoxusOsy.BusinessModel
             }
     
             return base.ExecuteFunction("CacheStats", phaseIdParameter);
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        /// <param name="supplier_kpsid">No Metadata Documentation available.</param>
-        /// <param name="afm">No Metadata Documentation available.</param>
-        /// <param name="name">No Metadata Documentation available.</param>
-        /// <param name="supplier_type">No Metadata Documentation available.</param>
-        /// <param name="count">No Metadata Documentation available.</param>
-        public ObjectResult<SupplierFullStatistics> GetSupplierFullStatistics(Nullable<global::System.Int32> supplier_kpsid, global::System.String afm, global::System.String name, Nullable<global::System.Int32> supplier_type, ObjectParameter count)
-        {
-            ObjectParameter supplier_kpsidParameter;
-            if (supplier_kpsid.HasValue)
-            {
-                supplier_kpsidParameter = new ObjectParameter("supplier_kpsid", supplier_kpsid);
-            }
-            else
-            {
-                supplier_kpsidParameter = new ObjectParameter("supplier_kpsid", typeof(global::System.Int32));
-            }
-    
-            ObjectParameter afmParameter;
-            if (afm != null)
-            {
-                afmParameter = new ObjectParameter("afm", afm);
-            }
-            else
-            {
-                afmParameter = new ObjectParameter("afm", typeof(global::System.String));
-            }
-    
-            ObjectParameter nameParameter;
-            if (name != null)
-            {
-                nameParameter = new ObjectParameter("name", name);
-            }
-            else
-            {
-                nameParameter = new ObjectParameter("name", typeof(global::System.String));
-            }
-    
-            ObjectParameter supplier_typeParameter;
-            if (supplier_type.HasValue)
-            {
-                supplier_typeParameter = new ObjectParameter("supplier_type", supplier_type);
-            }
-            else
-            {
-                supplier_typeParameter = new ObjectParameter("supplier_type", typeof(global::System.Int32));
-            }
-    
-            return base.ExecuteFunction<SupplierFullStatistics>("GetSupplierFullStatistics", supplier_kpsidParameter, afmParameter, nameParameter, supplier_typeParameter, count);
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        /// <param name="phaseID">No Metadata Documentation available.</param>
-        public ObjectResult<SuppliersStatsForExport> GetSuppliersStatsForExport(Nullable<global::System.Int32> phaseID)
-        {
-            ObjectParameter phaseIDParameter;
-            if (phaseID.HasValue)
-            {
-                phaseIDParameter = new ObjectParameter("phaseID", phaseID);
-            }
-            else
-            {
-                phaseIDParameter = new ObjectParameter("phaseID", typeof(global::System.Int32));
-            }
-    
-            return base.ExecuteFunction<SuppliersStatsForExport>("GetSuppliersStatsForExport", phaseIDParameter);
         }
     
         /// <summary>
@@ -1656,6 +1753,170 @@ namespace EudoxusOsy.BusinessModel
     
             return base.ExecuteFunction("spReceipt", registrationKpsIdParameter, receivedParameter, bookKpsIdParameter, secretariatKpsIdParameter, sentByKpsParameter, reasonParameter, auditReceiptIDParameter, ret);
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="supplier_kpsid">No Metadata Documentation available.</param>
+        /// <param name="afm">No Metadata Documentation available.</param>
+        /// <param name="phaseID">No Metadata Documentation available.</param>
+        /// <param name="name">No Metadata Documentation available.</param>
+        /// <param name="supplier_type">No Metadata Documentation available.</param>
+        /// <param name="count">No Metadata Documentation available.</param>
+        public ObjectResult<SupplierFullStatistics> GetSupplierFullStatistics(Nullable<global::System.Int32> supplier_kpsid, global::System.String afm, Nullable<global::System.Int32> phaseID, global::System.String name, Nullable<global::System.Int32> supplier_type, ObjectParameter count)
+        {
+            ObjectParameter supplier_kpsidParameter;
+            if (supplier_kpsid.HasValue)
+            {
+                supplier_kpsidParameter = new ObjectParameter("supplier_kpsid", supplier_kpsid);
+            }
+            else
+            {
+                supplier_kpsidParameter = new ObjectParameter("supplier_kpsid", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter afmParameter;
+            if (afm != null)
+            {
+                afmParameter = new ObjectParameter("afm", afm);
+            }
+            else
+            {
+                afmParameter = new ObjectParameter("afm", typeof(global::System.String));
+            }
+    
+            ObjectParameter phaseIDParameter;
+            if (phaseID.HasValue)
+            {
+                phaseIDParameter = new ObjectParameter("PhaseID", phaseID);
+            }
+            else
+            {
+                phaseIDParameter = new ObjectParameter("PhaseID", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter nameParameter;
+            if (name != null)
+            {
+                nameParameter = new ObjectParameter("name", name);
+            }
+            else
+            {
+                nameParameter = new ObjectParameter("name", typeof(global::System.String));
+            }
+    
+            ObjectParameter supplier_typeParameter;
+            if (supplier_type.HasValue)
+            {
+                supplier_typeParameter = new ObjectParameter("supplier_type", supplier_type);
+            }
+            else
+            {
+                supplier_typeParameter = new ObjectParameter("supplier_type", typeof(global::System.Int32));
+            }
+    
+            return base.ExecuteFunction<SupplierFullStatistics>("GetSupplierFullStatistics", supplier_kpsidParameter, afmParameter, phaseIDParameter, nameParameter, supplier_typeParameter, count);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public int Rest_PP()
+        {
+            return base.ExecuteFunction("Rest_PP");
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public int SuppliersFullStatistics_PP()
+        {
+            return base.ExecuteFunction("SuppliersFullStatistics_PP");
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="phaseId">No Metadata Documentation available.</param>
+        public ObjectResult<BasicStats> GetBasicStats(Nullable<global::System.Int32> phaseId)
+        {
+            ObjectParameter phaseIdParameter;
+            if (phaseId.HasValue)
+            {
+                phaseIdParameter = new ObjectParameter("phaseId", phaseId);
+            }
+            else
+            {
+                phaseIdParameter = new ObjectParameter("phaseId", typeof(global::System.Int32));
+            }
+    
+            return base.ExecuteFunction<BasicStats>("GetBasicStats", phaseIdParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public int FillArchiveFromTempArchive()
+        {
+            return base.ExecuteFunction("FillArchiveFromTempArchive");
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="phaseID">No Metadata Documentation available.</param>
+        public int GetSupplierMoneyDiffs(Nullable<global::System.Int32> phaseID)
+        {
+            ObjectParameter phaseIDParameter;
+            if (phaseID.HasValue)
+            {
+                phaseIDParameter = new ObjectParameter("PhaseID", phaseID);
+            }
+            else
+            {
+                phaseIDParameter = new ObjectParameter("PhaseID", typeof(global::System.Int32));
+            }
+    
+            return base.ExecuteFunction("GetSupplierMoneyDiffs", phaseIDParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="phaseId">No Metadata Documentation available.</param>
+        public ObjectResult<CatalogsReportItems> spCatalogsReport(Nullable<global::System.Int32> phaseId)
+        {
+            ObjectParameter phaseIdParameter;
+            if (phaseId.HasValue)
+            {
+                phaseIdParameter = new ObjectParameter("phaseId", phaseId);
+            }
+            else
+            {
+                phaseIdParameter = new ObjectParameter("phaseId", typeof(global::System.Int32));
+            }
+    
+            return base.ExecuteFunction<CatalogsReportItems>("spCatalogsReport", phaseIdParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="phaseID">No Metadata Documentation available.</param>
+        public ObjectResult<SuppliersStatsForExport> GetSuppliersStatsForExport(Nullable<global::System.Int32> phaseID)
+        {
+            ObjectParameter phaseIDParameter;
+            if (phaseID.HasValue)
+            {
+                phaseIDParameter = new ObjectParameter("phaseID", phaseID);
+            }
+            else
+            {
+                phaseIDParameter = new ObjectParameter("phaseID", typeof(global::System.Int32));
+            }
+    
+            return base.ExecuteFunction<SuppliersStatsForExport>("sp_GetSuppliersStatsForExport", phaseIDParameter);
+        }
 
         #endregion
 
@@ -1772,6 +2033,372 @@ namespace EudoxusOsy.BusinessModel
         private global::System.String _Value;
         partial void OnValueChanging(global::System.String value);
         partial void OnValueChanged();
+
+        #endregion
+
+    
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="DBEntitiesModel", Name="Archive")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Archive : Imis.Domain.EF.DomainEntity<DBEntities>
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Archive object.
+        /// </summary>
+        /// <param name="id">Initial value of the ID property.</param>
+        /// <param name="kPSArchiveID">Initial value of the KPSArchiveID property.</param>
+        /// <param name="year">Initial value of the Year property.</param>
+        /// <param name="suggestedPrice">Initial value of the SuggestedPrice property.</param>
+        /// <param name="lastUpdate">Initial value of the LastUpdate property.</param>
+        /// <param name="bookKpsID">Initial value of the BookKpsID property.</param>
+        /// <param name="isActive">Initial value of the IsActive property.</param>
+        public static Archive CreateArchive(global::System.Int32 id, global::System.Int32 kPSArchiveID, global::System.Int32 year, global::System.Decimal suggestedPrice, global::System.String lastUpdate, global::System.Int32 bookKpsID, global::System.Boolean isActive)
+        {
+            Archive archive = new Archive();
+            archive.ID = id;
+            archive.KPSArchiveID = kPSArchiveID;
+            archive.Year = year;
+            archive.SuggestedPrice = suggestedPrice;
+            archive.LastUpdate = lastUpdate;
+            archive.BookKpsID = bookKpsID;
+            archive.IsActive = isActive;
+            return archive;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 ID
+        {
+            get
+            {
+                return _ID;
+            }
+            set
+            {
+                if (_ID != value)
+                {
+                    OnIDChanging(value);
+                    ReportPropertyChanging("ID");
+                    _ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("ID");
+                    OnIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _ID;
+        partial void OnIDChanging(global::System.Int32 value);
+        partial void OnIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 KPSArchiveID
+        {
+            get
+            {
+                return _KPSArchiveID;
+            }
+            set
+            {
+                if (_KPSArchiveID != value)
+                {
+                    OnKPSArchiveIDChanging(value);
+                    ReportPropertyChanging("KPSArchiveID");
+                    _KPSArchiveID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("KPSArchiveID");
+                    OnKPSArchiveIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _KPSArchiveID;
+        partial void OnKPSArchiveIDChanging(global::System.Int32 value);
+        partial void OnKPSArchiveIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 Year
+        {
+            get
+            {
+                return _Year;
+            }
+            set
+            {
+                if (_Year != value)
+                {
+                    OnYearChanging(value);
+                    ReportPropertyChanging("Year");
+                    _Year = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("Year");
+                    OnYearChanged();
+                }
+            }
+        }
+        private global::System.Int32 _Year;
+        partial void OnYearChanging(global::System.Int32 value);
+        partial void OnYearChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> Price
+        {
+            get
+            {
+                return _Price;
+            }
+            set
+            {
+                if (_Price != value)
+                {
+                    OnPriceChanging(value);
+                    ReportPropertyChanging("Price");
+                    _Price = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("Price");
+                    OnPriceChanged();
+                }
+            }
+        }
+        private Nullable<global::System.Decimal> _Price;
+        partial void OnPriceChanging(Nullable<global::System.Decimal> value);
+        partial void OnPriceChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal SuggestedPrice
+        {
+            get
+            {
+                return _SuggestedPrice;
+            }
+            set
+            {
+                if (_SuggestedPrice != value)
+                {
+                    OnSuggestedPriceChanging(value);
+                    ReportPropertyChanging("SuggestedPrice");
+                    _SuggestedPrice = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("SuggestedPrice");
+                    OnSuggestedPriceChanged();
+                }
+            }
+        }
+        private global::System.Decimal _SuggestedPrice;
+        partial void OnSuggestedPriceChanging(global::System.Decimal value);
+        partial void OnSuggestedPriceChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String LastUpdate
+        {
+            get
+            {
+                return _LastUpdate;
+            }
+            set
+            {
+                if (_LastUpdate != value)
+                {
+                    OnLastUpdateChanging(value);
+                    ReportPropertyChanging("LastUpdate");
+                    _LastUpdate = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("LastUpdate");
+                    OnLastUpdateChanged();
+                }
+            }
+        }
+        private global::System.String _LastUpdate;
+        partial void OnLastUpdateChanging(global::System.String value);
+        partial void OnLastUpdateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String DecisionNumber
+        {
+            get
+            {
+                return _DecisionNumber;
+            }
+            set
+            {
+                if (_DecisionNumber != value)
+                {
+                    OnDecisionNumberChanging(value);
+                    ReportPropertyChanging("DecisionNumber");
+                    _DecisionNumber = StructuralObject.SetValidValue(value, true);
+                    ReportPropertyChanged("DecisionNumber");
+                    OnDecisionNumberChanged();
+                }
+            }
+        }
+        private global::System.String _DecisionNumber;
+        partial void OnDecisionNumberChanging(global::System.String value);
+        partial void OnDecisionNumberChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String PriceComments
+        {
+            get
+            {
+                return _PriceComments;
+            }
+            set
+            {
+                if (_PriceComments != value)
+                {
+                    OnPriceCommentsChanging(value);
+                    ReportPropertyChanging("PriceComments");
+                    _PriceComments = StructuralObject.SetValidValue(value, true);
+                    ReportPropertyChanged("PriceComments");
+                    OnPriceCommentsChanged();
+                }
+            }
+        }
+        private global::System.String _PriceComments;
+        partial void OnPriceCommentsChanging(global::System.String value);
+        partial void OnPriceCommentsChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> CheckedPrice
+        {
+            get
+            {
+                return _CheckedPrice;
+            }
+            set
+            {
+                if (_CheckedPrice != value)
+                {
+                    OnCheckedPriceChanging(value);
+                    ReportPropertyChanging("CheckedPrice");
+                    _CheckedPrice = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("CheckedPrice");
+                    OnCheckedPriceChanged();
+                }
+            }
+        }
+        private Nullable<global::System.Boolean> _CheckedPrice;
+        partial void OnCheckedPriceChanging(Nullable<global::System.Boolean> value);
+        partial void OnCheckedPriceChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 BookKpsID
+        {
+            get
+            {
+                return _BookKpsID;
+            }
+            set
+            {
+                if (_BookKpsID != value)
+                {
+                    OnBookKpsIDChanging(value);
+                    ReportPropertyChanging("BookKpsID");
+                    _BookKpsID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("BookKpsID");
+                    OnBookKpsIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _BookKpsID;
+        partial void OnBookKpsIDChanging(global::System.Int32 value);
+        partial void OnBookKpsIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean IsActive
+        {
+            get
+            {
+                return _IsActive;
+            }
+            set
+            {
+                if (_IsActive != value)
+                {
+                    OnIsActiveChanging(value);
+                    ReportPropertyChanging("IsActive");
+                    _IsActive = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("IsActive");
+                    OnIsActiveChanged();
+                }
+            }
+        }
+        private global::System.Boolean _IsActive;
+        partial void OnIsActiveChanging(global::System.Boolean value);
+        partial void OnIsActiveChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Fek
+        {
+            get
+            {
+                return _Fek;
+            }
+            set
+            {
+                if (_Fek != value)
+                {
+                    OnFekChanging(value);
+                    ReportPropertyChanging("Fek");
+                    _Fek = StructuralObject.SetValidValue(value, true);
+                    ReportPropertyChanged("Fek");
+                    OnFekChanged();
+                }
+            }
+        }
+        private global::System.String _Fek;
+        partial void OnFekChanging(global::System.String value);
+        partial void OnFekChanged();
 
         #endregion
 
@@ -5002,7 +5629,8 @@ namespace EudoxusOsy.BusinessModel
         /// <param name="statusInt">Initial value of the StatusInt property.</param>
         /// <param name="createdAt">Initial value of the CreatedAt property.</param>
         /// <param name="createdBy">Initial value of the CreatedBy property.</param>
-        public static BookPrice CreateBookPrice(global::System.Int32 id, global::System.Int32 bookID, global::System.Decimal price, global::System.Int32 year, global::System.Int32 statusInt, global::System.DateTime createdAt, global::System.String createdBy)
+        /// <param name="isChecked">Initial value of the IsChecked property.</param>
+        public static BookPrice CreateBookPrice(global::System.Int32 id, global::System.Int32 bookID, global::System.Decimal price, global::System.Int32 year, global::System.Int32 statusInt, global::System.DateTime createdAt, global::System.String createdBy, global::System.Boolean isChecked)
         {
             BookPrice bookPrice = new BookPrice();
             bookPrice.ID = id;
@@ -5012,6 +5640,7 @@ namespace EudoxusOsy.BusinessModel
             bookPrice.StatusInt = statusInt;
             bookPrice.CreatedAt = createdAt;
             bookPrice.CreatedBy = createdBy;
+            bookPrice.IsChecked = isChecked;
             return bookPrice;
         }
 
@@ -5315,6 +5944,33 @@ namespace EudoxusOsy.BusinessModel
         private global::System.String _UpdatedBy;
         partial void OnUpdatedByChanging(global::System.String value);
         partial void OnUpdatedByChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean IsChecked
+        {
+            get
+            {
+                return _IsChecked;
+            }
+            set
+            {
+                if (_IsChecked != value)
+                {
+                    OnIsCheckedChanging(value);
+                    ReportPropertyChanging("IsChecked");
+                    _IsChecked = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("IsChecked");
+                    OnIsCheckedChanged();
+                }
+            }
+        }
+        private global::System.Boolean _IsChecked;
+        partial void OnIsCheckedChanging(global::System.Boolean value);
+        partial void OnIsCheckedChanged();
 
         #endregion
 
@@ -5400,21 +6056,25 @@ namespace EudoxusOsy.BusinessModel
         /// </summary>
         /// <param name="id">Initial value of the ID property.</param>
         /// <param name="bookID">Initial value of the BookID property.</param>
+        /// <param name="suggestedPrice">Initial value of the SuggestedPrice property.</param>
         /// <param name="decisionNumber">Initial value of the DecisionNumber property.</param>
         /// <param name="priceComments">Initial value of the PriceComments property.</param>
         /// <param name="priceChecked">Initial value of the PriceChecked property.</param>
         /// <param name="createdAt">Initial value of the CreatedAt property.</param>
         /// <param name="createdBy">Initial value of the CreatedBy property.</param>
-        public static BookPriceChange CreateBookPriceChange(global::System.Int32 id, global::System.Int32 bookID, global::System.String decisionNumber, global::System.String priceComments, global::System.Boolean priceChecked, global::System.DateTime createdAt, global::System.String createdBy)
+        /// <param name="year">Initial value of the Year property.</param>
+        public static BookPriceChange CreateBookPriceChange(global::System.Int32 id, global::System.Int32 bookID, global::System.Decimal suggestedPrice, global::System.String decisionNumber, global::System.String priceComments, global::System.Boolean priceChecked, global::System.DateTime createdAt, global::System.String createdBy, global::System.Int32 year)
         {
             BookPriceChange bookPriceChange = new BookPriceChange();
             bookPriceChange.ID = id;
             bookPriceChange.BookID = bookID;
+            bookPriceChange.SuggestedPrice = suggestedPrice;
             bookPriceChange.DecisionNumber = decisionNumber;
             bookPriceChange.PriceComments = priceComments;
             bookPriceChange.PriceChecked = priceChecked;
             bookPriceChange.CreatedAt = createdAt;
             bookPriceChange.CreatedBy = createdBy;
+            bookPriceChange.Year = year;
             return bookPriceChange;
         }
 
@@ -5479,9 +6139,9 @@ namespace EudoxusOsy.BusinessModel
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Decimal> SuggestedPrice
+        public global::System.Decimal SuggestedPrice
         {
             get
             {
@@ -5499,8 +6159,8 @@ namespace EudoxusOsy.BusinessModel
                 }
             }
         }
-        private Nullable<global::System.Decimal> _SuggestedPrice;
-        partial void OnSuggestedPriceChanging(Nullable<global::System.Decimal> value);
+        private global::System.Decimal _SuggestedPrice;
+        partial void OnSuggestedPriceChanging(global::System.Decimal value);
         partial void OnSuggestedPriceChanged();
     
         /// <summary>
@@ -5691,6 +6351,60 @@ namespace EudoxusOsy.BusinessModel
         private Nullable<global::System.Boolean> _Approved;
         partial void OnApprovedChanging(Nullable<global::System.Boolean> value);
         partial void OnApprovedChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> IsUnexpected
+        {
+            get
+            {
+                return _IsUnexpected;
+            }
+            set
+            {
+                if (_IsUnexpected != value)
+                {
+                    OnIsUnexpectedChanging(value);
+                    ReportPropertyChanging("IsUnexpected");
+                    _IsUnexpected = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("IsUnexpected");
+                    OnIsUnexpectedChanged();
+                }
+            }
+        }
+        private Nullable<global::System.Boolean> _IsUnexpected;
+        partial void OnIsUnexpectedChanging(Nullable<global::System.Boolean> value);
+        partial void OnIsUnexpectedChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 Year
+        {
+            get
+            {
+                return _Year;
+            }
+            set
+            {
+                if (_Year != value)
+                {
+                    OnYearChanging(value);
+                    ReportPropertyChanging("Year");
+                    _Year = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("Year");
+                    OnYearChanged();
+                }
+            }
+        }
+        private global::System.Int32 _Year;
+        partial void OnYearChanging(global::System.Int32 value);
+        partial void OnYearChanged();
 
         #endregion
 
@@ -7744,6 +8458,904 @@ namespace EudoxusOsy.BusinessModel
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="DBEntitiesModel", Name="BookPricesGridV")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class BookPricesGridV : Imis.Domain.EF.DomainEntity<DBEntities>
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new BookPricesGridV object.
+        /// </summary>
+        /// <param name="bookID">Initial value of the BookID property.</param>
+        /// <param name="bookKpsID">Initial value of the BookKpsID property.</param>
+        /// <param name="title">Initial value of the Title property.</param>
+        /// <param name="isActive">Initial value of the IsActive property.</param>
+        /// <param name="hasPendingPriceVerification">Initial value of the HasPendingPriceVerification property.</param>
+        /// <param name="hasUnexpectedPriceChange">Initial value of the HasUnexpectedPriceChange property.</param>
+        /// <param name="id">Initial value of the ID property.</param>
+        public static BookPricesGridV CreateBookPricesGridV(global::System.Int32 bookID, global::System.Int32 bookKpsID, global::System.String title, global::System.Boolean isActive, global::System.Boolean hasPendingPriceVerification, global::System.Boolean hasUnexpectedPriceChange, global::System.Int64 id)
+        {
+            BookPricesGridV bookPricesGridV = new BookPricesGridV();
+            bookPricesGridV.BookID = bookID;
+            bookPricesGridV.BookKpsID = bookKpsID;
+            bookPricesGridV.Title = title;
+            bookPricesGridV.IsActive = isActive;
+            bookPricesGridV.HasPendingPriceVerification = hasPendingPriceVerification;
+            bookPricesGridV.HasUnexpectedPriceChange = hasUnexpectedPriceChange;
+            bookPricesGridV.ID = id;
+            return bookPricesGridV;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 BookID
+        {
+            get
+            {
+                return _BookID;
+            }
+            set
+            {
+                if (_BookID != value)
+                {
+                    OnBookIDChanging(value);
+                    ReportPropertyChanging("BookID");
+                    _BookID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("BookID");
+                    OnBookIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _BookID;
+        partial void OnBookIDChanging(global::System.Int32 value);
+        partial void OnBookIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 BookKpsID
+        {
+            get
+            {
+                return _BookKpsID;
+            }
+            set
+            {
+                if (_BookKpsID != value)
+                {
+                    OnBookKpsIDChanging(value);
+                    ReportPropertyChanging("BookKpsID");
+                    _BookKpsID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("BookKpsID");
+                    OnBookKpsIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _BookKpsID;
+        partial void OnBookKpsIDChanging(global::System.Int32 value);
+        partial void OnBookKpsIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Title
+        {
+            get
+            {
+                return _Title;
+            }
+            set
+            {
+                if (_Title != value)
+                {
+                    OnTitleChanging(value);
+                    ReportPropertyChanging("Title");
+                    _Title = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("Title");
+                    OnTitleChanged();
+                }
+            }
+        }
+        private global::System.String _Title;
+        partial void OnTitleChanging(global::System.String value);
+        partial void OnTitleChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Author
+        {
+            get
+            {
+                return _Author;
+            }
+            set
+            {
+                if (_Author != value)
+                {
+                    OnAuthorChanging(value);
+                    ReportPropertyChanging("Author");
+                    _Author = StructuralObject.SetValidValue(value, true);
+                    ReportPropertyChanged("Author");
+                    OnAuthorChanged();
+                }
+            }
+        }
+        private global::System.String _Author;
+        partial void OnAuthorChanging(global::System.String value);
+        partial void OnAuthorChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Publisher
+        {
+            get
+            {
+                return _Publisher;
+            }
+            set
+            {
+                if (_Publisher != value)
+                {
+                    OnPublisherChanging(value);
+                    ReportPropertyChanging("Publisher");
+                    _Publisher = StructuralObject.SetValidValue(value, true);
+                    ReportPropertyChanged("Publisher");
+                    OnPublisherChanged();
+                }
+            }
+        }
+        private global::System.String _Publisher;
+        partial void OnPublisherChanging(global::System.String value);
+        partial void OnPublisherChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ISBN
+        {
+            get
+            {
+                return _ISBN;
+            }
+            set
+            {
+                if (_ISBN != value)
+                {
+                    OnISBNChanging(value);
+                    ReportPropertyChanging("ISBN");
+                    _ISBN = StructuralObject.SetValidValue(value, true);
+                    ReportPropertyChanged("ISBN");
+                    OnISBNChanged();
+                }
+            }
+        }
+        private global::System.String _ISBN;
+        partial void OnISBNChanging(global::System.String value);
+        partial void OnISBNChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean IsActive
+        {
+            get
+            {
+                return _IsActive;
+            }
+            set
+            {
+                if (_IsActive != value)
+                {
+                    OnIsActiveChanging(value);
+                    ReportPropertyChanging("IsActive");
+                    _IsActive = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("IsActive");
+                    OnIsActiveChanged();
+                }
+            }
+        }
+        private global::System.Boolean _IsActive;
+        partial void OnIsActiveChanging(global::System.Boolean value);
+        partial void OnIsActiveChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> CreatedAt
+        {
+            get
+            {
+                return _CreatedAt;
+            }
+            set
+            {
+                if (_CreatedAt != value)
+                {
+                    OnCreatedAtChanging(value);
+                    ReportPropertyChanging("CreatedAt");
+                    _CreatedAt = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("CreatedAt");
+                    OnCreatedAtChanged();
+                }
+            }
+        }
+        private Nullable<global::System.DateTime> _CreatedAt;
+        partial void OnCreatedAtChanging(Nullable<global::System.DateTime> value);
+        partial void OnCreatedAtChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> SuggestedPrice
+        {
+            get
+            {
+                return _SuggestedPrice;
+            }
+            set
+            {
+                if (_SuggestedPrice != value)
+                {
+                    OnSuggestedPriceChanging(value);
+                    ReportPropertyChanging("SuggestedPrice");
+                    _SuggestedPrice = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("SuggestedPrice");
+                    OnSuggestedPriceChanged();
+                }
+            }
+        }
+        private Nullable<global::System.Decimal> _SuggestedPrice;
+        partial void OnSuggestedPriceChanging(Nullable<global::System.Decimal> value);
+        partial void OnSuggestedPriceChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> Price
+        {
+            get
+            {
+                return _Price;
+            }
+            set
+            {
+                if (_Price != value)
+                {
+                    OnPriceChanging(value);
+                    ReportPropertyChanging("Price");
+                    _Price = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("Price");
+                    OnPriceChanged();
+                }
+            }
+        }
+        private Nullable<global::System.Decimal> _Price;
+        partial void OnPriceChanging(Nullable<global::System.Decimal> value);
+        partial void OnPriceChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean HasPendingPriceVerification
+        {
+            get
+            {
+                return _HasPendingPriceVerification;
+            }
+            set
+            {
+                if (_HasPendingPriceVerification != value)
+                {
+                    OnHasPendingPriceVerificationChanging(value);
+                    ReportPropertyChanging("HasPendingPriceVerification");
+                    _HasPendingPriceVerification = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("HasPendingPriceVerification");
+                    OnHasPendingPriceVerificationChanged();
+                }
+            }
+        }
+        private global::System.Boolean _HasPendingPriceVerification;
+        partial void OnHasPendingPriceVerificationChanging(global::System.Boolean value);
+        partial void OnHasPendingPriceVerificationChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean HasUnexpectedPriceChange
+        {
+            get
+            {
+                return _HasUnexpectedPriceChange;
+            }
+            set
+            {
+                if (_HasUnexpectedPriceChange != value)
+                {
+                    OnHasUnexpectedPriceChangeChanging(value);
+                    ReportPropertyChanging("HasUnexpectedPriceChange");
+                    _HasUnexpectedPriceChange = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("HasUnexpectedPriceChange");
+                    OnHasUnexpectedPriceChangeChanged();
+                }
+            }
+        }
+        private global::System.Boolean _HasUnexpectedPriceChange;
+        partial void OnHasUnexpectedPriceChangeChanging(global::System.Boolean value);
+        partial void OnHasUnexpectedPriceChangeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> ChangeYear
+        {
+            get
+            {
+                return _ChangeYear;
+            }
+            set
+            {
+                if (_ChangeYear != value)
+                {
+                    OnChangeYearChanging(value);
+                    ReportPropertyChanging("ChangeYear");
+                    _ChangeYear = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("ChangeYear");
+                    OnChangeYearChanged();
+                }
+            }
+        }
+        private Nullable<global::System.Int32> _ChangeYear;
+        partial void OnChangeYearChanging(Nullable<global::System.Int32> value);
+        partial void OnChangeYearChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> PriceChecked
+        {
+            get
+            {
+                return _PriceChecked;
+            }
+            set
+            {
+                if (_PriceChecked != value)
+                {
+                    OnPriceCheckedChanging(value);
+                    ReportPropertyChanging("PriceChecked");
+                    _PriceChecked = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("PriceChecked");
+                    OnPriceCheckedChanged();
+                }
+            }
+        }
+        private Nullable<global::System.Boolean> _PriceChecked;
+        partial void OnPriceCheckedChanging(Nullable<global::System.Boolean> value);
+        partial void OnPriceCheckedChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> BookPriceID
+        {
+            get
+            {
+                return _BookPriceID;
+            }
+            set
+            {
+                if (_BookPriceID != value)
+                {
+                    OnBookPriceIDChanging(value);
+                    ReportPropertyChanging("BookPriceID");
+                    _BookPriceID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("BookPriceID");
+                    OnBookPriceIDChanged();
+                }
+            }
+        }
+        private Nullable<global::System.Int32> _BookPriceID;
+        partial void OnBookPriceIDChanging(Nullable<global::System.Int32> value);
+        partial void OnBookPriceIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int64 ID
+        {
+            get
+            {
+                return _ID;
+            }
+            set
+            {
+                if (_ID != value)
+                {
+                    OnIDChanging(value);
+                    ReportPropertyChanging("ID");
+                    _ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("ID");
+                    OnIDChanged();
+                }
+            }
+        }
+        private global::System.Int64 _ID;
+        partial void OnIDChanging(global::System.Int64 value);
+        partial void OnIDChanged();
+
+        #endregion
+
+    
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="DBEntitiesModel", Name="BookPricesV")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class BookPricesV : Imis.Domain.EF.DomainEntity<DBEntities>
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new BookPricesV object.
+        /// </summary>
+        /// <param name="id">Initial value of the ID property.</param>
+        /// <param name="bookID">Initial value of the BookID property.</param>
+        /// <param name="bookKpsID">Initial value of the BookKpsID property.</param>
+        /// <param name="title">Initial value of the Title property.</param>
+        /// <param name="bookPriceChangeID">Initial value of the BookPriceChangeID property.</param>
+        /// <param name="createdAt">Initial value of the CreatedAt property.</param>
+        /// <param name="suggestedPrice">Initial value of the SuggestedPrice property.</param>
+        /// <param name="priceChecked">Initial value of the PriceChecked property.</param>
+        /// <param name="changeYear">Initial value of the ChangeYear property.</param>
+        public static BookPricesV CreateBookPricesV(global::System.Int32 id, global::System.Int32 bookID, global::System.Int32 bookKpsID, global::System.String title, global::System.Int32 bookPriceChangeID, global::System.DateTime createdAt, global::System.Decimal suggestedPrice, global::System.Boolean priceChecked, global::System.Int32 changeYear)
+        {
+            BookPricesV bookPricesV = new BookPricesV();
+            bookPricesV.ID = id;
+            bookPricesV.BookID = bookID;
+            bookPricesV.BookKpsID = bookKpsID;
+            bookPricesV.Title = title;
+            bookPricesV.BookPriceChangeID = bookPriceChangeID;
+            bookPricesV.CreatedAt = createdAt;
+            bookPricesV.SuggestedPrice = suggestedPrice;
+            bookPricesV.PriceChecked = priceChecked;
+            bookPricesV.ChangeYear = changeYear;
+            return bookPricesV;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 ID
+        {
+            get
+            {
+                return _ID;
+            }
+            set
+            {
+                if (_ID != value)
+                {
+                    OnIDChanging(value);
+                    ReportPropertyChanging("ID");
+                    _ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("ID");
+                    OnIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _ID;
+        partial void OnIDChanging(global::System.Int32 value);
+        partial void OnIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 BookID
+        {
+            get
+            {
+                return _BookID;
+            }
+            set
+            {
+                if (_BookID != value)
+                {
+                    OnBookIDChanging(value);
+                    ReportPropertyChanging("BookID");
+                    _BookID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("BookID");
+                    OnBookIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _BookID;
+        partial void OnBookIDChanging(global::System.Int32 value);
+        partial void OnBookIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 BookKpsID
+        {
+            get
+            {
+                return _BookKpsID;
+            }
+            set
+            {
+                if (_BookKpsID != value)
+                {
+                    OnBookKpsIDChanging(value);
+                    ReportPropertyChanging("BookKpsID");
+                    _BookKpsID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("BookKpsID");
+                    OnBookKpsIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _BookKpsID;
+        partial void OnBookKpsIDChanging(global::System.Int32 value);
+        partial void OnBookKpsIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Title
+        {
+            get
+            {
+                return _Title;
+            }
+            set
+            {
+                if (_Title != value)
+                {
+                    OnTitleChanging(value);
+                    ReportPropertyChanging("Title");
+                    _Title = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("Title");
+                    OnTitleChanged();
+                }
+            }
+        }
+        private global::System.String _Title;
+        partial void OnTitleChanging(global::System.String value);
+        partial void OnTitleChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 BookPriceChangeID
+        {
+            get
+            {
+                return _BookPriceChangeID;
+            }
+            set
+            {
+                if (_BookPriceChangeID != value)
+                {
+                    OnBookPriceChangeIDChanging(value);
+                    ReportPropertyChanging("BookPriceChangeID");
+                    _BookPriceChangeID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("BookPriceChangeID");
+                    OnBookPriceChangeIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _BookPriceChangeID;
+        partial void OnBookPriceChangeIDChanging(global::System.Int32 value);
+        partial void OnBookPriceChangeIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime CreatedAt
+        {
+            get
+            {
+                return _CreatedAt;
+            }
+            set
+            {
+                if (_CreatedAt != value)
+                {
+                    OnCreatedAtChanging(value);
+                    ReportPropertyChanging("CreatedAt");
+                    _CreatedAt = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("CreatedAt");
+                    OnCreatedAtChanged();
+                }
+            }
+        }
+        private global::System.DateTime _CreatedAt;
+        partial void OnCreatedAtChanging(global::System.DateTime value);
+        partial void OnCreatedAtChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal SuggestedPrice
+        {
+            get
+            {
+                return _SuggestedPrice;
+            }
+            set
+            {
+                if (_SuggestedPrice != value)
+                {
+                    OnSuggestedPriceChanging(value);
+                    ReportPropertyChanging("SuggestedPrice");
+                    _SuggestedPrice = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("SuggestedPrice");
+                    OnSuggestedPriceChanged();
+                }
+            }
+        }
+        private global::System.Decimal _SuggestedPrice;
+        partial void OnSuggestedPriceChanging(global::System.Decimal value);
+        partial void OnSuggestedPriceChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> Price
+        {
+            get
+            {
+                return _Price;
+            }
+            set
+            {
+                if (_Price != value)
+                {
+                    OnPriceChanging(value);
+                    ReportPropertyChanging("Price");
+                    _Price = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("Price");
+                    OnPriceChanged();
+                }
+            }
+        }
+        private Nullable<global::System.Decimal> _Price;
+        partial void OnPriceChanging(Nullable<global::System.Decimal> value);
+        partial void OnPriceChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean PriceChecked
+        {
+            get
+            {
+                return _PriceChecked;
+            }
+            set
+            {
+                if (_PriceChecked != value)
+                {
+                    OnPriceCheckedChanging(value);
+                    ReportPropertyChanging("PriceChecked");
+                    _PriceChecked = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("PriceChecked");
+                    OnPriceCheckedChanged();
+                }
+            }
+        }
+        private global::System.Boolean _PriceChecked;
+        partial void OnPriceCheckedChanging(global::System.Boolean value);
+        partial void OnPriceCheckedChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> PendingCommitteePriceVerification
+        {
+            get
+            {
+                return _PendingCommitteePriceVerification;
+            }
+            set
+            {
+                if (_PendingCommitteePriceVerification != value)
+                {
+                    OnPendingCommitteePriceVerificationChanging(value);
+                    ReportPropertyChanging("PendingCommitteePriceVerification");
+                    _PendingCommitteePriceVerification = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("PendingCommitteePriceVerification");
+                    OnPendingCommitteePriceVerificationChanged();
+                }
+            }
+        }
+        private Nullable<global::System.Boolean> _PendingCommitteePriceVerification;
+        partial void OnPendingCommitteePriceVerificationChanging(Nullable<global::System.Boolean> value);
+        partial void OnPendingCommitteePriceVerificationChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> HasUnexpectedPriceChangePhaseID
+        {
+            get
+            {
+                return _HasUnexpectedPriceChangePhaseID;
+            }
+            set
+            {
+                if (_HasUnexpectedPriceChangePhaseID != value)
+                {
+                    OnHasUnexpectedPriceChangePhaseIDChanging(value);
+                    ReportPropertyChanging("HasUnexpectedPriceChangePhaseID");
+                    _HasUnexpectedPriceChangePhaseID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("HasUnexpectedPriceChangePhaseID");
+                    OnHasUnexpectedPriceChangePhaseIDChanged();
+                }
+            }
+        }
+        private Nullable<global::System.Int32> _HasUnexpectedPriceChangePhaseID;
+        partial void OnHasUnexpectedPriceChangePhaseIDChanging(Nullable<global::System.Int32> value);
+        partial void OnHasUnexpectedPriceChangePhaseIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 ChangeYear
+        {
+            get
+            {
+                return _ChangeYear;
+            }
+            set
+            {
+                if (_ChangeYear != value)
+                {
+                    OnChangeYearChanging(value);
+                    ReportPropertyChanging("ChangeYear");
+                    _ChangeYear = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("ChangeYear");
+                    OnChangeYearChanged();
+                }
+            }
+        }
+        private global::System.Int32 _ChangeYear;
+        partial void OnChangeYearChanging(global::System.Int32 value);
+        partial void OnChangeYearChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int64> RowNum
+        {
+            get
+            {
+                return _RowNum;
+            }
+            set
+            {
+                if (_RowNum != value)
+                {
+                    OnRowNumChanging(value);
+                    ReportPropertyChanging("RowNum");
+                    _RowNum = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("RowNum");
+                    OnRowNumChanged();
+                }
+            }
+        }
+        private Nullable<global::System.Int64> _RowNum;
+        partial void OnRowNumChanging(Nullable<global::System.Int64> value);
+        partial void OnRowNumChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> Approved
+        {
+            get
+            {
+                return _Approved;
+            }
+            set
+            {
+                if (_Approved != value)
+                {
+                    OnApprovedChanging(value);
+                    ReportPropertyChanging("Approved");
+                    _Approved = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("Approved");
+                    OnApprovedChanged();
+                }
+            }
+        }
+        private Nullable<global::System.Boolean> _Approved;
+        partial void OnApprovedChanging(Nullable<global::System.Boolean> value);
+        partial void OnApprovedChanged();
+
+        #endregion
+
+    
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="DBEntitiesModel", Name="BookSupplier")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
@@ -8133,6 +9745,208 @@ namespace EudoxusOsy.BusinessModel
 
         #endregion
 
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="DBEntitiesModel", Name="BusinessLogicErrorsKP")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class BusinessLogicErrorsKP : Imis.Domain.EF.DomainEntity<DBEntities>
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new BusinessLogicErrorsKP object.
+        /// </summary>
+        /// <param name="id">Initial value of the ID property.</param>
+        /// <param name="entityID">Initial value of the EntityID property.</param>
+        /// <param name="errorEntityTypeInt">Initial value of the ErrorEntityTypeInt property.</param>
+        /// <param name="errorCodeInt">Initial value of the ErrorCodeInt property.</param>
+        /// <param name="description">Initial value of the Description property.</param>
+        /// <param name="createdAt">Initial value of the CreatedAt property.</param>
+        public static BusinessLogicErrorsKP CreateBusinessLogicErrorsKP(global::System.Int32 id, global::System.Int32 entityID, global::System.Int32 errorEntityTypeInt, global::System.Int32 errorCodeInt, global::System.String description, global::System.DateTime createdAt)
+        {
+            BusinessLogicErrorsKP businessLogicErrorsKP = new BusinessLogicErrorsKP();
+            businessLogicErrorsKP.ID = id;
+            businessLogicErrorsKP.EntityID = entityID;
+            businessLogicErrorsKP.ErrorEntityTypeInt = errorEntityTypeInt;
+            businessLogicErrorsKP.ErrorCodeInt = errorCodeInt;
+            businessLogicErrorsKP.Description = description;
+            businessLogicErrorsKP.CreatedAt = createdAt;
+            return businessLogicErrorsKP;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 ID
+        {
+            get
+            {
+                return _ID;
+            }
+            set
+            {
+                if (_ID != value)
+                {
+                    OnIDChanging(value);
+                    ReportPropertyChanging("ID");
+                    _ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("ID");
+                    OnIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _ID;
+        partial void OnIDChanging(global::System.Int32 value);
+        partial void OnIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 EntityID
+        {
+            get
+            {
+                return _EntityID;
+            }
+            set
+            {
+                if (_EntityID != value)
+                {
+                    OnEntityIDChanging(value);
+                    ReportPropertyChanging("EntityID");
+                    _EntityID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("EntityID");
+                    OnEntityIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _EntityID;
+        partial void OnEntityIDChanging(global::System.Int32 value);
+        partial void OnEntityIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 ErrorEntityTypeInt
+        {
+            get
+            {
+                return _ErrorEntityTypeInt;
+            }
+            set
+            {
+                if (_ErrorEntityTypeInt != value)
+                {
+                    OnErrorEntityTypeIntChanging(value);
+                    ReportPropertyChanging("ErrorEntityTypeInt");
+                    _ErrorEntityTypeInt = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("ErrorEntityTypeInt");
+                    OnErrorEntityTypeIntChanged();
+                }
+            }
+        }
+        private global::System.Int32 _ErrorEntityTypeInt;
+        partial void OnErrorEntityTypeIntChanging(global::System.Int32 value);
+        partial void OnErrorEntityTypeIntChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 ErrorCodeInt
+        {
+            get
+            {
+                return _ErrorCodeInt;
+            }
+            set
+            {
+                if (_ErrorCodeInt != value)
+                {
+                    OnErrorCodeIntChanging(value);
+                    ReportPropertyChanging("ErrorCodeInt");
+                    _ErrorCodeInt = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("ErrorCodeInt");
+                    OnErrorCodeIntChanged();
+                }
+            }
+        }
+        private global::System.Int32 _ErrorCodeInt;
+        partial void OnErrorCodeIntChanging(global::System.Int32 value);
+        partial void OnErrorCodeIntChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Description
+        {
+            get
+            {
+                return _Description;
+            }
+            set
+            {
+                if (_Description != value)
+                {
+                    OnDescriptionChanging(value);
+                    ReportPropertyChanging("Description");
+                    _Description = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("Description");
+                    OnDescriptionChanged();
+                }
+            }
+        }
+        private global::System.String _Description;
+        partial void OnDescriptionChanging(global::System.String value);
+        partial void OnDescriptionChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime CreatedAt
+        {
+            get
+            {
+                return _CreatedAt;
+            }
+            set
+            {
+                if (_CreatedAt != value)
+                {
+                    OnCreatedAtChanging(value);
+                    ReportPropertyChanging("CreatedAt");
+                    _CreatedAt = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("CreatedAt");
+                    OnCreatedAtChanged();
+                }
+            }
+        }
+        private global::System.DateTime _CreatedAt;
+        partial void OnCreatedAtChanging(global::System.DateTime value);
+        partial void OnCreatedAtChanged();
+
+        #endregion
+
+    
     }
     
     /// <summary>
@@ -10281,7 +12095,8 @@ namespace EudoxusOsy.BusinessModel
         /// <param name="createdAt">Initial value of the CreatedAt property.</param>
         /// <param name="groupID">Initial value of the GroupID property.</param>
         /// <param name="newStateInt">Initial value of the NewStateInt property.</param>
-        public static CatalogGroupLog CreateCatalogGroupLog(global::System.Int32 id, global::System.String createdBy, global::System.DateTime createdAt, global::System.Int32 groupID, global::System.Int32 newStateInt)
+        /// <param name="pdfTypeInt">Initial value of the PdfTypeInt property.</param>
+        public static CatalogGroupLog CreateCatalogGroupLog(global::System.Int32 id, global::System.String createdBy, global::System.DateTime createdAt, global::System.Int32 groupID, global::System.Int32 newStateInt, global::System.Int32 pdfTypeInt)
         {
             CatalogGroupLog catalogGroupLog = new CatalogGroupLog();
             catalogGroupLog.ID = id;
@@ -10289,6 +12104,7 @@ namespace EudoxusOsy.BusinessModel
             catalogGroupLog.CreatedAt = createdAt;
             catalogGroupLog.GroupID = groupID;
             catalogGroupLog.NewStateInt = newStateInt;
+            catalogGroupLog.PdfTypeInt = pdfTypeInt;
             return catalogGroupLog;
         }
 
@@ -10646,6 +12462,33 @@ namespace EudoxusOsy.BusinessModel
         private Nullable<global::System.DateTime> _OfficeSlipDate;
         partial void OnOfficeSlipDateChanging(Nullable<global::System.DateTime> value);
         partial void OnOfficeSlipDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 PdfTypeInt
+        {
+            get
+            {
+                return _PdfTypeInt;
+            }
+            set
+            {
+                if (_PdfTypeInt != value)
+                {
+                    OnPdfTypeIntChanging(value);
+                    ReportPropertyChanging("PdfTypeInt");
+                    _PdfTypeInt = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("PdfTypeInt");
+                    OnPdfTypeIntChanged();
+                }
+            }
+        }
+        private global::System.Int32 _PdfTypeInt;
+        partial void OnPdfTypeIntChanging(global::System.Int32 value);
+        partial void OnPdfTypeIntChanged();
 
         #endregion
 
@@ -12217,6 +14060,569 @@ namespace EudoxusOsy.BusinessModel
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="DBEntitiesModel", Name="EditCatalogsGridV")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class EditCatalogsGridV : Imis.Domain.EF.DomainEntity<DBEntities>
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new EditCatalogsGridV object.
+        /// </summary>
+        /// <param name="id">Initial value of the ID property.</param>
+        /// <param name="supplierKpsID">Initial value of the SupplierKpsID property.</param>
+        /// <param name="bookKpsID">Initial value of the BookKpsID property.</param>
+        /// <param name="bookCount">Initial value of the BookCount property.</param>
+        /// <param name="discountPercentage">Initial value of the DiscountPercentage property.</param>
+        /// <param name="createdAt">Initial value of the CreatedAt property.</param>
+        /// <param name="status">Initial value of the Status property.</param>
+        /// <param name="state">Initial value of the State property.</param>
+        /// <param name="catalogType">Initial value of the CatalogType property.</param>
+        /// <param name="hasPendingPriceVerification">Initial value of the HasPendingPriceVerification property.</param>
+        /// <param name="hasUnexpectedPriceChange">Initial value of the HasUnexpectedPriceChange property.</param>
+        public static EditCatalogsGridV CreateEditCatalogsGridV(global::System.Int32 id, global::System.Int32 supplierKpsID, global::System.Int32 bookKpsID, global::System.Int32 bookCount, global::System.Decimal discountPercentage, global::System.DateTime createdAt, global::System.Int32 status, global::System.Int32 state, global::System.Int32 catalogType, global::System.Boolean hasPendingPriceVerification, global::System.Boolean hasUnexpectedPriceChange)
+        {
+            EditCatalogsGridV editCatalogsGridV = new EditCatalogsGridV();
+            editCatalogsGridV.ID = id;
+            editCatalogsGridV.SupplierKpsID = supplierKpsID;
+            editCatalogsGridV.BookKpsID = bookKpsID;
+            editCatalogsGridV.BookCount = bookCount;
+            editCatalogsGridV.DiscountPercentage = discountPercentage;
+            editCatalogsGridV.CreatedAt = createdAt;
+            editCatalogsGridV.Status = status;
+            editCatalogsGridV.State = state;
+            editCatalogsGridV.CatalogType = catalogType;
+            editCatalogsGridV.HasPendingPriceVerification = hasPendingPriceVerification;
+            editCatalogsGridV.HasUnexpectedPriceChange = hasUnexpectedPriceChange;
+            return editCatalogsGridV;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 ID
+        {
+            get
+            {
+                return _ID;
+            }
+            set
+            {
+                if (_ID != value)
+                {
+                    OnIDChanging(value);
+                    ReportPropertyChanging("ID");
+                    _ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("ID");
+                    OnIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _ID;
+        partial void OnIDChanging(global::System.Int32 value);
+        partial void OnIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> GroupID
+        {
+            get
+            {
+                return _GroupID;
+            }
+            set
+            {
+                if (_GroupID != value)
+                {
+                    OnGroupIDChanging(value);
+                    ReportPropertyChanging("GroupID");
+                    _GroupID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("GroupID");
+                    OnGroupIDChanged();
+                }
+            }
+        }
+        private Nullable<global::System.Int32> _GroupID;
+        partial void OnGroupIDChanging(Nullable<global::System.Int32> value);
+        partial void OnGroupIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> PhaseID
+        {
+            get
+            {
+                return _PhaseID;
+            }
+            set
+            {
+                if (_PhaseID != value)
+                {
+                    OnPhaseIDChanging(value);
+                    ReportPropertyChanging("PhaseID");
+                    _PhaseID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("PhaseID");
+                    OnPhaseIDChanged();
+                }
+            }
+        }
+        private Nullable<global::System.Int32> _PhaseID;
+        partial void OnPhaseIDChanging(Nullable<global::System.Int32> value);
+        partial void OnPhaseIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 SupplierKpsID
+        {
+            get
+            {
+                return _SupplierKpsID;
+            }
+            set
+            {
+                if (_SupplierKpsID != value)
+                {
+                    OnSupplierKpsIDChanging(value);
+                    ReportPropertyChanging("SupplierKpsID");
+                    _SupplierKpsID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("SupplierKpsID");
+                    OnSupplierKpsIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _SupplierKpsID;
+        partial void OnSupplierKpsIDChanging(global::System.Int32 value);
+        partial void OnSupplierKpsIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> Percentage
+        {
+            get
+            {
+                return _Percentage;
+            }
+            set
+            {
+                if (_Percentage != value)
+                {
+                    OnPercentageChanging(value);
+                    ReportPropertyChanging("Percentage");
+                    _Percentage = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("Percentage");
+                    OnPercentageChanged();
+                }
+            }
+        }
+        private Nullable<global::System.Decimal> _Percentage;
+        partial void OnPercentageChanging(Nullable<global::System.Decimal> value);
+        partial void OnPercentageChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> LibraryKpsID
+        {
+            get
+            {
+                return _LibraryKpsID;
+            }
+            set
+            {
+                if (_LibraryKpsID != value)
+                {
+                    OnLibraryKpsIDChanging(value);
+                    ReportPropertyChanging("LibraryKpsID");
+                    _LibraryKpsID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("LibraryKpsID");
+                    OnLibraryKpsIDChanged();
+                }
+            }
+        }
+        private Nullable<global::System.Int32> _LibraryKpsID;
+        partial void OnLibraryKpsIDChanging(Nullable<global::System.Int32> value);
+        partial void OnLibraryKpsIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> SecretaryKpsID
+        {
+            get
+            {
+                return _SecretaryKpsID;
+            }
+            set
+            {
+                if (_SecretaryKpsID != value)
+                {
+                    OnSecretaryKpsIDChanging(value);
+                    ReportPropertyChanging("SecretaryKpsID");
+                    _SecretaryKpsID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("SecretaryKpsID");
+                    OnSecretaryKpsIDChanged();
+                }
+            }
+        }
+        private Nullable<global::System.Int32> _SecretaryKpsID;
+        partial void OnSecretaryKpsIDChanging(Nullable<global::System.Int32> value);
+        partial void OnSecretaryKpsIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> SecretaryOrLibaryID
+        {
+            get
+            {
+                return _SecretaryOrLibaryID;
+            }
+            set
+            {
+                if (_SecretaryOrLibaryID != value)
+                {
+                    OnSecretaryOrLibaryIDChanging(value);
+                    ReportPropertyChanging("SecretaryOrLibaryID");
+                    _SecretaryOrLibaryID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("SecretaryOrLibaryID");
+                    OnSecretaryOrLibaryIDChanged();
+                }
+            }
+        }
+        private Nullable<global::System.Int32> _SecretaryOrLibaryID;
+        partial void OnSecretaryOrLibaryIDChanging(Nullable<global::System.Int32> value);
+        partial void OnSecretaryOrLibaryIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 BookKpsID
+        {
+            get
+            {
+                return _BookKpsID;
+            }
+            set
+            {
+                if (_BookKpsID != value)
+                {
+                    OnBookKpsIDChanging(value);
+                    ReportPropertyChanging("BookKpsID");
+                    _BookKpsID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("BookKpsID");
+                    OnBookKpsIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _BookKpsID;
+        partial void OnBookKpsIDChanging(global::System.Int32 value);
+        partial void OnBookKpsIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 BookCount
+        {
+            get
+            {
+                return _BookCount;
+            }
+            set
+            {
+                if (_BookCount != value)
+                {
+                    OnBookCountChanging(value);
+                    ReportPropertyChanging("BookCount");
+                    _BookCount = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("BookCount");
+                    OnBookCountChanged();
+                }
+            }
+        }
+        private global::System.Int32 _BookCount;
+        partial void OnBookCountChanging(global::System.Int32 value);
+        partial void OnBookCountChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal DiscountPercentage
+        {
+            get
+            {
+                return _DiscountPercentage;
+            }
+            set
+            {
+                if (_DiscountPercentage != value)
+                {
+                    OnDiscountPercentageChanging(value);
+                    ReportPropertyChanging("DiscountPercentage");
+                    _DiscountPercentage = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("DiscountPercentage");
+                    OnDiscountPercentageChanged();
+                }
+            }
+        }
+        private global::System.Decimal _DiscountPercentage;
+        partial void OnDiscountPercentageChanging(global::System.Decimal value);
+        partial void OnDiscountPercentageChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> Amount
+        {
+            get
+            {
+                return _Amount;
+            }
+            set
+            {
+                if (_Amount != value)
+                {
+                    OnAmountChanging(value);
+                    ReportPropertyChanging("Amount");
+                    _Amount = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("Amount");
+                    OnAmountChanged();
+                }
+            }
+        }
+        private Nullable<global::System.Decimal> _Amount;
+        partial void OnAmountChanging(Nullable<global::System.Decimal> value);
+        partial void OnAmountChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> GroupState
+        {
+            get
+            {
+                return _GroupState;
+            }
+            set
+            {
+                if (_GroupState != value)
+                {
+                    OnGroupStateChanging(value);
+                    ReportPropertyChanging("GroupState");
+                    _GroupState = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("GroupState");
+                    OnGroupStateChanged();
+                }
+            }
+        }
+        private Nullable<global::System.Int32> _GroupState;
+        partial void OnGroupStateChanging(Nullable<global::System.Int32> value);
+        partial void OnGroupStateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime CreatedAt
+        {
+            get
+            {
+                return _CreatedAt;
+            }
+            set
+            {
+                if (_CreatedAt != value)
+                {
+                    OnCreatedAtChanging(value);
+                    ReportPropertyChanging("CreatedAt");
+                    _CreatedAt = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("CreatedAt");
+                    OnCreatedAtChanged();
+                }
+            }
+        }
+        private global::System.DateTime _CreatedAt;
+        partial void OnCreatedAtChanging(global::System.DateTime value);
+        partial void OnCreatedAtChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 Status
+        {
+            get
+            {
+                return _Status;
+            }
+            set
+            {
+                if (_Status != value)
+                {
+                    OnStatusChanging(value);
+                    ReportPropertyChanging("Status");
+                    _Status = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("Status");
+                    OnStatusChanged();
+                }
+            }
+        }
+        private global::System.Int32 _Status;
+        partial void OnStatusChanging(global::System.Int32 value);
+        partial void OnStatusChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 State
+        {
+            get
+            {
+                return _State;
+            }
+            set
+            {
+                if (_State != value)
+                {
+                    OnStateChanging(value);
+                    ReportPropertyChanging("State");
+                    _State = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("State");
+                    OnStateChanged();
+                }
+            }
+        }
+        private global::System.Int32 _State;
+        partial void OnStateChanging(global::System.Int32 value);
+        partial void OnStateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 CatalogType
+        {
+            get
+            {
+                return _CatalogType;
+            }
+            set
+            {
+                if (_CatalogType != value)
+                {
+                    OnCatalogTypeChanging(value);
+                    ReportPropertyChanging("CatalogType");
+                    _CatalogType = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("CatalogType");
+                    OnCatalogTypeChanged();
+                }
+            }
+        }
+        private global::System.Int32 _CatalogType;
+        partial void OnCatalogTypeChanging(global::System.Int32 value);
+        partial void OnCatalogTypeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean HasPendingPriceVerification
+        {
+            get
+            {
+                return _HasPendingPriceVerification;
+            }
+            set
+            {
+                if (_HasPendingPriceVerification != value)
+                {
+                    OnHasPendingPriceVerificationChanging(value);
+                    ReportPropertyChanging("HasPendingPriceVerification");
+                    _HasPendingPriceVerification = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("HasPendingPriceVerification");
+                    OnHasPendingPriceVerificationChanged();
+                }
+            }
+        }
+        private global::System.Boolean _HasPendingPriceVerification;
+        partial void OnHasPendingPriceVerificationChanging(global::System.Boolean value);
+        partial void OnHasPendingPriceVerificationChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean HasUnexpectedPriceChange
+        {
+            get
+            {
+                return _HasUnexpectedPriceChange;
+            }
+            set
+            {
+                if (_HasUnexpectedPriceChange != value)
+                {
+                    OnHasUnexpectedPriceChangeChanging(value);
+                    ReportPropertyChanging("HasUnexpectedPriceChange");
+                    _HasUnexpectedPriceChange = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("HasUnexpectedPriceChange");
+                    OnHasUnexpectedPriceChangeChanged();
+                }
+            }
+        }
+        private global::System.Boolean _HasUnexpectedPriceChange;
+        partial void OnHasUnexpectedPriceChangeChanging(global::System.Boolean value);
+        partial void OnHasUnexpectedPriceChangeChanged();
+
+        #endregion
+
+    
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="DBEntitiesModel", Name="Email")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
@@ -12974,6 +15380,28 @@ namespace EudoxusOsy.BusinessModel
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<PaymentOrder>("DBEntitiesModel.FK_PaymentOrder_File", "PaymentOrder", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DBEntitiesModel", "FK_SupplierIBAN_File", "SupplierIBAN")]
+        public EntityCollection<SupplierIBAN> SupplierIBANs
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<SupplierIBAN>("DBEntitiesModel.FK_SupplierIBAN_File", "SupplierIBAN");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<SupplierIBAN>("DBEntitiesModel.FK_SupplierIBAN_File", "SupplierIBAN", value);
                 }
             }
         }
@@ -15374,6 +17802,33 @@ namespace EudoxusOsy.BusinessModel
         private global::System.Boolean _CatalogsCreated;
         partial void OnCatalogsCreatedChanging(global::System.Boolean value);
         partial void OnCatalogsCreatedChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> PhaseAmountMinistry
+        {
+            get
+            {
+                return _PhaseAmountMinistry;
+            }
+            set
+            {
+                if (_PhaseAmountMinistry != value)
+                {
+                    OnPhaseAmountMinistryChanging(value);
+                    ReportPropertyChanging("PhaseAmountMinistry");
+                    _PhaseAmountMinistry = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("PhaseAmountMinistry");
+                    OnPhaseAmountMinistryChanged();
+                }
+            }
+        }
+        private Nullable<global::System.Decimal> _PhaseAmountMinistry;
+        partial void OnPhaseAmountMinistryChanging(Nullable<global::System.Decimal> value);
+        partial void OnPhaseAmountMinistryChanged();
 
         #endregion
 
@@ -20524,6 +22979,33 @@ namespace EudoxusOsy.BusinessModel
         private global::System.String _CreatedBy;
         partial void OnCreatedByChanging(global::System.String value);
         partial void OnCreatedByChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> IBANCertificateID
+        {
+            get
+            {
+                return _IBANCertificateID;
+            }
+            set
+            {
+                if (_IBANCertificateID != value)
+                {
+                    OnIBANCertificateIDChanging(value);
+                    ReportPropertyChanging("IBANCertificateID");
+                    _IBANCertificateID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("IBANCertificateID");
+                    OnIBANCertificateIDChanged();
+                }
+            }
+        }
+        private Nullable<global::System.Int32> _IBANCertificateID;
+        partial void OnIBANCertificateIDChanging(Nullable<global::System.Int32> value);
+        partial void OnIBANCertificateIDChanged();
 
         #endregion
 
@@ -20586,6 +23068,44 @@ namespace EudoxusOsy.BusinessModel
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Supplier>("DBEntitiesModel.FK_SupplierIBAN_Supplier", "Supplier", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DBEntitiesModel", "FK_SupplierIBAN_File", "File")]
+        public File File
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<File>("DBEntitiesModel.FK_SupplierIBAN_File", "File").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<File>("DBEntitiesModel.FK_SupplierIBAN_File", "File").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<File> FileReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<File>("DBEntitiesModel.FK_SupplierIBAN_File", "File");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<File>("DBEntitiesModel.FK_SupplierIBAN_File", "File", value);
                 }
             }
         }
@@ -21068,6 +23588,481 @@ namespace EudoxusOsy.BusinessModel
         private global::System.DateTime _LastRunTime;
         partial void OnLastRunTimeChanging(global::System.DateTime value);
         partial void OnLastRunTimeChanged();
+
+        #endregion
+
+    
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="DBEntitiesModel", Name="TempAmountDiff")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class TempAmountDiff : Imis.Domain.EF.DomainEntity<DBEntities>
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new TempAmountDiff object.
+        /// </summary>
+        /// <param name="supplierID">Initial value of the SupplierID property.</param>
+        public static TempAmountDiff CreateTempAmountDiff(global::System.Int32 supplierID)
+        {
+            TempAmountDiff tempAmountDiff = new TempAmountDiff();
+            tempAmountDiff.SupplierID = supplierID;
+            return tempAmountDiff;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 SupplierID
+        {
+            get
+            {
+                return _SupplierID;
+            }
+            set
+            {
+                if (_SupplierID != value)
+                {
+                    OnSupplierIDChanging(value);
+                    ReportPropertyChanging("SupplierID");
+                    _SupplierID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("SupplierID");
+                    OnSupplierIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _SupplierID;
+        partial void OnSupplierIDChanging(global::System.Int32 value);
+        partial void OnSupplierIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> SupplierPhaseAmount
+        {
+            get
+            {
+                return _SupplierPhaseAmount;
+            }
+            set
+            {
+                if (_SupplierPhaseAmount != value)
+                {
+                    OnSupplierPhaseAmountChanging(value);
+                    ReportPropertyChanging("SupplierPhaseAmount");
+                    _SupplierPhaseAmount = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("SupplierPhaseAmount");
+                    OnSupplierPhaseAmountChanged();
+                }
+            }
+        }
+        private Nullable<global::System.Decimal> _SupplierPhaseAmount;
+        partial void OnSupplierPhaseAmountChanging(Nullable<global::System.Decimal> value);
+        partial void OnSupplierPhaseAmountChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> CatalogsSumAmount
+        {
+            get
+            {
+                return _CatalogsSumAmount;
+            }
+            set
+            {
+                if (_CatalogsSumAmount != value)
+                {
+                    OnCatalogsSumAmountChanging(value);
+                    ReportPropertyChanging("CatalogsSumAmount");
+                    _CatalogsSumAmount = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("CatalogsSumAmount");
+                    OnCatalogsSumAmountChanged();
+                }
+            }
+        }
+        private Nullable<global::System.Decimal> _CatalogsSumAmount;
+        partial void OnCatalogsSumAmountChanging(Nullable<global::System.Decimal> value);
+        partial void OnCatalogsSumAmountChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> AmountDiff
+        {
+            get
+            {
+                return _AmountDiff;
+            }
+            set
+            {
+                if (_AmountDiff != value)
+                {
+                    OnAmountDiffChanging(value);
+                    ReportPropertyChanging("AmountDiff");
+                    _AmountDiff = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("AmountDiff");
+                    OnAmountDiffChanged();
+                }
+            }
+        }
+        private Nullable<global::System.Decimal> _AmountDiff;
+        partial void OnAmountDiffChanging(Nullable<global::System.Decimal> value);
+        partial void OnAmountDiffChanged();
+
+        #endregion
+
+    
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="DBEntitiesModel", Name="TempArchive")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class TempArchive : Imis.Domain.EF.DomainEntity<DBEntities>
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new TempArchive object.
+        /// </summary>
+        /// <param name="id">Initial value of the ID property.</param>
+        /// <param name="kPSArchiveID">Initial value of the KPSArchiveID property.</param>
+        /// <param name="bookID">Initial value of the BookID property.</param>
+        /// <param name="year">Initial value of the Year property.</param>
+        /// <param name="suggestedPrice">Initial value of the SuggestedPrice property.</param>
+        /// <param name="lastUpdate">Initial value of the LastUpdate property.</param>
+        public static TempArchive CreateTempArchive(global::System.Int32 id, global::System.Int32 kPSArchiveID, global::System.Int32 bookID, global::System.Int32 year, global::System.Decimal suggestedPrice, global::System.String lastUpdate)
+        {
+            TempArchive tempArchive = new TempArchive();
+            tempArchive.ID = id;
+            tempArchive.KPSArchiveID = kPSArchiveID;
+            tempArchive.BookID = bookID;
+            tempArchive.Year = year;
+            tempArchive.SuggestedPrice = suggestedPrice;
+            tempArchive.LastUpdate = lastUpdate;
+            return tempArchive;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 ID
+        {
+            get
+            {
+                return _ID;
+            }
+            set
+            {
+                if (_ID != value)
+                {
+                    OnIDChanging(value);
+                    ReportPropertyChanging("ID");
+                    _ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("ID");
+                    OnIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _ID;
+        partial void OnIDChanging(global::System.Int32 value);
+        partial void OnIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 KPSArchiveID
+        {
+            get
+            {
+                return _KPSArchiveID;
+            }
+            set
+            {
+                if (_KPSArchiveID != value)
+                {
+                    OnKPSArchiveIDChanging(value);
+                    ReportPropertyChanging("KPSArchiveID");
+                    _KPSArchiveID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("KPSArchiveID");
+                    OnKPSArchiveIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _KPSArchiveID;
+        partial void OnKPSArchiveIDChanging(global::System.Int32 value);
+        partial void OnKPSArchiveIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 BookID
+        {
+            get
+            {
+                return _BookID;
+            }
+            set
+            {
+                if (_BookID != value)
+                {
+                    OnBookIDChanging(value);
+                    ReportPropertyChanging("BookID");
+                    _BookID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("BookID");
+                    OnBookIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _BookID;
+        partial void OnBookIDChanging(global::System.Int32 value);
+        partial void OnBookIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 Year
+        {
+            get
+            {
+                return _Year;
+            }
+            set
+            {
+                if (_Year != value)
+                {
+                    OnYearChanging(value);
+                    ReportPropertyChanging("Year");
+                    _Year = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("Year");
+                    OnYearChanged();
+                }
+            }
+        }
+        private global::System.Int32 _Year;
+        partial void OnYearChanging(global::System.Int32 value);
+        partial void OnYearChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> Price
+        {
+            get
+            {
+                return _Price;
+            }
+            set
+            {
+                if (_Price != value)
+                {
+                    OnPriceChanging(value);
+                    ReportPropertyChanging("Price");
+                    _Price = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("Price");
+                    OnPriceChanged();
+                }
+            }
+        }
+        private Nullable<global::System.Decimal> _Price;
+        partial void OnPriceChanging(Nullable<global::System.Decimal> value);
+        partial void OnPriceChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal SuggestedPrice
+        {
+            get
+            {
+                return _SuggestedPrice;
+            }
+            set
+            {
+                if (_SuggestedPrice != value)
+                {
+                    OnSuggestedPriceChanging(value);
+                    ReportPropertyChanging("SuggestedPrice");
+                    _SuggestedPrice = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("SuggestedPrice");
+                    OnSuggestedPriceChanged();
+                }
+            }
+        }
+        private global::System.Decimal _SuggestedPrice;
+        partial void OnSuggestedPriceChanging(global::System.Decimal value);
+        partial void OnSuggestedPriceChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String LastUpdate
+        {
+            get
+            {
+                return _LastUpdate;
+            }
+            set
+            {
+                if (_LastUpdate != value)
+                {
+                    OnLastUpdateChanging(value);
+                    ReportPropertyChanging("LastUpdate");
+                    _LastUpdate = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("LastUpdate");
+                    OnLastUpdateChanged();
+                }
+            }
+        }
+        private global::System.String _LastUpdate;
+        partial void OnLastUpdateChanging(global::System.String value);
+        partial void OnLastUpdateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String DecisionNumber
+        {
+            get
+            {
+                return _DecisionNumber;
+            }
+            set
+            {
+                if (_DecisionNumber != value)
+                {
+                    OnDecisionNumberChanging(value);
+                    ReportPropertyChanging("DecisionNumber");
+                    _DecisionNumber = StructuralObject.SetValidValue(value, true);
+                    ReportPropertyChanged("DecisionNumber");
+                    OnDecisionNumberChanged();
+                }
+            }
+        }
+        private global::System.String _DecisionNumber;
+        partial void OnDecisionNumberChanging(global::System.String value);
+        partial void OnDecisionNumberChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String PriceComments
+        {
+            get
+            {
+                return _PriceComments;
+            }
+            set
+            {
+                if (_PriceComments != value)
+                {
+                    OnPriceCommentsChanging(value);
+                    ReportPropertyChanging("PriceComments");
+                    _PriceComments = StructuralObject.SetValidValue(value, true);
+                    ReportPropertyChanged("PriceComments");
+                    OnPriceCommentsChanged();
+                }
+            }
+        }
+        private global::System.String _PriceComments;
+        partial void OnPriceCommentsChanging(global::System.String value);
+        partial void OnPriceCommentsChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> CheckedPrice
+        {
+            get
+            {
+                return _CheckedPrice;
+            }
+            set
+            {
+                if (_CheckedPrice != value)
+                {
+                    OnCheckedPriceChanging(value);
+                    ReportPropertyChanging("CheckedPrice");
+                    _CheckedPrice = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("CheckedPrice");
+                    OnCheckedPriceChanged();
+                }
+            }
+        }
+        private Nullable<global::System.Boolean> _CheckedPrice;
+        partial void OnCheckedPriceChanging(Nullable<global::System.Boolean> value);
+        partial void OnCheckedPriceChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Fek
+        {
+            get
+            {
+                return _Fek;
+            }
+            set
+            {
+                if (_Fek != value)
+                {
+                    OnFekChanging(value);
+                    ReportPropertyChanging("Fek");
+                    _Fek = StructuralObject.SetValidValue(value, true);
+                    ReportPropertyChanged("Fek");
+                    OnFekChanged();
+                }
+            }
+        }
+        private global::System.String _Fek;
+        partial void OnFekChanging(global::System.String value);
+        partial void OnFekChanged();
 
         #endregion
 
@@ -22309,6 +25304,549 @@ namespace EudoxusOsy.BusinessModel
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
+    [EdmComplexTypeAttribute(NamespaceName="DBEntitiesModel", Name="BasicStats")]
+    [DataContractAttribute(IsReference=true)]
+    [Serializable()]
+    public partial class BasicStats : ComplexObject
+    {
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> totalbooks
+        {
+            get
+            {
+                return _totalbooks;
+            }
+            set
+            {
+                if (_totalbooks != value)
+                {
+                    OntotalbooksChanging(value);
+                    ReportPropertyChanging("totalbooks");
+                    _totalbooks = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("totalbooks");
+                    OntotalbooksChanged();
+                }
+            }
+        }
+        private Nullable<global::System.Int32> _totalbooks;
+        partial void OntotalbooksChanging(Nullable<global::System.Int32> value);
+        partial void OntotalbooksChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> pricedBooks
+        {
+            get
+            {
+                return _pricedBooks;
+            }
+            set
+            {
+                if (_pricedBooks != value)
+                {
+                    OnpricedBooksChanging(value);
+                    ReportPropertyChanging("pricedBooks");
+                    _pricedBooks = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("pricedBooks");
+                    OnpricedBooksChanged();
+                }
+            }
+        }
+        private Nullable<global::System.Int32> _pricedBooks;
+        partial void OnpricedBooksChanging(Nullable<global::System.Int32> value);
+        partial void OnpricedBooksChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> avgPricedBooks
+        {
+            get
+            {
+                return _avgPricedBooks;
+            }
+            set
+            {
+                if (_avgPricedBooks != value)
+                {
+                    OnavgPricedBooksChanging(value);
+                    ReportPropertyChanging("avgPricedBooks");
+                    _avgPricedBooks = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("avgPricedBooks");
+                    OnavgPricedBooksChanged();
+                }
+            }
+        }
+        private Nullable<global::System.Decimal> _avgPricedBooks;
+        partial void OnavgPricedBooksChanging(Nullable<global::System.Decimal> value);
+        partial void OnavgPricedBooksChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> TotalCost
+        {
+            get
+            {
+                return _TotalCost;
+            }
+            set
+            {
+                if (_TotalCost != value)
+                {
+                    OnTotalCostChanging(value);
+                    ReportPropertyChanging("TotalCost");
+                    _TotalCost = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("TotalCost");
+                    OnTotalCostChanged();
+                }
+            }
+        }
+        private Nullable<global::System.Decimal> _TotalCost;
+        partial void OnTotalCostChanging(Nullable<global::System.Decimal> value);
+        partial void OnTotalCostChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> TotalToYDE
+        {
+            get
+            {
+                return _TotalToYDE;
+            }
+            set
+            {
+                if (_TotalToYDE != value)
+                {
+                    OnTotalToYDEChanging(value);
+                    ReportPropertyChanging("TotalToYDE");
+                    _TotalToYDE = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("TotalToYDE");
+                    OnTotalToYDEChanged();
+                }
+            }
+        }
+        private Nullable<global::System.Decimal> _TotalToYDE;
+        partial void OnTotalToYDEChanging(Nullable<global::System.Decimal> value);
+        partial void OnTotalToYDEChanged();
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmComplexTypeAttribute(NamespaceName="DBEntitiesModel", Name="CatalogsReportItems")]
+    [DataContractAttribute(IsReference=true)]
+    [Serializable()]
+    public partial class CatalogsReportItems : ComplexObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new CatalogsReportItems object.
+        /// </summary>
+        /// <param name="bookTitle">Initial value of the BookTitle property.</param>
+        /// <param name="bookKpsID">Initial value of the BookKpsID property.</param>
+        /// <param name="supplierName">Initial value of the SupplierName property.</param>
+        /// <param name="supplierKpsID">Initial value of the SupplierKpsID property.</param>
+        /// <param name="department">Initial value of the Department property.</param>
+        /// <param name="bookCount">Initial value of the BookCount property.</param>
+        /// <param name="discountPercentage">Initial value of the DiscountPercentage property.</param>
+        /// <param name="percentage">Initial value of the Percentage property.</param>
+        public static CatalogsReportItems CreateCatalogsReportItems(global::System.String bookTitle, global::System.Int32 bookKpsID, global::System.String supplierName, global::System.Int32 supplierKpsID, global::System.String department, global::System.Int32 bookCount, global::System.Decimal discountPercentage, global::System.Decimal percentage)
+        {
+            CatalogsReportItems catalogsReportItems = new CatalogsReportItems();
+            catalogsReportItems.BookTitle = bookTitle;
+            catalogsReportItems.BookKpsID = bookKpsID;
+            catalogsReportItems.SupplierName = supplierName;
+            catalogsReportItems.SupplierKpsID = supplierKpsID;
+            catalogsReportItems.Department = department;
+            catalogsReportItems.BookCount = bookCount;
+            catalogsReportItems.DiscountPercentage = discountPercentage;
+            catalogsReportItems.Percentage = percentage;
+            return catalogsReportItems;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String BookTitle
+        {
+            get
+            {
+                return _BookTitle;
+            }
+            set
+            {
+                if (_BookTitle != value)
+                {
+                    OnBookTitleChanging(value);
+                    ReportPropertyChanging("BookTitle");
+                    _BookTitle = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("BookTitle");
+                    OnBookTitleChanged();
+                }
+            }
+        }
+        private global::System.String _BookTitle;
+        partial void OnBookTitleChanging(global::System.String value);
+        partial void OnBookTitleChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 BookKpsID
+        {
+            get
+            {
+                return _BookKpsID;
+            }
+            set
+            {
+                if (_BookKpsID != value)
+                {
+                    OnBookKpsIDChanging(value);
+                    ReportPropertyChanging("BookKpsID");
+                    _BookKpsID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("BookKpsID");
+                    OnBookKpsIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _BookKpsID;
+        partial void OnBookKpsIDChanging(global::System.Int32 value);
+        partial void OnBookKpsIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String SupplierName
+        {
+            get
+            {
+                return _SupplierName;
+            }
+            set
+            {
+                if (_SupplierName != value)
+                {
+                    OnSupplierNameChanging(value);
+                    ReportPropertyChanging("SupplierName");
+                    _SupplierName = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("SupplierName");
+                    OnSupplierNameChanged();
+                }
+            }
+        }
+        private global::System.String _SupplierName;
+        partial void OnSupplierNameChanging(global::System.String value);
+        partial void OnSupplierNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 SupplierKpsID
+        {
+            get
+            {
+                return _SupplierKpsID;
+            }
+            set
+            {
+                if (_SupplierKpsID != value)
+                {
+                    OnSupplierKpsIDChanging(value);
+                    ReportPropertyChanging("SupplierKpsID");
+                    _SupplierKpsID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("SupplierKpsID");
+                    OnSupplierKpsIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _SupplierKpsID;
+        partial void OnSupplierKpsIDChanging(global::System.Int32 value);
+        partial void OnSupplierKpsIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Department
+        {
+            get
+            {
+                return _Department;
+            }
+            set
+            {
+                if (_Department != value)
+                {
+                    OnDepartmentChanging(value);
+                    ReportPropertyChanging("Department");
+                    _Department = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("Department");
+                    OnDepartmentChanged();
+                }
+            }
+        }
+        private global::System.String _Department;
+        partial void OnDepartmentChanging(global::System.String value);
+        partial void OnDepartmentChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> LibraryKpsID
+        {
+            get
+            {
+                return _LibraryKpsID;
+            }
+            set
+            {
+                if (_LibraryKpsID != value)
+                {
+                    OnLibraryKpsIDChanging(value);
+                    ReportPropertyChanging("LibraryKpsID");
+                    _LibraryKpsID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("LibraryKpsID");
+                    OnLibraryKpsIDChanged();
+                }
+            }
+        }
+        private Nullable<global::System.Int32> _LibraryKpsID;
+        partial void OnLibraryKpsIDChanging(Nullable<global::System.Int32> value);
+        partial void OnLibraryKpsIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> SecretaryKpsID
+        {
+            get
+            {
+                return _SecretaryKpsID;
+            }
+            set
+            {
+                if (_SecretaryKpsID != value)
+                {
+                    OnSecretaryKpsIDChanging(value);
+                    ReportPropertyChanging("SecretaryKpsID");
+                    _SecretaryKpsID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("SecretaryKpsID");
+                    OnSecretaryKpsIDChanged();
+                }
+            }
+        }
+        private Nullable<global::System.Int32> _SecretaryKpsID;
+        partial void OnSecretaryKpsIDChanging(Nullable<global::System.Int32> value);
+        partial void OnSecretaryKpsIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> FinalAmount
+        {
+            get
+            {
+                return _FinalAmount;
+            }
+            set
+            {
+                if (_FinalAmount != value)
+                {
+                    OnFinalAmountChanging(value);
+                    ReportPropertyChanging("FinalAmount");
+                    _FinalAmount = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("FinalAmount");
+                    OnFinalAmountChanged();
+                }
+            }
+        }
+        private Nullable<global::System.Decimal> _FinalAmount;
+        partial void OnFinalAmountChanging(Nullable<global::System.Decimal> value);
+        partial void OnFinalAmountChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 BookCount
+        {
+            get
+            {
+                return _BookCount;
+            }
+            set
+            {
+                if (_BookCount != value)
+                {
+                    OnBookCountChanging(value);
+                    ReportPropertyChanging("BookCount");
+                    _BookCount = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("BookCount");
+                    OnBookCountChanged();
+                }
+            }
+        }
+        private global::System.Int32 _BookCount;
+        partial void OnBookCountChanging(global::System.Int32 value);
+        partial void OnBookCountChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> PricePerBook
+        {
+            get
+            {
+                return _PricePerBook;
+            }
+            set
+            {
+                if (_PricePerBook != value)
+                {
+                    OnPricePerBookChanging(value);
+                    ReportPropertyChanging("PricePerBook");
+                    _PricePerBook = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("PricePerBook");
+                    OnPricePerBookChanged();
+                }
+            }
+        }
+        private Nullable<global::System.Decimal> _PricePerBook;
+        partial void OnPricePerBookChanging(Nullable<global::System.Decimal> value);
+        partial void OnPricePerBookChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> FirstRegistrationYear
+        {
+            get
+            {
+                return _FirstRegistrationYear;
+            }
+            set
+            {
+                if (_FirstRegistrationYear != value)
+                {
+                    OnFirstRegistrationYearChanging(value);
+                    ReportPropertyChanging("FirstRegistrationYear");
+                    _FirstRegistrationYear = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("FirstRegistrationYear");
+                    OnFirstRegistrationYearChanged();
+                }
+            }
+        }
+        private Nullable<global::System.Int32> _FirstRegistrationYear;
+        partial void OnFirstRegistrationYearChanging(Nullable<global::System.Int32> value);
+        partial void OnFirstRegistrationYearChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal DiscountPercentage
+        {
+            get
+            {
+                return _DiscountPercentage;
+            }
+            set
+            {
+                if (_DiscountPercentage != value)
+                {
+                    OnDiscountPercentageChanging(value);
+                    ReportPropertyChanging("DiscountPercentage");
+                    _DiscountPercentage = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("DiscountPercentage");
+                    OnDiscountPercentageChanged();
+                }
+            }
+        }
+        private global::System.Decimal _DiscountPercentage;
+        partial void OnDiscountPercentageChanging(global::System.Decimal value);
+        partial void OnDiscountPercentageChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal Percentage
+        {
+            get
+            {
+                return _Percentage;
+            }
+            set
+            {
+                if (_Percentage != value)
+                {
+                    OnPercentageChanging(value);
+                    ReportPropertyChanging("Percentage");
+                    _Percentage = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("Percentage");
+                    OnPercentageChanged();
+                }
+            }
+        }
+        private global::System.Decimal _Percentage;
+        partial void OnPercentageChanging(global::System.Decimal value);
+        partial void OnPercentageChanged();
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
     [EdmComplexTypeAttribute(NamespaceName="DBEntitiesModel", Name="CoAuthors")]
     [DataContractAttribute(IsReference=true)]
     [Serializable()]
@@ -23305,7 +26843,7 @@ namespace EudoxusOsy.BusinessModel
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Double> totalprice
+        public Nullable<global::System.Decimal> totalprice
         {
             get
             {
@@ -23323,8 +26861,8 @@ namespace EudoxusOsy.BusinessModel
                 }
             }
         }
-        private Nullable<global::System.Double> _totalprice;
-        partial void OntotalpriceChanging(Nullable<global::System.Double> value);
+        private Nullable<global::System.Decimal> _totalprice;
+        partial void OntotalpriceChanging(Nullable<global::System.Decimal> value);
         partial void OntotalpriceChanged();
     
         /// <summary>
@@ -23332,7 +26870,7 @@ namespace EudoxusOsy.BusinessModel
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Double> totalpayment
+        public Nullable<global::System.Decimal> totalpayment
         {
             get
             {
@@ -23350,8 +26888,8 @@ namespace EudoxusOsy.BusinessModel
                 }
             }
         }
-        private Nullable<global::System.Double> _totalpayment;
-        partial void OntotalpaymentChanging(Nullable<global::System.Double> value);
+        private Nullable<global::System.Decimal> _totalpayment;
+        partial void OntotalpaymentChanging(Nullable<global::System.Decimal> value);
         partial void OntotalpaymentChanged();
     
         /// <summary>
@@ -23359,7 +26897,7 @@ namespace EudoxusOsy.BusinessModel
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Double> totalofferprice
+        public Nullable<global::System.Decimal> totalofferprice
         {
             get
             {
@@ -23377,8 +26915,8 @@ namespace EudoxusOsy.BusinessModel
                 }
             }
         }
-        private Nullable<global::System.Double> _totalofferprice;
-        partial void OntotalofferpriceChanging(Nullable<global::System.Double> value);
+        private Nullable<global::System.Decimal> _totalofferprice;
+        partial void OntotalofferpriceChanging(Nullable<global::System.Decimal> value);
         partial void OntotalofferpriceChanged();
     
         /// <summary>
@@ -23386,7 +26924,7 @@ namespace EudoxusOsy.BusinessModel
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Double> totaltoyde
+        public Nullable<global::System.Decimal> totaltoyde
         {
             get
             {
@@ -23404,8 +26942,8 @@ namespace EudoxusOsy.BusinessModel
                 }
             }
         }
-        private Nullable<global::System.Double> _totaltoyde;
-        partial void OntotaltoydeChanging(Nullable<global::System.Double> value);
+        private Nullable<global::System.Decimal> _totaltoyde;
+        partial void OntotaltoydeChanging(Nullable<global::System.Decimal> value);
         partial void OntotaltoydeChanged();
     
         /// <summary>
@@ -23434,6 +26972,60 @@ namespace EudoxusOsy.BusinessModel
         private Nullable<global::System.Int32> _phase_id;
         partial void Onphase_idChanging(Nullable<global::System.Int32> value);
         partial void Onphase_idChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> booksPriced
+        {
+            get
+            {
+                return _booksPriced;
+            }
+            set
+            {
+                if (_booksPriced != value)
+                {
+                    OnbooksPricedChanging(value);
+                    ReportPropertyChanging("booksPriced");
+                    _booksPriced = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("booksPriced");
+                    OnbooksPricedChanged();
+                }
+            }
+        }
+        private Nullable<global::System.Int32> _booksPriced;
+        partial void OnbooksPricedChanging(Nullable<global::System.Int32> value);
+        partial void OnbooksPricedChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> booksNotPriced
+        {
+            get
+            {
+                return _booksNotPriced;
+            }
+            set
+            {
+                if (_booksNotPriced != value)
+                {
+                    OnbooksNotPricedChanging(value);
+                    ReportPropertyChanging("booksNotPriced");
+                    _booksNotPriced = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("booksNotPriced");
+                    OnbooksNotPricedChanged();
+                }
+            }
+        }
+        private Nullable<global::System.Int32> _booksNotPriced;
+        partial void OnbooksNotPricedChanging(Nullable<global::System.Int32> value);
+        partial void OnbooksNotPricedChanged();
 
         #endregion
 
@@ -23805,34 +27397,34 @@ namespace EudoxusOsy.BusinessModel
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Int32> books_registered
+        public Nullable<global::System.Int32> booksPriced
         {
             get
             {
-                return _books_registered;
+                return _booksPriced;
             }
             set
             {
-                if (_books_registered != value)
+                if (_booksPriced != value)
                 {
-                    Onbooks_registeredChanging(value);
-                    ReportPropertyChanging("books_registered");
-                    _books_registered = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("books_registered");
-                    Onbooks_registeredChanged();
+                    OnbooksPricedChanging(value);
+                    ReportPropertyChanging("booksPriced");
+                    _booksPriced = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("booksPriced");
+                    OnbooksPricedChanged();
                 }
             }
         }
-        private Nullable<global::System.Int32> _books_registered;
-        partial void Onbooks_registeredChanging(Nullable<global::System.Int32> value);
-        partial void Onbooks_registeredChanged();
+        private Nullable<global::System.Int32> _booksPriced;
+        partial void OnbooksPricedChanging(Nullable<global::System.Int32> value);
+        partial void OnbooksPricedChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Double> totalPrice
+        public Nullable<global::System.Decimal> totalPrice
         {
             get
             {
@@ -23850,8 +27442,8 @@ namespace EudoxusOsy.BusinessModel
                 }
             }
         }
-        private Nullable<global::System.Double> _totalPrice;
-        partial void OntotalPriceChanging(Nullable<global::System.Double> value);
+        private Nullable<global::System.Decimal> _totalPrice;
+        partial void OntotalPriceChanging(Nullable<global::System.Decimal> value);
         partial void OntotalPriceChanged();
     
         /// <summary>
@@ -23859,7 +27451,7 @@ namespace EudoxusOsy.BusinessModel
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Double> totalpayment
+        public Nullable<global::System.Decimal> totalpayment
         {
             get
             {
@@ -23877,8 +27469,8 @@ namespace EudoxusOsy.BusinessModel
                 }
             }
         }
-        private Nullable<global::System.Double> _totalpayment;
-        partial void OntotalpaymentChanging(Nullable<global::System.Double> value);
+        private Nullable<global::System.Decimal> _totalpayment;
+        partial void OntotalpaymentChanging(Nullable<global::System.Decimal> value);
         partial void OntotalpaymentChanged();
     
         /// <summary>
@@ -23886,7 +27478,7 @@ namespace EudoxusOsy.BusinessModel
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Double> totaltoyde
+        public Nullable<global::System.Decimal> totaltoyde
         {
             get
             {
@@ -23904,8 +27496,8 @@ namespace EudoxusOsy.BusinessModel
                 }
             }
         }
-        private Nullable<global::System.Double> _totaltoyde;
-        partial void OntotaltoydeChanging(Nullable<global::System.Double> value);
+        private Nullable<global::System.Decimal> _totaltoyde;
+        partial void OntotaltoydeChanging(Nullable<global::System.Decimal> value);
         partial void OntotaltoydeChanged();
     
         /// <summary>
@@ -23913,27 +27505,54 @@ namespace EudoxusOsy.BusinessModel
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Int32> books_registeredNOTPRICED
+        public Nullable<global::System.Int32> booksNotPriced
         {
             get
             {
-                return _books_registeredNOTPRICED;
+                return _booksNotPriced;
             }
             set
             {
-                if (_books_registeredNOTPRICED != value)
+                if (_booksNotPriced != value)
                 {
-                    Onbooks_registeredNOTPRICEDChanging(value);
-                    ReportPropertyChanging("books_registeredNOTPRICED");
-                    _books_registeredNOTPRICED = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("books_registeredNOTPRICED");
-                    Onbooks_registeredNOTPRICEDChanged();
+                    OnbooksNotPricedChanging(value);
+                    ReportPropertyChanging("booksNotPriced");
+                    _booksNotPriced = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("booksNotPriced");
+                    OnbooksNotPricedChanged();
                 }
             }
         }
-        private Nullable<global::System.Int32> _books_registeredNOTPRICED;
-        partial void Onbooks_registeredNOTPRICEDChanging(Nullable<global::System.Int32> value);
-        partial void Onbooks_registeredNOTPRICEDChanged();
+        private Nullable<global::System.Int32> _booksNotPriced;
+        partial void OnbooksNotPricedChanging(Nullable<global::System.Int32> value);
+        partial void OnbooksNotPricedChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> phaseId
+        {
+            get
+            {
+                return _phaseId;
+            }
+            set
+            {
+                if (_phaseId != value)
+                {
+                    OnphaseIdChanging(value);
+                    ReportPropertyChanging("phaseId");
+                    _phaseId = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("phaseId");
+                    OnphaseIdChanged();
+                }
+            }
+        }
+        private Nullable<global::System.Int32> _phaseId;
+        partial void OnphaseIdChanging(Nullable<global::System.Int32> value);
+        partial void OnphaseIdChanged();
 
         #endregion
 

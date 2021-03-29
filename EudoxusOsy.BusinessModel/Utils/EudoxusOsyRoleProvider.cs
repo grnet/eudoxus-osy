@@ -207,5 +207,18 @@ namespace EudoxusOsy.BusinessModel
                 throw new NotImplementedException();
             }
         }
+
+        public static bool IsAuthorizedEditorUser()
+        {
+            return HttpContext.Current.User.IsInRole(RoleNames.MinistryPayments) 
+                || HttpContext.Current.User.IsInRole(RoleNames.SuperMinistry) 
+                || HttpContext.Current.User.IsInRole(RoleNames.SystemAdministrator);
+        }
+
+        public static bool IsAuthorizedMinistryUserForView()
+        {
+            return IsAuthorizedEditorUser()
+                || HttpContext.Current.User.IsInRole(RoleNames.MinistryAuditor);
+        }
     }
 }

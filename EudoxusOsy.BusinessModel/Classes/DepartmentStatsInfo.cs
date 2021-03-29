@@ -1,4 +1,4 @@
-﻿namespace EudoxusOsy.BusinessModel.Classes
+﻿namespace EudoxusOsy.BusinessModel
 {
     public class DepartmentStatsInfo
     {

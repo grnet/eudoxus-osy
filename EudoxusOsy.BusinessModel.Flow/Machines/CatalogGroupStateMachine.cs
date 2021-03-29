@@ -1,4 +1,5 @@
-﻿using EudoxusOsy.Utils;
+﻿using EudoxusOsy.BusinessModel.Interfaces;
+using EudoxusOsy.Utils;
 using Imis.Domain;
 using Stateless;
 using System;
@@ -8,6 +9,8 @@ namespace EudoxusOsy.BusinessModel.Flow
 {
     public class CatalogGroupStateMachine : StateMachine<enCatalogGroupState, enCatalogGroupTriggers>
     {
+        private readonly IRepositoryFactory _repFactory;
+
         #region [ Helpers ]
 
         #region [ Triggers ]
@@ -41,10 +44,11 @@ namespace EudoxusOsy.BusinessModel.Flow
         }
         #endregion
 
-        public CatalogGroupStateMachine(CatalogGroup group)
+        public CatalogGroupStateMachine(CatalogGroup group, IRepositoryFactory repFactory = null)
             : base(group.State)
         {
             CatalogGroup = group;
+            this._repFactory = repFactory;
             ConfigureInitial();
         }
 
@@ -57,17 +61,22 @@ namespace EudoxusOsy.BusinessModel.Flow
             Configure(enCatalogGroupState.New)
                 .PermitIf(enCatalogGroupTriggers.Select, enCatalogGroupState.Selected, () => (
                     !CatalogGroup.ContainsInActiveBooks.Value &&
-                    !CatalogGroup.ContainsPendingPriceVerificationCatalogs.Value &&
-                        (!CatalogGroup.InvoiceSum.HasValue || CatalogGroup.InvoiceSum <= CatalogGroup.TotalAmount)))
+                    CatalogGroup.DoesNotHavePendingPrices &&
+                    (CatalogGroup.TotalAmount <= 0 || (
+                        !CatalogGroup.InvoiceSum.HasValue || CatalogGroup.InvoiceSum <= CatalogGroup.TotalAmount)
+                    )
+                    ))
                 .OnEntryFrom(TriggerFor(enCatalogGroupTriggers.Delete),
                     (triggerParams, transition) =>
                     {
                         IUnitOfWork uow = triggerParams.UnitOfWork;
                         uow.MarkAsNew(GetLog(triggerParams, transition));
-                        var paymentOrder = new PaymentOrderRepository(uow).FindByGroupID(CatalogGroup.ID);
+
+                        var paymentOrder = GetPaymentOrderRep(_repFactory, uow).FindByGroupID(CatalogGroup.ID);
                         if (paymentOrder != null)
                         {
-                            paymentOrder.State = (enPaymentOrderState)Enum.Parse(typeof(enPaymentOrderState), transition.Destination.GetValue().ToString());
+                            enCatalogGroupState catalogGroupState = (enCatalogGroupState)Enum.Parse(typeof(enCatalogGroupState), transition.Destination.GetValue().ToString());
+                            paymentOrder.State = CatalogGroupHelper.MapCatalogGroupStateToPaymentOrderState(catalogGroupState);
                         }
                         CatalogGroup.State = transition.Destination;
                     })
@@ -76,10 +85,11 @@ namespace EudoxusOsy.BusinessModel.Flow
                     {
                         IUnitOfWork uow = triggerParams.UnitOfWork;
                         uow.MarkAsNew(GetLog(triggerParams, transition));
-                        var paymentOrder = new PaymentOrderRepository(uow).FindByGroupID(CatalogGroup.ID);
+                        var paymentOrder = GetPaymentOrderRep(_repFactory, uow).FindByGroupID(CatalogGroup.ID);
                         if (paymentOrder != null)
                         {
-                            paymentOrder.State = (enPaymentOrderState)Enum.Parse(typeof(enPaymentOrderState), transition.Destination.GetValue().ToString());
+                            enCatalogGroupState catalogGroupState = (enCatalogGroupState)Enum.Parse(typeof(enCatalogGroupState), transition.Destination.GetValue().ToString());
+                            paymentOrder.State = CatalogGroupHelper.MapCatalogGroupStateToPaymentOrderState(catalogGroupState);
                         }
 
                         CatalogGroup.State = transition.Destination;
@@ -89,10 +99,11 @@ namespace EudoxusOsy.BusinessModel.Flow
                     {
                         IUnitOfWork uow = triggerParams.UnitOfWork;
                         uow.MarkAsNew(GetLog(triggerParams, transition));
-                        var paymentOrder = new PaymentOrderRepository(uow).FindByGroupID(CatalogGroup.ID);
+                        var paymentOrder = GetPaymentOrderRep(_repFactory, uow).FindByGroupID(CatalogGroup.ID);
                         if (paymentOrder != null)
                         {
-                            paymentOrder.State = (enPaymentOrderState)Enum.Parse(typeof(enPaymentOrderState), transition.Destination.GetValue().ToString());
+                            enCatalogGroupState catalogGroupState = (enCatalogGroupState)Enum.Parse(typeof(enCatalogGroupState), transition.Destination.GetValue().ToString());
+                            paymentOrder.State = CatalogGroupHelper.MapCatalogGroupStateToPaymentOrderState(catalogGroupState);
                         }
 
                         CatalogGroup.State = transition.Destination;
@@ -107,28 +118,17 @@ namespace EudoxusOsy.BusinessModel.Flow
                     {
                         IUnitOfWork uow = triggerParams.UnitOfWork;
                         uow.MarkAsNew(GetLog(triggerParams, transition));
-                        var paymentOrder = new PaymentOrderRepository(uow).FindByGroupID(CatalogGroup.ID);
+                        var paymentOrder = GetPaymentOrderRep(_repFactory, uow).FindByGroupID(CatalogGroup.ID);
                         if (paymentOrder != null)
                         {
-                            paymentOrder.State = (enPaymentOrderState)Enum.Parse(typeof(enPaymentOrderState), transition.Destination.GetValue().ToString());
+                            enCatalogGroupState catalogGroupState = (enCatalogGroupState)Enum.Parse(typeof(enCatalogGroupState), transition.Destination.GetValue().ToString());
+                            paymentOrder.State = CatalogGroupHelper.MapCatalogGroupStateToPaymentOrderState(catalogGroupState);
                         }
 
                         CatalogGroup.State = transition.Destination;
                     })
                     .OnEntryFrom(TriggerFor(enCatalogGroupTriggers.RevertApproval),
-                    (triggerParams, transition) =>
-                    {
-                        IUnitOfWork uow = triggerParams.UnitOfWork;
-                        uow.MarkAsNew(GetLog(triggerParams, transition));
-                        var paymentOrder = new PaymentOrderRepository(uow).FindByGroupID(CatalogGroup.ID);
-                        if (paymentOrder != null)
-                        {
-                            paymentOrder.State = (enPaymentOrderState)Enum.Parse(typeof(enPaymentOrderState), transition.Destination.GetValue().ToString());
-                        }
-
-                        CatalogGroup.State = transition.Destination;
-                        CatalogGroup.Comments = triggerParams.Comments;
-                    });
+                    (triggerParams, transition) => { ManageApproval(triggerParams, transition); });
 
             Configure(enCatalogGroupState.Approved)
                 .Permit(enCatalogGroupTriggers.SendToYDE, enCatalogGroupState.Sent)
@@ -136,17 +136,7 @@ namespace EudoxusOsy.BusinessModel.Flow
                 .OnEntryFrom(TriggerFor(enCatalogGroupTriggers.Approve),
                     (triggerParams, transition) =>
                     {
-                        IUnitOfWork uow = triggerParams.UnitOfWork;
-                        uow.MarkAsNew(GetLog(triggerParams, transition));
-                        var paymentOrder = new PaymentOrderRepository(uow).FindByGroupID(CatalogGroup.ID);
-                        if (paymentOrder != null)
-                        {
-                            paymentOrder.State = (enPaymentOrderState)Enum.Parse(typeof(enPaymentOrderState), transition.Destination.GetValue().ToString());
-                        }
-
-                        CatalogGroup.State = transition.Destination;
-                        CatalogGroup.Comments = triggerParams.Comments;
-
+                        ManageApproval(triggerParams, transition);
                     });
 
             Configure(enCatalogGroupState.Sent)
@@ -154,50 +144,74 @@ namespace EudoxusOsy.BusinessModel.Flow
                 .OnEntryFrom(TriggerFor(enCatalogGroupTriggers.SendToYDE),
                     (triggerParams, transition) =>
                     {
-                        IUnitOfWork uow = triggerParams.UnitOfWork;
-                        var groupLog = GetLog(triggerParams, transition);
-                        uow.MarkAsNew(groupLog);
-                        var paymentOrder = new PaymentOrderRepository(uow).FindByGroupID(CatalogGroup.ID);
-
-                        if (paymentOrder != null)
-                        {
-                            paymentOrder.State = (enPaymentOrderState)Enum.Parse(typeof(enPaymentOrderState), transition.Destination.GetValue().ToString());
-                            paymentOrder.Comments = triggerParams.Comments;
-                        }
-
-                        paymentOrder = UpdateOfficeSlipNumber(triggerParams, paymentOrder);
-                        groupLog.OfficeSlipNumber = paymentOrder.OfficeSlipNumber;
-                        groupLog.OfficeSlipDate = paymentOrder.OfficeSlipDate;
-                        CatalogGroup.State = transition.Destination;
+                        ManageYDE(triggerParams, transition);
                     });
 
             Configure(enCatalogGroupState.Returned)
                 .Permit(enCatalogGroupTriggers.SendToYDE, enCatalogGroupState.Sent)
                 .OnEntryFrom(TriggerFor(enCatalogGroupTriggers.ReturnFromYDE),
-                    (triggerParams, transition) =>
-                    {
-                        IUnitOfWork uow = triggerParams.UnitOfWork;
-                        var groupLog = GetLog(triggerParams, transition);
-                        uow.MarkAsNew(groupLog);
-                        var paymentOrder = new PaymentOrderRepository(uow).FindByGroupID(CatalogGroup.ID);
-                        if (paymentOrder != null)
-                        {
-                            paymentOrder.State = (enPaymentOrderState)Enum.Parse(typeof(enPaymentOrderState), transition.Destination.GetValue().ToString());
-                            paymentOrder.Comments = triggerParams.Comments;
-                        }
-
-                        paymentOrder = UpdateOfficeSlipNumber(triggerParams, paymentOrder);
-                        groupLog.OfficeSlipNumber = paymentOrder.OfficeSlipNumber;
-                        groupLog.OfficeSlipDate = paymentOrder.OfficeSlipDate;
-                        CatalogGroup.State = transition.Destination;
-                    });
+                    (triggerParams, transition) => { ManageYDE(triggerParams, transition); });
         }
 
-        private PaymentOrder UpdateOfficeSlipNumber(CatalogGroupTriggerParams triggerParams, PaymentOrder paymentOrder)
+        private void ManageApproval(CatalogGroupTriggerParams triggerParams, Transition transition)
         {
-            CatalogGroup.PhaseReference.EnsureLoad();
-            var maxOfficeSlipNumber = new PaymentOrderRepository(triggerParams.UnitOfWork).FindMaxOfficeSlipNumber(CatalogGroup.Phase.Year);
+            IUnitOfWork uow = triggerParams.UnitOfWork;
+            uow.MarkAsNew(GetLog(triggerParams, transition));
+            enCatalogGroupState catalogGroupState =
+                (enCatalogGroupState) Enum.Parse(typeof(enCatalogGroupState), transition.Destination.GetValue().ToString());
+            var paymentOrder = GetPaymentOrder(uow, catalogGroupState);
+
+            CatalogGroup.State = transition.Destination;
+            CatalogGroup.Comments = triggerParams.Comments;
+        }
+
+        private void ManageYDE(CatalogGroupTriggerParams triggerParams, Transition transition)
+        {
+            IUnitOfWork uow = triggerParams.UnitOfWork;
+            var groupLog = GetLog(triggerParams, transition);
+            uow.MarkAsNew(groupLog);
+            enCatalogGroupState catalogGroupState =
+                (enCatalogGroupState) Enum.Parse(typeof(enCatalogGroupState), transition.Destination.GetValue().ToString());
+            var paymentOrder = GetPaymentOrder(uow, catalogGroupState);
+
+            paymentOrder = UpdateOfficeSlipNumber(triggerParams, paymentOrder, catalogGroupState);
+            groupLog.OfficeSlipNumber = paymentOrder.OfficeSlipNumber;
+            groupLog.OfficeSlipDate = paymentOrder.OfficeSlipDate;
+            CatalogGroup.State = transition.Destination;
+        }
+
+        private PaymentOrder GetPaymentOrder(IUnitOfWork uow, enCatalogGroupState catalogGroupState)
+        {
+            var paymentOrder = GetPaymentOrderRep(_repFactory, uow).FindByGroupID(CatalogGroup.ID);
+            if (paymentOrder != null)
+            {               
+                paymentOrder.State = CatalogGroupHelper.MapCatalogGroupStateToPaymentOrderState(catalogGroupState);
+            }
+            return paymentOrder;
+        }
+
+        private IPaymentOrderRepository GetPaymentOrderRep(IRepositoryFactory repFactory, IUnitOfWork uow)
+        {
+            return repFactory != null ? repFactory.GetRepositoryInstance<PaymentOrder, IPaymentOrderRepository>(uow) : new PaymentOrderRepository(uow);
+        }
+
+        private PaymentOrder UpdateOfficeSlipNumber(CatalogGroupTriggerParams triggerParams, PaymentOrder paymentOrder, enCatalogGroupState catalogGroupState)
+        {            
+            int officeSlipYear;
+
+            if (triggerParams.SentToYDEDate.HasValue)
+            {
+                officeSlipYear = triggerParams.SentToYDEDate.Value.Year;
+            }
+            else
+            {
+                officeSlipYear = DateTime.Today.Year;
+            }
+
+            var maxOfficeSlipNumber = GetPaymentOrderRep(_repFactory, triggerParams.UnitOfWork).FindMaxOfficeSlipNumber(officeSlipYear);
             maxOfficeSlipNumber++;
+
+            double paymentOrderAmount = CatalogGroup.TotalAmount != null ? (double) CatalogGroup.TotalAmount.Value : 0;
 
             // if paymentOrder does not exist for this group, create it
             if (paymentOrder == null)
@@ -207,7 +221,12 @@ namespace EudoxusOsy.BusinessModel.Flow
                     GroupID = CatalogGroup.ID,
                     IsActive = true,
                     OfficeSlipDate = triggerParams.SentToYDEDate,
-                    OfficeSlipNumber = Convert.ToInt32(CatalogGroup.Phase.Year.ToString() + maxOfficeSlipNumber.ToString("000000"))
+                    OfficeSlipNumber = Convert.ToInt32(officeSlipYear.ToString() + maxOfficeSlipNumber.ToString("000000")),
+                    State = CatalogGroupHelper.MapCatalogGroupStateToPaymentOrderState(catalogGroupState),
+                    Comments = triggerParams.Comments,
+                    Amount = paymentOrderAmount,
+                    CreatedAt = DateTime.Now,
+                    CreatedBy = triggerParams.Username
                 };
 
                 triggerParams.UnitOfWork.MarkAsNew(newPaymentOrder);
@@ -216,8 +235,13 @@ namespace EudoxusOsy.BusinessModel.Flow
             else // if paymentOrder exists for the group, update its data
             {
                 paymentOrder.OfficeSlipDate = triggerParams.SentToYDEDate;
-                paymentOrder.OfficeSlipNumber = Convert.ToInt32(CatalogGroup.Phase.Year.ToString() + maxOfficeSlipNumber.ToString("000000"));
+                paymentOrder.OfficeSlipNumber = Convert.ToInt32(officeSlipYear.ToString() + maxOfficeSlipNumber.ToString("000000"));
                 paymentOrder.IsActive = true;
+                paymentOrder.Comments = triggerParams.Comments;
+                paymentOrder.Amount = paymentOrderAmount;
+                paymentOrder.UpdatedAt = DateTime.Now;
+                paymentOrder.UpdatedBy = triggerParams.Username;
+
                 return paymentOrder;
             }
         }

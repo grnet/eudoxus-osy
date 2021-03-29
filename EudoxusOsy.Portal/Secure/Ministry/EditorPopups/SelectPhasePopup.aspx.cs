@@ -3,9 +3,6 @@ using EudoxusOsy.Portal.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace EudoxusOsy.Portal.Secure.Ministry.EditorPopups
 {
@@ -21,19 +18,19 @@ namespace EudoxusOsy.Portal.Secure.Ministry.EditorPopups
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if(Type== "nolog" || Type == "commit")
+            if (Type == "nolog" || Type == "commit")
             {
                 divSelectPhase.Visible = false;
                 divSelectYear.Visible = true;
                 divMoveToPhase.Visible = false;
             }
-            else if(Type == "coauthors")
+            else if (Type == "coauthors")
             {
                 divSelectPhase.Visible = true;
                 divSelectYear.Visible = false;
                 divMoveToPhase.Visible = false;
             }
-            else if(Type == "move")
+            else if (Type == "move")
             {
                 divMoveToPhase.Visible = true;
                 divSelectPhase.Visible = false;
@@ -45,7 +42,15 @@ namespace EudoxusOsy.Portal.Secure.Ministry.EditorPopups
                 divSelectPhase.Visible = true;
                 divSelectYear.Visible = false;
             }
-            else 
+            else if (Type == "catalogsreport")
+            {
+                divMoveToPhase.Visible = false;
+                divSelectPhase.Visible = true;
+                divSelectYear.Visible = false;
+                lblAllPhases.Visible = false;
+                lblPhase.Text = "Εισάγετε τη φάση πληρωμών:";
+            }
+            else
             {
                 divSelectPhase.Visible = true;
                 divSelectYear.Visible = false;
@@ -55,7 +60,7 @@ namespace EudoxusOsy.Portal.Secure.Ministry.EditorPopups
 
         protected void btnSubmitHidden_Click(object sender, EventArgs e)
         {
-            if(string.IsNullOrEmpty(txtPhaseID.Text) && string.IsNullOrEmpty(ddlSelectYear.Text))
+            if (string.IsNullOrEmpty(txtPhaseID.Text) && string.IsNullOrEmpty(ddlSelectYear.Text))
             {
                 return;
             }
@@ -76,7 +81,7 @@ namespace EudoxusOsy.Portal.Secure.Ministry.EditorPopups
 
                 gveNoLogisticBooks.Export(suppliersNoLogisticBooks, "no_logistics_year_" + (yearInt > 0 ? yearInt.ToString() : "all_phases"));
             }
-            else if(Type == "coauthors")
+            else if (Type == "coauthors")
             {
                 var phaseID = int.Parse(txtPhaseID.Text);
                 var coAuthors = new SupplierRepository(UnitOfWork).GetCoAuthors(phaseID);
@@ -84,16 +89,32 @@ namespace EudoxusOsy.Portal.Secure.Ministry.EditorPopups
             }
             else if (Type == "supplierstats")
             {
+                if (string.IsNullOrEmpty(txtPhaseID.Text))
+                {
+                    return;
+                }
+
                 var phaseID = int.Parse(txtPhaseID.GetText());
                 var supplierStats = new SupplierRepository(UnitOfWork).GetSupplierStatsForExport(phaseID);
                 ucSupplierStats.Export(supplierStats, "supplier_stats_info");
             }
+            else if (Type == "catalogsreport")
+            {
+                if (string.IsNullOrEmpty(txtPhaseID.Text))
+                {
+                    return;
+                }
+
+                var phaseID = int.Parse(txtPhaseID.GetText());
+                var catalogsReport = new CatalogRepository(UnitOfWork).GetCatalogsReport(phaseID);
+                ucCatalogsReport.Export(catalogsReport, "catalogs_report_"+phaseID);
+            }
             else if (Type == "move")
             {
                 var phaseID = int.Parse(txtMoveToPhaseID.Text);
-                ClientScript.RegisterStartupScript(GetType(), "hidePopup", "window.parent.doAction('movetophase', " + phaseID +", 'PaymentOrders');window.parent.popUp.hide();", true);
+                ClientScript.RegisterStartupScript(GetType(), "hidePopup", "window.parent.doAction('movetophase', " + phaseID + ", 'PaymentOrders');window.parent.popUp.hide();", true);
             }
-            else if(Type == "commit")
+            else if (Type == "commit")
             {
 
                 int? yearInt = ddlSelectYear.GetSelectedInteger();
@@ -108,7 +129,7 @@ namespace EudoxusOsy.Portal.Secure.Ministry.EditorPopups
                 }
 
                 var commitmentsRegistry = new SupplierRepository(UnitOfWork).GetCommitments(phaseID);
-                gveExportCommitments.Export(commitmentsRegistry, "commitmentRecords_phase_" + phase.AcademicYearString);
+                gveExportCommitments.Export(commitmentsRegistry, "commitmentRecords_phase_" + (phaseID == 0 ? "ALL" : phase.AcademicYearString));
             }
         }
 

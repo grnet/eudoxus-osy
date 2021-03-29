@@ -13,6 +13,24 @@ namespace EudoxusOsy.Portal.Secure.Ministry {
     public partial class Catalogs {
         
         /// <summary>
+        /// btnExport control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxButton btnExport;
+        
+        /// <summary>
+        /// btnExportCatalogsReport control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxButton btnExportCatalogsReport;
+        
+        /// <summary>
         /// ucCatalogSearchFiltersControl control.
         /// </summary>
         /// <remarks>
@@ -47,6 +65,15 @@ namespace EudoxusOsy.Portal.Secure.Ministry {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::EudoxusOsy.Portal.UserControls.GridViews.EditCatalogsGridView gvCatalogs;
+        
+        /// <summary>
+        /// gvCatalogsExport control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EudoxusOsy.Portal.UserControls.ExportGridViews.EditCatalogsExportGridView gvCatalogsExport;
         
         /// <summary>
         /// odsCatalogs control.

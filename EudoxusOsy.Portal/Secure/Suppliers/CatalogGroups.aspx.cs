@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+﻿using DevExpress.Web;
 using EudoxusOsy.BusinessModel;
 using EudoxusOsy.Portal.Controls;
+using EudoxusOsy.Portal.Utils;
+using System;
+using System.Collections.Generic;
 using System.Drawing;
-using Imis.Domain;
-using DevExpress.Web;
-using EudoxusOsy.BusinessModel.Flow;
+using System.Linq;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 
 namespace EudoxusOsy.Portal.Secure.Suppliers
 {
@@ -27,7 +24,7 @@ namespace EudoxusOsy.Portal.Secure.Suppliers
 
         protected override void Fill()
         {
-            Entity = new SupplierRepository(UnitOfWork).FindByUsername(Page.User.Identity.Name);
+            Entity = new SupplierRepository(UnitOfWork).FindByUsername(Page.User.Identity.Name, x => x.SupplierIBANs);
             Entity.SaveToCurrentContext();
 
             int phaseID;
@@ -64,6 +61,17 @@ namespace EudoxusOsy.Portal.Secure.Suppliers
                 ltSelectedPhase.Text += string.Format("Επιλεγμένη Περίοδος Πληρωμών: <b>{0:dd/MM/yyyy}</b> με <b>{1}</b>.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a runat='server' href='CatalogGroups.aspx?pID={2}&t=false'>Αλλαγή Περιόδου Πληρωμών</a>", SelectedPhase.StartDate, SelectedPhase.EndDate.HasValue ? string.Format("{0:dd/MM/yyyy}", SelectedPhase.EndDate) : "σήμερα", SelectedPhase.ID);
 
                 DisplayMoney();
+                if(SelectedPhase.ID == Config.HideGroupCreationForPhase)
+                {
+                    btnCreateGroup.Visible = false;
+                    btnGroupCatalogs.Visible = false;
+                    btnUngroupCatalogs.Visible = false;
+                    divGroupsCreationLockedMessage.Visible = true;
+                }
+                else
+                {
+                    divGroupsCreationLockedMessage.Visible = false;
+                }
             }
         }
 
@@ -83,7 +91,7 @@ namespace EudoxusOsy.Portal.Secure.Suppliers
         {
             if (Entity != null)
             {
-                CatalogGroupHelper.GroupCatalogsByInstitution(Entity.ID, SelectedPhase.ID, UnitOfWork);
+                CatalogGroupHelper.GroupCatalogsByInstitution(Entity.ID, Entity.GetLatestIBANID(), SelectedPhase.ID, UnitOfWork);
                 Response.Redirect(string.Format("CatalogGroups.aspx?pID={0}&t=true", SelectedPhase.ID));
             }
         }
@@ -109,6 +117,7 @@ namespace EudoxusOsy.Portal.Secure.Suppliers
                 SupplierID = Entity.ID,
                 InstitutionID = catalog.Department.InstitutionID,
                 State = enCatalogGroupState.New,
+                SupplierIBANID = Entity.GetLatestIBANID(),
                 IsActive = true
             };
 
@@ -150,17 +159,27 @@ namespace EudoxusOsy.Portal.Secure.Suppliers
                 return;
             }
 
-            lblError.Visible = false;
+            if (CatalogGroupHelper.CanDeleteGroup(currentGroup.ToCatalogGroupInfo()))
+            {
 
-            currentGroup.Catalogs.ToList().ForEach(x => { x.GroupID = null; });
-            currentGroup.Invoices.ToList().ForEach(x => { UnitOfWork.MarkAsDeleted(x); });
-            currentGroup.CatalogGroupLogs.ToList().ForEach(y => UnitOfWork.MarkAsDeleted(y));
+                lblError.Visible = false;
 
-            UnitOfWork.MarkAsDeleted(currentGroup);
-            UnitOfWork.Commit();
+                currentGroup.Catalogs.ToList().ForEach(x => { x.GroupID = null; });
+                currentGroup.Invoices.ToList().ForEach(x => { UnitOfWork.MarkAsDeleted(x); });
+                currentGroup.CatalogGroupLogs.ToList().ForEach(y => UnitOfWork.MarkAsDeleted(y));
 
-            gvCatalogGroups.DataBind();
-            gvCatalogs.DataBind();
+                UnitOfWork.MarkAsDeleted(currentGroup);
+                UnitOfWork.Commit();
+
+                gvCatalogGroups.DataBind();
+                gvCatalogs.DataBind();
+            }
+            else if (currentGroup.State != enCatalogGroupState.New)
+            {
+                lblError.Visible = true;
+                lblError.Text = "Δεν μπορείτε να διαγράψετε τη συγκεκριμένη κατάσταση, γιατί έχει ήδη ελεγχθεί από το Υπουργείο.";
+                return;
+            }
         }
 
         protected void cbpStatistics_Callback(object sender, CallbackEventArgsBase e)
@@ -176,6 +195,12 @@ namespace EudoxusOsy.Portal.Secure.Suppliers
 
             gvBooks.Export(_items, string.Format("catalog_{0}_{1}", catalogID, Entity.ID));
 
+        }
+
+        protected void btnExportPdfHidden_OnClick(object sender, EventArgs e)
+        {
+            var catalogID = int.Parse(hfExportCatalogID.Value);
+            Response.Redirect(string.Format("~/Secure/GenerateCatalogPDF.ashx?id={0}&saveLog=false", catalogID));            
         }
 
         #endregion
@@ -281,7 +306,11 @@ namespace EudoxusOsy.Portal.Secure.Suppliers
 
             if (catalog != null)
             {
-                if (catalog.BookPriceID.HasValue && catalog.IsBookActive)
+                if (catalog.HasPendingPriceVerification || catalog.HasUnexpectedPriceChange)
+                {
+                    e.Row.BackColor = Color.LightSalmon;
+                }
+                else if (catalog.BookPriceID.HasValue && catalog.IsBookActive)
                 {
                     e.Row.BackColor = Color.LightGreen;
                 }
@@ -299,129 +328,18 @@ namespace EudoxusOsy.Portal.Secure.Suppliers
             }
             else
             {
-                var id = int.Parse(parameters[1]);
+                string error;
+                string jsProperty;
 
-                if (action == "include")
+                PaymentOrdersUserManagement poManagement = new PaymentOrdersUserManagement(UnitOfWork);
+
+                if (!poManagement.ManageActions(Page.User.Identity.Name, false, action, parameters,
+                    out error, out jsProperty))
                 {
-                    var currentGroup = new CatalogGroupRepository(UnitOfWork).Load(id, x => x.Invoices, x => x.Catalogs, x => x.LockedCatalogGroups);
-
-                    if (currentGroup.IsLocked)
-                    {
-                        if (currentGroup.State == enCatalogGroupState.New)
-                        {
-                            gvCatalogGroups.Grid.JSProperties["cpError"] = "Η κατάσταση δεν μπορεί να επιλεχθεί για πληρωμή, γιατί είναι κλειδωμένη από το Υπουργείο.";
-                            gvCatalogGroups.DataBind();
-                            return;
-                        }
-                        else if (currentGroup.State == enCatalogGroupState.Selected)
-                        {
-                            gvCatalogGroups.Grid.JSProperties["cpError"] = "Η αναίρεση της επιλογής για πληρωμή δεν μπορεί να πραγματοποιηθεί, γιατί είναι κλειδωμένη από το Υπουργείο.";
-                            gvCatalogGroups.DataBind();
-                            return;
-                        }
-                    }
-                    else
-                    {
-                        var cgStateMachine = new CatalogGroupStateMachine(currentGroup);
-
-                        if (cgStateMachine.CanFire(enCatalogGroupTriggers.Select))
-                        {
-                            var triggerParams = new CatalogGroupTriggerParams()
-                            {
-                                UnitOfWork = UnitOfWork,
-                                Username = Page.User.Identity.Name
-                            };
-
-                            cgStateMachine.Select(triggerParams);
-
-                            UnitOfWork.Commit();
-                        }
-                        else if (cgStateMachine.CanFire(enCatalogGroupTriggers.RevertSelection))
-                        {
-                            var triggerParams = new CatalogGroupTriggerParams()
-                            {
-                                UnitOfWork = UnitOfWork,
-                                Username = Page.User.Identity.Name
-                            };
-
-                            cgStateMachine.RevertSelection(triggerParams);
-
-                            UnitOfWork.Commit();
-                        }
-                        else if (currentGroup.ContainsInActiveBooks.Value)
-                        {
-                            gvCatalogGroups.Grid.JSProperties["cpError"] = "Η κατάσταση δεν μπορεί να επιλεχθεί για πληρωμή, γιατί περιέχει διανομές βιβλίων που δεν είναι δυνατόν να τιμολογηθούν και να αποζημιωθούν. Για περισσότερες διευκρινίσεις επικοινωνήστε με το Γραφείο Αρωγής Χρηστών.";
-                            gvCatalogGroups.DataBind();
-                            return;
-                        }
-                        else if (currentGroup.PhaseID >= 13 && currentGroup.Catalogs.Any(c => c.HasPendingPriceVerification))
-                        {
-                            gvCatalogGroups.Grid.JSProperties["cpError"] = "Η κατάσταση δεν μπορεί να επιλεχθεί για πληρωμή, γιατί περιέχει διανομές βιβλίων των οποίων η τιμή εξετάζεται από την επιτροπή κοστολόγησης. Για περισσότερες διευκρινίσεις επικοινωνήστε με το Γραφείο Αρωγής Χρηστών.";
-                            gvCatalogGroups.DataBind();
-                            return;
-                        }
-                        /**
-                            do not allow group selection if it contains books that have unexpected price change and phase >= 13
-                        */
-                        else if (currentGroup.PhaseID >= 13 && currentGroup.Catalogs.Any(c => c.HasUnexpectedPriceChange))
-                        {
-                            gvCatalogGroups.Grid.JSProperties["cpError"] = "Η κατάσταση δεν μπορεί να επιλεχθεί για πληρωμή, γιατί περιέχει διανομές βιβλίων με μη αναμενόμενη αλλαγή στην τιμή τους. Για περισσότερες διευκρινίσεις επικοινωνήστε με το Γραφείο Αρωγής Χρηστών.";
-                            gvCatalogGroups.DataBind();
-                            return;
-                        }
-                        else if (currentGroup.InvoiceSum > currentGroup.TotalAmount)
-                        {
-                            gvCatalogGroups.Grid.JSProperties["cpError"] = "Η κατάσταση δεν μπορεί να επιλεχθεί για πληρωμή, γιατί το συνολικό ποσό των παραστατικών είναι μεγαλύτερο από το συνολικό ποσό της κατάστασης.";
-                            gvCatalogGroups.DataBind();
-                            return;
-                        }
-                        else if (currentGroup.StateInt > (int)enCatalogGroupState.Selected)
-                        {
-                            gvCatalogGroups.Grid.JSProperties["cpError"] = "Η κατάσταση δεν μπορεί να απο-επιλεγεί για πληρωμή, γιατί βρίσκεται σε έλεγχο από το Υπουργείο.";
-                            gvCatalogGroups.DataBind();
-                            return;
-                        }
-
-                        gvCatalogGroups.DataBind();
-                    }
+                    gvCatalogGroups.Grid.JSProperties[jsProperty] = error;
                 }
-                else if (action == "removebanktransfer")
-                {
-                    var currentGroup = new CatalogGroupRepository(UnitOfWork).Load(id);
-
-                    currentGroup.IsTransfered = false;
-                    currentGroup.BankID = null;
-
-                    UnitOfWork.Commit();
-
-                    gvCatalogGroups.DataBind();
-                }
-                else if (action == "delete")
-                {
-                    var currentGroup = new CatalogGroupRepository(UnitOfWork).Load(id, x => x.Catalogs, y => y.Invoices, z => z.CatalogGroupLogs);
-
-                    if (currentGroup.ReversalCount.HasValue && currentGroup.ReversalCount.Value > 0)
-                    {
-                        gvCatalogGroups.Grid.JSProperties["cpError"] = "Δεν μπορείτε να διαγράψετε τη συγκεκριμένη κατάσταση γιατί έχει ήδη ελεγχθεί από το Υπουργείο.";
-                        return;
-                    }
-
-                    if (currentGroup.LockedCatalogGroups.Count() > 0)
-                    {
-                        gvCatalogGroups.Grid.JSProperties["cpError"] = "Δεν μπορείτε να διαγράψετε τη συγκεκριμένη κατάσταση γιατί έχει ήδη ελεγχθεί από το Υπουργείο.";
-                        return;
-                    }
-
-                    currentGroup.Catalogs.ToList().ForEach(x => { x.GroupID = null; });
-                    currentGroup.Invoices.ToList().ForEach(x => { UnitOfWork.MarkAsDeleted(x); });
-                    currentGroup.CatalogGroupLogs.ToList().ForEach(y => UnitOfWork.MarkAsDeleted(y));
-
-                    UnitOfWork.MarkAsDeleted(currentGroup);
-                    UnitOfWork.Commit();
-
-                    gvCatalogGroups.DataBind();
-                    gvCatalogs.DataBind();
-                }
+                gvCatalogGroups.DataBind();
+                gvCatalogs.DataBind();
             }
         }
 
@@ -453,7 +371,7 @@ namespace EudoxusOsy.Portal.Secure.Suppliers
         }
 
         protected bool ContainsInActiveBooks(CatalogGroupInfo group)
-        {
+        {            
             if (group == null)
                 return false;
 
@@ -516,11 +434,17 @@ namespace EudoxusOsy.Portal.Secure.Suppliers
             return CatalogGroupHelper.CanAddToGroup(catalog);
         }
 
+        protected string InabilityToCreateGroup(Catalog catalog)
+        {
+            return CatalogGroupHelper.InabilityToCreateGroup(catalog);
+        }
         #endregion
 
         protected void btnSearchCatalogs_Click(object sender, EventArgs e)
         {
             gvCatalogs.DataBind();
         }
+
+        
     }
 }

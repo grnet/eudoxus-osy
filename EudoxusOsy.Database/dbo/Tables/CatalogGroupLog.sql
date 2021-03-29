@@ -10,6 +10,7 @@
 	[PdfNotes] nvarchar(500) null,
 	[OfficeSlipNumber] int null,
 	[OfficeSlipDate] datetime2(7) null,
+	[PdfType] int NOT NULL default(0),
 	[CreatedBy] [nvarchar](256) NOT NULL,
 	[CreatedAt] [datetime2](7) NOT NULL,
  CONSTRAINT [PK_CatalogGroupLog] PRIMARY KEY CLUSTERED 

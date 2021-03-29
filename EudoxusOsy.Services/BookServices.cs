@@ -1,12 +1,15 @@
 ﻿using EudoxusOsy.BusinessModel;
 using EudoxusOsy.BusinessModel.Services;
 using EudoxusOsy.Services.Models;
+using Imis.Domain;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.ServiceModel;
 using System.ServiceModel.Activation;
 using System.ServiceModel.Web;
-using System.Runtime.Serialization;
+using System.Text;
 
 namespace EudoxusOsy.Services
 {
@@ -50,20 +53,86 @@ namespace EudoxusOsy.Services
         {
             try
             {
-                bool? registrationInserted;
-                registrationInserted = true; //KpsRegistrationService.InsertRegistration(request);
+                List<Book> lstBook = new BookRepository().FindByBookKpsID((int)request.BookKpsID);
+                List<CoAuthorDTO> coAuthorsDto = request.CoAuthors;
+                StringBuilder sb = new StringBuilder();
 
+                var currenPhase = new PhaseRepository().GetCurrentPhase();
+                int year = currenPhase.Year;
 
+                var coAuthorsInserted = false;
+
+                Book book = lstBook.FirstOrDefault();
+
+                if (book != null)
+                {
+                    int bookID = book.ID;
+
+                    using (IUnitOfWork uow = UnitOfWorkFactory.Create())
+                    {
+                        BookSupplierRepository bsRepository = new BookSupplierRepository(uow);
+
+                        List<BookSupplier> bookSuppliers = bsRepository.FindByManyByBookIDAndYear(bookID, year);
+
+                        if (bookSuppliers != null && bookSuppliers.Any())
+                        {
+                            bookSuppliers.ForEach(x => x.IsActive = false);
+                        }
+
+                        foreach (var coAuthor in coAuthorsDto)
+                        {
+                            var currentSupplier = new SupplierRepository().FindByKpsID(coAuthor.CoAuthorID);
+                            if (currentSupplier == null)
+                            {
+                                // log "suppliers does not exist is OSY"
+                                sb.AppendFormat("supplier {0} does not exist in OSY \r\n", coAuthor.CoAuthorID);
+                            }
+                            else if (coAuthor.Percentage == 0)
+                            {
+                                //log "percentage for supplier is missing"
+                                sb.AppendFormat("percentage is missing for coAuthor {0}  \r\n", coAuthor.CoAuthorID);
+                            }
+                            else
+                            {
+                                BookSupplier bookSupplier = new BookSupplier()
+                                {
+                                    BookID = bookID,
+                                    SupplierID = currentSupplier.ID,
+                                    Percentage = coAuthor.Percentage,
+                                    Year = year,
+                                    IsActive = true,
+                                    CreatedAt = DateTime.Now,
+                                    CreatedBy = "kpsService"
+                                };
+
+                                uow.MarkAsNew(bookSupplier);
+                            }
+                        }
+
+                        uow.Commit();
+                        coAuthorsInserted = true;
+                    }
+                }
 
                 LogCall(true, enStatusCode.OK);
 
-                if (registrationInserted == true)
+                if (coAuthorsInserted == true)
                 {
-                    return new ServiceResponse(true, enStatusCode.KPSRegistrationInsertionSucceeded);
+                    if (sb.Length > 0)
+                    {
+                        return new ServiceResponse(true, enStatusCode.CoAuthorsInsertionSucceeded, sb.ToString());
+                    }
+
+                    return new ServiceResponse(true, enStatusCode.CoAuthorsInsertionSucceeded);
                 }
                 else
                 {
-                    return new ServiceResponse(true, enStatusCode.KPSRegistrationInsertionFailed);
+                    if (sb.Length > 0)
+                    {
+                        return new ServiceResponse(true, enStatusCode.CoAuthorsInsertionFailed, sb.ToString());
+                    }
+
+                    return new ServiceResponse(true, enStatusCode.CoAuthorsInsertionFailed);
                 }
             }
             catch (Exception ex)

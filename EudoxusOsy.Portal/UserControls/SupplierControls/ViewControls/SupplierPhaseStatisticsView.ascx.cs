@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+﻿using EudoxusOsy.BusinessModel;
 using EudoxusOsy.Portal.Controls;
-using EudoxusOsy.BusinessModel;
 
 namespace EudoxusOsy.Portal.UserControls.SupplierControls.ViewControls
 {

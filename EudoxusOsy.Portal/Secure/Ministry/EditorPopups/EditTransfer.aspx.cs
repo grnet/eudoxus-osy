@@ -14,7 +14,7 @@ using DevExpress.Web;
 
 namespace EudoxusOsy.Portal.Secure.Ministry.EditorPopups
 {
-    public partial class EditTransfer : BaseEntityPortalPage<BankTransfer>
+    public partial class EditTransfer : BaseSecureEntityPortalPage<BankTransfer>
     {
         #region [ Entity Fill ]
 
@@ -31,12 +31,22 @@ namespace EudoxusOsy.Portal.Secure.Ministry.EditorPopups
             }
         }
 
+        protected override bool Authorize()
+        {
+            return EudoxusOsyRoleProvider.IsAuthorizedEditorUser();
+        }
+
         #endregion
 
         #region [ Page Inits ]
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if(!IsAuthorized)
+            {
+                ClientScript.RegisterStartupScript(GetType(), "hidePopup", "window.parent.popUp.hide();", true);
+            }
+
             if (!Page.IsPostBack)
             {
                 ucTransferInput.Entity = Entity;

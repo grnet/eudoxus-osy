@@ -1,5 +1,9 @@
 ﻿CREATE TABLE report.ViewStatisticsPerInstitution (
-		institution_id INT NOT NULL,
-		debt FLOAT NOT NULL,
-		phase_id INT NOT NULL
+		[InstitutionID] INT NOT NULL,	
+		[Debt] [decimal](10, 2) NULL,
+		[PhaseId] [int] NULL,
+		[InstName] [nvarchar](500) NULL,			
+		[PricedCount] [int] NULL,
+		[NotPricedCount] [int] NULL,
+		[DepartmentCount] [int] NULL,
 	) 

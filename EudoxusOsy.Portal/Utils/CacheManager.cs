@@ -134,6 +134,14 @@ namespace EudoxusOsy.Portal
                         .ToList();
         }
 
+        public static List<Phase> GetCorrespondingPhasesOfYear(int year)
+        {
+            return EudoxusOsyCacheManager<Phase>.Current
+                .GetItems()
+                .Where(x => x.IsActive && x.Year == year)
+                .ToList();
+
+        }
         #endregion
 
         public static void Initialize()

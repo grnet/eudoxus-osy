@@ -92,6 +92,18 @@
             <div style="text-align: right; height: 2em; margin: 0em 7em 2em 0em; font-weight: bold; font-size: 1em; color: Black">
                 Με τη συγχρηματοδότηση της Ελλάδας & της Ευρωπαϊκής Ένωσης
             </div>--%>
+            <div id="footer" style="height: 8em;">
+                <div style="                
+                    clear: both;
+                    border-top: 0px solid #e0e0e0;
+                    margin-left: 25em;
+                    padding: .833em 1.667em;
+                    text-align: center;
+                    ">                    
+                    <a href="https://www.minedu.gov.gr/" target="_blank"><img src="/_img/logos/minedu2.png" alt="ΥΠΕΠΘ" /></a>
+                    <a href="http://www.grnet.gr/" target="_blank"><img src="/_img/logos/grnet.png" alt="ΕΔΕΤ" /></a>                
+                </div>
+            </div>  
         </div>
 
         <script type="text/javascript">

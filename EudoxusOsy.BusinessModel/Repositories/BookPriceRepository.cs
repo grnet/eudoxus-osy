@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using Imis.Domain.EF;
+﻿using Imis.Domain.EF;
 using Imis.Domain.EF.Extensions;
-using System.Data.Objects;
+using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 
 namespace EudoxusOsy.BusinessModel
 {
-    public class BookPriceRepository : DomainRepository<DBEntities, BookPrice, int>
+    public class BookPriceRepository : DomainRepository<DBEntities, BookPrice, int>, IBookPriceRepository
     {
         #region [ Base .ctors ]
 

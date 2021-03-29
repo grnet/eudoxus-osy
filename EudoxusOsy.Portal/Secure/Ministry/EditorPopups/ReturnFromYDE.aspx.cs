@@ -2,15 +2,11 @@
 using EudoxusOsy.BusinessModel.Flow;
 using EudoxusOsy.Portal.Controls;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+using EudoxusOsy.Portal.Utils;
 
 namespace EudoxusOsy.Portal.Secure.Ministry.EditorPopups
 {
-    public partial class ReturnFromYDE : BaseEntityPortalPage<CatalogGroup>
+    public partial class ReturnFromYDE : BaseSecureEntityPortalPage<CatalogGroup>
     {
         #region [ Entity Fill ]
 
@@ -19,9 +15,22 @@ namespace EudoxusOsy.Portal.Secure.Ministry.EditorPopups
             int groupID;
             if (int.TryParse(Request.QueryString["id"], out groupID) && groupID > 0)
             {
-                Entity = new CatalogGroupRepository(UnitOfWork).Load(groupID);
+                Entity = new CatalogGroupRepository(UnitOfWork).Load(groupID, x => x.Catalogs);
             }
             else
+            {
+                ClientScript.RegisterStartupScript(GetType(), "hidePopup", "window.parent.popUp.hide();", true);
+            }
+        }
+
+        protected override bool Authorize()
+        {
+            return EudoxusOsyRoleProvider.IsAuthorizedEditorUser();
+        }
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if(!IsAuthorized)
             {
                 ClientScript.RegisterStartupScript(GetType(), "hidePopup", "window.parent.popUp.hide();", true);
             }
@@ -30,22 +39,9 @@ namespace EudoxusOsy.Portal.Secure.Ministry.EditorPopups
         #endregion
 
         protected void btnSubmit_Click(object sender, EventArgs e)
-        {
-            var stateMachine = new CatalogGroupStateMachine(Entity);
-
-            if (stateMachine.CanFire(enCatalogGroupTriggers.ReturnFromYDE))
-            {
-                var triggerParams = new CatalogGroupTriggerParams()
-                {
-                    Username = User.Identity.Name,
-                    Comments = txtReturnComments.GetText(),
-                    UnitOfWork = UnitOfWork
-                };
-
-                stateMachine.ReturnFromYDE(triggerParams);
-
-                UnitOfWork.Commit();
-            }
+        {            
+            PaymentOrdersUserManagement poum = new PaymentOrdersUserManagement(UnitOfWork);
+            poum.MoveToState(enCatalogGroupTriggers.ReturnFromYDE, Entity, User.Identity.Name, txtReturnComments.GetText());
 
             ClientScript.RegisterStartupScript(GetType(), "closePopup", "window.parent.cmdRefresh();window.parent.popUp.hide();", true);
         }

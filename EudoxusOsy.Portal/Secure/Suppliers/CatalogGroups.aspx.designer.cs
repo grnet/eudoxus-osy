@@ -58,6 +58,15 @@ namespace EudoxusOsy.Portal.Secure.Suppliers {
         protected global::System.Web.UI.WebControls.Literal ltSelectedPhase;
         
         /// <summary>
+        /// divGroupsCreationLockedMessage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divGroupsCreationLockedMessage;
+        
+        /// <summary>
         /// cbpStatistics control.
         /// </summary>
         /// <remarks>
@@ -92,6 +101,15 @@ namespace EudoxusOsy.Portal.Secure.Suppliers {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxButton btnExportHidden;
+        
+        /// <summary>
+        /// btnExportPdfHidden control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxButton btnExportPdfHidden;
         
         /// <summary>
         /// hfExportCatalogID control.

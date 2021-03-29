@@ -1,8 +1,10 @@
-﻿CREATE PROCEDURE [dbo].[spExportCommitmentsRegistry] @phaseID int
+﻿
+CREATE PROCEDURE [dbo].[spExportCommitmentsRegistry] @phaseID int
 AS
 DECLARE @OtherPhaseID int
 SELECT @OtherPhaseID = CASE WHEN @phaseID%2 = 0 THEN @phaseID - 1 ELSE @phaseID + 1 END
 BEGIN
+
 Select 
 	i.InvoiceNumber,
 	i.InvoiceDate,
@@ -10,8 +12,8 @@ Select
 	s.Name,
 	s.AFM,
 	g.ID as GroupID,
-	CASE WHEN g.State = 0 THEN 'Μη επιλεχθέν'
-		WHEN g.State = 1 THEN 'Επιλεχθέν για πληρωμή'
+	CASE WHEN g.State = 0 THEN 'Μη επιλεχθείσα'
+		WHEN g.State = 1 THEN 'Επιλεχθείσα για πληρωμή'
 		WHEN g.State = 2 THEN 'Εγκεκριμένη για πληρωμή'
 		WHEN g.State = 3 THEN 'Σταλμένη προς ΥΔΕ'
 		WHEN g.State = 4 THEN 'Επιστροφή από ΥΔΕ' END as GroupState,
@@ -39,8 +41,13 @@ from
 where 
 	i.IsActive = 1 
 	and g.IsActive = 1
-	and (@phaseID = 0 OR g.PhaseID in (@phaseID, @OtherPhaseID))
+	AND g.PhaseID IN (
+		SELECT ID
+		FROM Phase
+		WHERE IsActive = 1 and (@phaseID = 0 OR g.PhaseID in (@phaseID, @OtherPhaseID))
+	)	
 	and p.OfficeSlipDate is not null
 order by i.InvoiceNumber
 END
+
 

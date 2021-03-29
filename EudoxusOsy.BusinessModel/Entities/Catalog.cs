@@ -40,6 +40,14 @@ namespace EudoxusOsy.BusinessModel
             }
         }
 
+        public bool IsLocked
+        {
+            get
+            {
+                return HasPendingPriceVerification || HasUnexpectedPriceChange;                
+            }
+        }
+
         public enCatalogType CatalogType
         {
             get

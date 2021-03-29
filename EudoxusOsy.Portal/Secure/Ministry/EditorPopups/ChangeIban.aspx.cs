@@ -1,14 +1,9 @@
 ﻿using DevExpress.Web;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using EudoxusOsy.BusinessModel;
 using EudoxusOsy.Portal.Controls;
-using EudoxusOsy.Utils;
+using System;
+using System.Linq;
+using System.Web.UI;
 
 namespace EudoxusOsy.Portal.Secure.Ministry.EditorPopups
 {
@@ -16,11 +11,11 @@ namespace EudoxusOsy.Portal.Secure.Ministry.EditorPopups
     {
         #region [ Entity Fill ]
 
-        protected string CurrentIBAN 
+        protected string CurrentIBAN
         {
             get
             {
-                var iban = Entity.SupplierIBANs.OrderByDescending(x => x.CreatedAt).FirstOrDefault();
+                var iban = Entity.SupplierIBANs.OrderByDescending(x => x.ID).FirstOrDefault();
 
                 return iban != null
                         ? iban.IBAN

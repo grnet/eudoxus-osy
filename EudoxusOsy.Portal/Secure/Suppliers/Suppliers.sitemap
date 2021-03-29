@@ -3,6 +3,6 @@
   <siteMapNode url="~/Secure/Suppliers" title="Default" roles="Supplier">
     <siteMapNode url="~/Secure/Suppliers/Default.aspx" title="Στοιχεία Εκδότη" />        
     <siteMapNode url="~/Secure/Suppliers/CatalogGroups.aspx?t=true" title="Καταστάσεις" />
-    <siteMapNode url="~/Secure/Suppliers/EditFinancialData.aspx" title="Στοιχεία Πληρωμών" />
+    <siteMapNode url="~/Secure/Suppliers/EditFinancialData.aspx" title="Στοιχεία Πληρωμής" />
   </siteMapNode>
 </siteMap>

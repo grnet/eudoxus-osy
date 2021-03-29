@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using Imis.Domain.EF;
-using Imis.Domain.EF.Extensions;
-using System.Data.Objects;
+﻿using Imis.Domain.EF;
 using System.Linq;
-using System.Linq.Expressions;
 
 namespace EudoxusOsy.BusinessModel
 {
-    public class DiscountRepository : DomainRepository<DBEntities, Discount, int>
+    public class DiscountRepository : DomainRepository<DBEntities, Discount, int>, IDiscountRepository
     {
         #region [ Base .ctors ]
 
@@ -27,7 +22,7 @@ namespace EudoxusOsy.BusinessModel
         public Discount FindGeneralForPhase(int phaseID)
         {
             return BaseQuery
-                    .FirstOrDefault(x => x.PhaseID == phaseID 
+                    .FirstOrDefault(x => x.PhaseID == phaseID
                     && !x.BookID.HasValue);
         }
     }

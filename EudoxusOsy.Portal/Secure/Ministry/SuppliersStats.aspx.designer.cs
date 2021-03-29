@@ -13,6 +13,24 @@ namespace EudoxusOsy.Portal.Secure.Ministry {
     public partial class SuppliersStats {
         
         /// <summary>
+        /// cmbPhases control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxComboBox cmbPhases;
+        
+        /// <summary>
+        /// bsView control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EudoxusOsy.Portal.UserControls.MinistryControls.ViewControls.BasicStatsView bsView;
+        
+        /// <summary>
         /// btnExportSuppliersStats control.
         /// </summary>
         /// <remarks>
@@ -47,15 +65,6 @@ namespace EudoxusOsy.Portal.Secure.Ministry {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxGridView gvSuppliersStats;
-        
-        /// <summary>
-        /// gvSuppliersExport control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::EudoxusOsy.Portal.UserControls.ExportGridViews.SuppliersExportGridView gvSuppliersExport;
         
         /// <summary>
         /// odsSuppliers control.

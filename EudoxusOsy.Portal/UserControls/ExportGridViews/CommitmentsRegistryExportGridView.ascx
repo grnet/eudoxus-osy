@@ -10,13 +10,11 @@
         </EmptyDataRow>
     </Templates>
     <Columns>
-        <dx:GridViewDataTextColumn FieldName="InvoiceNumber" Name="InvoiceNumber" Caption="Αριθμός τιμολογίου" Width="30px">
+        <dx:GridViewDataTextColumn FieldName="InvoiceNumber" Name="InvoiceNumber" Caption="Αριθμός παραστατικού" Width="30px">
             <HeaderStyle HorizontalAlign="Center" />
             <CellStyle HorizontalAlign="Center" />
         </dx:GridViewDataTextColumn>
-        <dx:GridViewDataTextColumn Name="InvoiceDate" FieldName="InvoiceDate" Caption="Ημ/νία τιμολογίου">
-        </dx:GridViewDataTextColumn> 
-        <dx:GridViewDataTextColumn Name="InvoiceValue" FieldName="InvoiceValue" Caption="Αξία Τιμολογίου">
+        <dx:GridViewDataTextColumn Name="InvoiceDate" FieldName="InvoiceDate" Caption="Ημ/νία παραστατικού">
         </dx:GridViewDataTextColumn> 
         <dx:GridViewDataTextColumn FieldName="SupplierKpsID" Name="ID" Caption="ID Εκδότη" Width="30px">
             <HeaderStyle HorizontalAlign="Center" />
@@ -24,10 +22,10 @@
         </dx:GridViewDataTextColumn>
         <dx:GridViewDataTextColumn Name="Name" FieldName="Name" Caption="Επωνυμία Εκδότη">
         </dx:GridViewDataTextColumn> 
-        <dx:GridViewDataTextColumn Name="AFM" FieldName="AFM" Caption="ΑΦΜ">
-        </dx:GridViewDataTextColumn> 
         <dx:GridViewDataTextColumn Name="GroupID" FieldName="GroupID" Caption="ID Κατάστασης">
         </dx:GridViewDataTextColumn> 
+        <dx:GridViewDataTextColumn Name="InvoiceValue" FieldName="InvoiceValue" Caption="Αξία παραστατικού">
+        </dx:GridViewDataTextColumn>                                 
         <dx:GridViewDataTextColumn Name="CatalogsAmount" FieldName="CatalogsAmount" Caption="Κόστος Κατάστασης">
         </dx:GridViewDataTextColumn> 
         <dx:GridViewDataTextColumn Name="GroupState" FieldName="GroupState" Caption="Στάδιο Κατάστασης">
@@ -36,6 +34,8 @@
         </dx:GridViewDataTextColumn>
         <dx:GridViewDataTextColumn FieldName="PhaseID" Name="PhaseID" Caption="Περίοδος Πληρωμών">
         </dx:GridViewDataTextColumn>
+        <dx:GridViewDataTextColumn Name="AFM" FieldName="AFM" Caption="ΑΦΜ">
+        </dx:GridViewDataTextColumn> 
     </Columns>
 </dx:ASPxGridView>
 

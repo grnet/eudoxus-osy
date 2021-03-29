@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using Imis.Domain.EF;
+﻿using Imis.Domain.EF;
 using Imis.Domain.EF.Extensions;
-using System.Data.Objects;
+using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 
 namespace EudoxusOsy.BusinessModel
 {
-    public class SupplierPhaseRepository : DomainRepository<DBEntities, SupplierPhase, int>
+    public class SupplierPhaseRepository : DomainRepository<DBEntities, SupplierPhase, int>, ISupplierPhaseRepository
     {
         #region [ Base .ctors ]
 
@@ -61,7 +58,12 @@ namespace EudoxusOsy.BusinessModel
 
         public IList<SupplierPhase> GetAllActive(int phaseID)
         {
-            return BaseQuery.Where(x => x.IsActive && x.PhaseID == phaseID).ToList(); 
+            return BaseQuery.Where(x => x.IsActive && x.PhaseID == phaseID).ToList();
+        }
+
+        public double? GetPhaseMoney(int phaseID)
+        {            
+            return BaseQuery.Where(x => x.IsActive && x.PhaseID == phaseID).Sum(x => x.TotalDebt);
         }
 
     }

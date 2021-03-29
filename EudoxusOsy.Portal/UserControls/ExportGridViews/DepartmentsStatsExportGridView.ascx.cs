@@ -1,8 +1,9 @@
 ﻿using DevExpress.Web;
-using EudoxusOsy.BusinessModel.Classes;
 using EudoxusOsy.Portal.Controls;
 using System;
 using System.Collections.Generic;
+using EudoxusOsy.BusinessModel;
+
 
 namespace EudoxusOsy.Portal.UserControls.ExportGridViews
 {

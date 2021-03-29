@@ -1,12 +1,7 @@
 ﻿using Imis.Domain;
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Data;
 using System.Linq;
-using System.Numerics;
-using System.Security.Cryptography;
-using System.Text.RegularExpressions;
 using System.Threading;
 
 namespace EudoxusOsy.BusinessModel
@@ -110,7 +105,7 @@ namespace EudoxusOsy.BusinessModel
             var number1 = (int)decimalNumber;
             var number2 = (int)((decimalNumber % 1) * 100);
 
-            return NumberToWordsGenitive(number1) + " ευρώ " + (number2 > 0 ?  "και " + NumberToWordsGenitive(number2) + " λεπτών " : "");
+            return NumberToWordsGenitive(number1) + " ευρώ " + (number2 > 0 ? "και " + NumberToWordsGenitive(number2) + " λεπτών " : "");
         }
 
         public static string NumberToWords(int number, bool hundredsFemale = false)
@@ -125,25 +120,25 @@ namespace EudoxusOsy.BusinessModel
 
             if ((number / 1000000) > 0)
             {
-                var word = number / 1000000 > 1 ? " εκατομμύρια " : " εκατομμύριο ";
+                var word = number / 1000000 > 1 ? " εκατομμύρια " : "ένα εκατομμύριο ";
                 words += (number / 1000000 > 1 ? NumberToWords(number / 1000000) : "") + word;
                 number %= 1000000;
             }
 
             if ((number / 1000) > 0)
             {
-                var word = number / 1000 > 1 ? " χιλιάδες " : " χίλια ";
-                words += (number / 1000 > 1 ? NumberToWords(number / 1000, true): "") + word;
+                var word = number / 1000 > 1 ? " χιλιάδες " : (hundredsFemale ? " χίλιες " : " χίλια ");
+                words += (number / 1000 > 1 ? NumberToWords(number / 1000, true) : "") + word;
                 number %= 1000;
             }
 
-            var hundredsMap = new[] { "μηδέν","εκατό", "διακόσια", "τριακόσια", "τετρακόσια", "πεντακόσια", "εξακόσια", "επτακόσια", "οκτακόσια", "εννιακόσια" };
+            var hundredsMap = new[] { "μηδέν", "εκατό", "διακόσια", "τριακόσια", "τετρακόσια", "πεντακόσια", "εξακόσια", "επτακόσια", "οκτακόσια", "εννιακόσια" };
             var hundredsMapFemale = new[] { "μηδέν", "εκατό", "διακόσιες", "τριακόσιες", "τετρακόσιες", "πεντακόσιες", "εξακόσιες", "επτακόσιες", "οκτακόσιες", "εννιακόσιες" };
 
             if ((number / 100) > 0)
             {
-                var word = hundredsFemale ? hundredsMapFemale[number/100] + " " : hundredsMap[number/100] + " ";
-                words +=  word;
+                var word = hundredsFemale ? hundredsMapFemale[number / 100] + " " : hundredsMap[number / 100] + " ";
+                words += word;
                 number %= 100;
             }
 

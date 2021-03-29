@@ -2,11 +2,13 @@
 using EudoxusOsy.BusinessModel;
 using EudoxusOsy.Portal.Controls;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Web.UI.WebControls;
 
 namespace EudoxusOsy.Portal.Secure.Ministry
 {
-    public partial class PriceVerificationMinistry : BaseEntityPortalPage<Book>
+    public partial class PriceVerificationMinistry : BaseEntityPortalPage<BookPricesGridV>
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -17,7 +19,7 @@ namespace EudoxusOsy.Portal.Secure.Ministry
         {
             var parameters = e.Parameters.Split(':');
             var action = parameters[0].ToLower();
-            var id = int.Parse(parameters[1]);
+            var bookPriceId = int.Parse(parameters[1]);
 
 
             if (action == "refresh")
@@ -25,15 +27,64 @@ namespace EudoxusOsy.Portal.Secure.Ministry
                 gvBooks.DataBind();
                 return;
             }
-            else if (action == "lock" || action == "unlock")
+
+            if (EudoxusOsyRoleProvider.IsAuthorizedEditorUser())
             {
-                var currentPhase = new PhaseRepository(UnitOfWork).GetCurrentPhase();
-                var selectedBook = new BookRepository(UnitOfWork).Load(id, x => x.BookPriceChanges);
-                var newPrice = selectedBook.LastPriceChange == null ? null : (selectedBook.LastPriceChange.Price.HasValue ? selectedBook.LastPriceChange.Price : selectedBook.LastPriceChange.SuggestedPrice);
-                BookHelper.DoUpdateBooksAndCatalogs(action, id, currentPhase, newPrice, UnitOfWork);
+                if (action == "lock" || action == "unlock")
+                {
+                    
+                    BookPricesGridV bookPrice = new BookPricesGridVRepository(UnitOfWork).FindByBookPriceID(bookPriceId);
+
+                    if (bookPrice.ChangeYear.HasValue)
+                    {
+                        List<Phase> phases = PhaseHelper.GetPhasesOfYear(bookPrice.ChangeYear.Value);
+                        List<Phase> validPhases = new List<Phase>();
+
+                        foreach (var phase in phases)
+                        {
+                            if (ValidateVerification(phase.ID, bookPrice))
+                            {
+                                validPhases.Add(phase);
+                            }
+                        }
+
+                        if (validPhases.Count > 0)
+                        {
+                            BookHelper.DoUpdateBooksAndCatalogs(action, bookPrice, validPhases, UnitOfWork);
+                        }
+                        else if (action == "unlock")
+                        {
+                            bookPrice.ApproveFuturePrice(UnitOfWork);
+                        }
+                    }                                                           
+                }
             }
 
             gvBooks.DataBind();
+        }
+
+        public bool ValidateVerification(int phaseID, BookPricesGridV bookPrice)
+        {
+            bool ok = false;
+
+            var reversalOrSpecialCatalogs = new CatalogRepository(UnitOfWork).GetSpecialOrReversalCatalogsForBook(bookPrice.BookID, phaseID);
+
+            if (reversalOrSpecialCatalogs != null && reversalOrSpecialCatalogs.Count > 0)
+            {
+                gvBooks.Grid.JSProperties["cperrors"] =
+                    "Η τιμή του βιβλίου δεν μπορεί να εγκριθεί επειδή υπάρχουν δημιουργημένες αντιλογιστικές διανομές. Φάση:" + phaseID;
+            }
+            else if (bookPrice.Price.HasValue && (!bookPrice.PriceChecked.HasValue || !bookPrice.PriceChecked.Value))
+            {
+                gvBooks.Grid.JSProperties["cperrors"] =
+                    "Η τιμή του βιβλίου δεν μπορεί να εγκριθεί επειδή πρόκειται για τιμή Υπουργείου που δεν έχει ελεγχθεί.";
+            }
+            else
+            {
+                ok = true;
+            }
+
+            return ok;
         }
 
         protected void gvBookPriceChange_OnCustomCallback(object sender, ASPxGridViewCustomCallbackEventArgs e)
@@ -45,35 +96,63 @@ namespace EudoxusOsy.Portal.Secure.Ministry
 
         protected void odsBooks_OnSelecting(object sender, ObjectDataSourceSelectingEventArgs e)
         {
-            Criteria<Book> criteria = new Criteria<Book>();
-            criteria.Include(x => x.BookPriceChanges);
-            criteria.Sort.OrderBy(x => x.ID);
-
-            var expression = ucSearchFilters.GetSearchFilters().GetExpression();
-
-            if (expression == null)
-            {
-                expression = Imis.Domain.EF.Search.Criteria<Book>.Empty;
-            }
-
-            expression = expression.Where(x => x.PendingCommitteePriceVerification, true);
-            criteria.Expression = string.IsNullOrEmpty(expression.CommandText) ? null : expression;
-
-            e.InputParameters["criteria"] = criteria;
+            e.InputParameters["criteria"] = SetCriteria();
         }
 
-        protected void odsBookPriceChanges_OnSelecting(object sender, ObjectDataSourceSelectingEventArgs e)
+        private Criteria<BookPricesGridV> SetCriteria()
         {
-            Criteria<BookPriceChange> criteria = new Criteria<BookPriceChange>();
-            criteria.Include(x => x.Book);
-            criteria.Sort.OrderBy(x => x.ID);
+            Criteria<BookPricesGridV> criteria = new Criteria<BookPricesGridV>();            
+            criteria.Sort.OrderBy(x => x.BookID);
 
-            e.InputParameters["criteria"] = criteria;
+            var expression = ucSearchFilters.GetSearchFilters().GetExpression();
+            
+            if (expression == null)
+            {
+                expression = Imis.Domain.EF.Search.Criteria<BookPricesGridV>.Empty;
+            }
+                       
+            criteria.Expression = expression.Where(x => x.HasPendingPriceVerification, true);
+
+            return criteria;
         }
 
         protected void btnReturn_Click(object sender, EventArgs e)
         {
             Response.Redirect("PriceVerification.aspx");
+        }
+
+        protected void btnExportBooks_Click(object sender, EventArgs e)
+        {
+            var criteria = SetCriteria();
+            int count = 0;
+
+            var books = new BookPricesGridVRepository(UnitOfWork).FindWithCriteria(criteria, out count);
+
+            if (books != null && books.Count > 0)
+            {
+                var booksExport = books.Select(x => new PriceVerificationExportInfo()
+                {
+                    BookKpsID = x.BookKpsID,
+                    Title = x.Title,
+                    //CreatedAt = x.LastPriceChange == null ? string.Empty : x.LastPriceChange.CreatedAt.ToShortDateString(),
+                    //SuggestedPrice = x.LastPriceChange == null ? string.Empty : x.LastPriceChange.SuggestedPrice.ToString(),
+                    //Price = x.LastPriceChange == null ||
+                    //    (x.LastPriceChange.Price == 0m && !x.LastPriceChange.PriceChecked)
+                    //    ? string.Empty : x.LastPriceChange.Price.ToString()
+                });
+
+                gvBooksExport.Export(booksExport, "price_verification");
+            }
+        }
+
+        protected void btnExport_OnClick(object sender, EventArgs e)
+        {
+            var criteria = SetCriteria();
+     
+            int count = 0;
+            criteria.UsePaging = false;
+            var booksToExport = new BookPricesGridVRepository(UnitOfWork).FindWithCriteria(criteria, out count);
+            gvBooks.Export(booksToExport, "PriceVerificationMinistry_" + DateTime.Today);
         }
     }
 }

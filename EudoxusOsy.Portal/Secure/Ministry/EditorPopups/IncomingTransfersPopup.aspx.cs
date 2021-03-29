@@ -70,7 +70,7 @@ namespace EudoxusOsy.Portal.Secure.Ministry.EditorPopups
             {
                 ucIncomingTransfersInvoicesGridView.DataBind();
             }
-            else if(action == "delete")
+            else if(action == "delete" && EudoxusOsyRoleProvider.IsAuthorizedEditorUser())
             {
                 var id = Convert.ToInt32(parameters[1]);
                 var invoice = new BankTransferRepository(UnitOfWork).Load(id);

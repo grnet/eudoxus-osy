@@ -1,13 +1,13 @@
 namespace EudoxusOsy.BusinessModel
 {
 	public enum enDeductionVatType
-	{   
-        High = 1,
-        Medium = 2,
-        Small = 3,
+	{
+        SmallLowered = 0,
+        Small = 1,
+        MediumLowered = 2,
+        Medium = 3,
         HighLowered = 4,
-        MediumLowered = 5,
-		SmallLowered = 6,
-        Custom = 7
+        High = 5,
+        Custom = 6
 	}
 }

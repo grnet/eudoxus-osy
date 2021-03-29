@@ -9,10 +9,15 @@ using System.Web.UI.WebControls;
 
 namespace EudoxusOsy.Portal.Secure.EditorPopups
 {
-    public partial class EditVatDataPopup : BaseEntityPortalPage
+    public partial class EditVatDataPopup : BaseSecureEntityPortalPage
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if(!IsSecure)
+            {
+                ClientScript.RegisterStartupScript(GetType(), "closePopup", "window.parent.popUp.hide();", true);
+            }
+
             if (!IsPostBack)
             {
                 var deductions = new DeductionRepository(UnitOfWork).FindActive();
@@ -26,7 +31,12 @@ namespace EudoxusOsy.Portal.Secure.EditorPopups
                 txtOGA.Text = deductions.FirstOrDefault().OgaPercentage.ToString();
                 txtMTPY.Text = deductions.FirstOrDefault().MtpyPercentage.ToString();
             }
-       }
+        }
+
+        protected override bool Authenticate()
+        {
+            return EudoxusOsyRoleProvider.IsAuthorizedEditorUser();
+        }
 
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
@@ -47,7 +57,7 @@ namespace EudoxusOsy.Portal.Secure.EditorPopups
                     VatType = deduction.VatType
                 };
 
-                switch(deduction.VatType)
+                switch (deduction.VatType)
                 {
                     case enDeductionVatType.High:
                         newDeduction.Vat = Convert.ToDecimal(txtVatHigh.Text);

@@ -12,7 +12,7 @@ using DevExpress.Web;
 
 namespace EudoxusOsy.Portal.Secure.EditorPopups
 {
-    public partial class ViewCatalogGroupDetails : BaseEntityPortalPage<CatalogGroup>
+    public partial class ViewCatalogGroupDetails : BaseSecureEntityPortalPage<CatalogGroup>
     {
         #region [ Entity Fill ]
         
@@ -25,7 +25,7 @@ namespace EudoxusOsy.Portal.Secure.EditorPopups
             {
                 using (UnitOfWork.SingleConnection())
                 {
-                    Entity = new CatalogGroupRepository(UnitOfWork).Load(catalogGroupID);
+                    Entity = new CatalogGroupRepository(UnitOfWork).Load(catalogGroupID, x => x.Supplier);
 
                     if (Entity != null)
                     {
@@ -38,6 +38,12 @@ namespace EudoxusOsy.Portal.Secure.EditorPopups
             {
                 ClientScript.RegisterStartupScript(GetType(), "hidePopup", "window.parent.popUp.hide();", true);
             }
+        }
+
+        protected override bool Authorize()
+        {
+            return EudoxusOsyRoleProvider.IsAuthorizedMinistryUserForView()
+                || Entity.Supplier.ReporterID == User.Identity.ReporterID;
         }
 
         #endregion

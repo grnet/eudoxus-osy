@@ -9,13 +9,13 @@ namespace EudoxusOsy.Portal.DataSources
     public class Suppliers : BaseDataSource<Supplier>
     {
 
-        public List<SupplierFullStatistics> GetSuppliersStats(int? supplierKpsID, string afm, string name, int? supplierType, int startRowIndex, int maximumRows, string sortExpression)
+        public List<SupplierFullStatistics> GetSuppliersStats(int? supplierKpsID, string afm, string name, int? supplierType, int phaseID, int startRowIndex, int maximumRows, string sortExpression)
         {
             maximumRows = 20;
             int recordCount = 0;
             using (Imis.Domain.IUnitOfWork uow = UnitOfWorkFactory.Create())
             {
-                var result = new SupplierRepository(uow).GetCurrentPhaseStatistics(supplierKpsID, afm, name, supplierType, out recordCount);
+                var result = new SupplierRepository(uow).GetCurrentPhaseStatistics(supplierKpsID, afm, name, supplierType, phaseID, out recordCount);
                 _RecordCount = recordCount;
 
                 if (string.IsNullOrEmpty(sortExpression))
@@ -28,7 +28,7 @@ namespace EudoxusOsy.Portal.DataSources
         }
 
 
-        public int CountResult(int? supplierKpsID, string afm, string name, int? supplierType)
+        public int CountResult(int? supplierKpsID, string afm, string name, int? supplierType, int phaseID)
         {
             return _RecordCount;
         }

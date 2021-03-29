@@ -59,14 +59,27 @@
             <div class="br"></div>
             <div class="br"></div>
             <div class="br"></div>
-
+            
+            <my:CatalogSearchFilters runat="server" ID="ucConnectedCatalogSearchFilters"></my:CatalogSearchFilters>
+            <div class="gridViewTopButtons">
+                <table>
+                    <tr>
+                        <td>
+                            <dx:ASPxButton ID="btnSearchConnected" runat="server" ClientInstanceName="btnSearchConnected" 
+                                           Text="Αναζήτηση" Image-Url="~/_img/iconEdit.png" OnClick="btnSearchConnected_OnClick" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="br"></div>
             <table class="dv" style="width: 100%">
                 <tr>
                     <th class="header">&raquo; Διανομές που περιέχονται στην Κατάσταση</th>
                 </tr>
                 <tr>
                     <td>
-                        <my:CatalogsGridView ID="gvConnectedCatalogs" runat="server" DataSourceForceStandardPaging="false" HideInstitution="true">
+                        <my:CatalogsGridView ID="gvConnectedCatalogs" runat="server" HideInstitution="true"
+                            DataSourceID="odsConnectedCatalogs" OnHtmlRowPrepared="gvConnectedCatalogs_HtmlRowPrepared">
                             <Columns>
                                 <dx:GridViewDataTextColumn Name="Actions" Caption="Αφαίρεση από Κατάσταση" Width="70px" VisibleIndex="8">
                                     <HeaderStyle HorizontalAlign="Center" Wrap="true" />
@@ -104,8 +117,9 @@
                 </tr>
                 <tr>
                     <td>
-                        <my:CatalogsGridView ID="gvNotConnectedCatalogs" runat="server" HideInstitution="true" ClientInstanceName="gvNotConnectedCatalogs" DataSourceID="odsNotConnectedCatalogs"
-                            OnCustomCallback="gvNotConnectedCatalogs_CustomCallback">
+                        <my:CatalogsGridView ID="gvNotConnectedCatalogs" runat="server" HideInstitution="true" ClientInstanceName="gvNotConnectedCatalogs" 
+                            DataSourceID="odsNotConnectedCatalogs"
+                            OnCustomCallback="gvNotConnectedCatalogs_CustomCallback" OnHtmlRowPrepared="gvNotConnectedCatalogs_OnHtmlRowPreparedatalogs_HtmlRowPrepared">
                             <Columns>
                                 <dx:GridViewDataTextColumn Name="Actions" Caption="Προσθήκη σε Κατάσταση" Width="70px" VisibleIndex="8">
                                     <HeaderStyle HorizontalAlign="Center" Wrap="true" />
@@ -143,6 +157,14 @@
 
         </ContentTemplate>
     </asp:UpdatePanel>
+    
+    <asp:ObjectDataSource ID="odsConnectedCatalogs" runat="server" TypeName="EudoxusOsy.Portal.DataSources.Catalogs"
+                          SelectMethod="FindWithCriteria" SelectCountMethod="CountWithCriteria"
+                          EnablePaging="true" SortParameterName="sortExpression" OnSelecting="odsConnectedCatalogs_OnSelecting">
+        <SelectParameters>
+            <asp:Parameter Name="criteria" Type="Object" />
+        </SelectParameters>
+    </asp:ObjectDataSource>
 
     <asp:ObjectDataSource ID="odsNotConnectedCatalogs" runat="server" TypeName="EudoxusOsy.Portal.DataSources.Catalogs"
         SelectMethod="FindWithCriteria" SelectCountMethod="CountWithCriteria"

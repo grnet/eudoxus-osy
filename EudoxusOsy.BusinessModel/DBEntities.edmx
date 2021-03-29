@@ -13,6 +13,23 @@
           <Property Name="Name" Type="nvarchar" MaxLength="2000" />
           <Property Name="Value" Type="nvarchar" MaxLength="2000" />
         </EntityType>
+        <EntityType Name="Archive">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KPSArchiveID" Type="int" Nullable="false" />
+          <Property Name="BookKpsID" Type="int" Nullable="false" />
+          <Property Name="Year" Type="int" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="6" Scale="2" />
+          <Property Name="SuggestedPrice" Type="decimal" Precision="6" Scale="2" Nullable="false" />
+          <Property Name="Fek" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastUpdate" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="DecisionNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="PriceComments" Type="nvarchar" MaxLength="500" />
+          <Property Name="CheckedPrice" Type="bit" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="aspnet_Membership">
           <Key>
             <PropertyRef Name="UserId" />
@@ -116,11 +133,11 @@
           <Property Name="SupplierCode" Type="int" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="PendingCommitteePriceVerification" Type="bit" />
-          <Property Name="HasUnexpectedPriceChangePhaseID" Type="int" />
           <Property Name="CreatedAt" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="CreatedBy" Type="nvarchar" MaxLength="256" Nullable="false" />
           <Property Name="UpdatedAt" Type="datetime2" Precision="7" />
           <Property Name="UpdatedBy" Type="nvarchar" MaxLength="256" />
+          <Property Name="HasUnexpectedPriceChangePhaseID" Type="int" />
         </EntityType>
         <EntityType Name="BookBlackList">
           <Key>
@@ -151,6 +168,7 @@
           <Property Name="CreatedBy" Type="nvarchar" MaxLength="256" Nullable="false" />
           <Property Name="UpdatedAt" Type="datetime2" Precision="7" />
           <Property Name="UpdatedBy" Type="nvarchar" MaxLength="256" />
+          <Property Name="IsChecked" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="BookPriceChange">
           <Key>
@@ -163,9 +181,11 @@
           <Property Name="DecisionNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="PriceComments" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="PriceChecked" Type="bit" Nullable="false" />
-          <Property Name="Approved" Type="bit" />
           <Property Name="CreatedAt" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Approved" Type="bit" />
+          <Property Name="IsUnexpected" Type="bit" />
+          <Property Name="Year" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="BookPriceRequest">
           <Key>
@@ -252,6 +272,17 @@
           <Property Name="UpdatedAt" Type="datetime2" Precision="7" />
           <Property Name="UpdatedBy" Type="nvarchar" MaxLength="256" />
         </EntityType>
+        <EntityType Name="BusinessLogicErrorsKPS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EntityID" Type="int" Nullable="false" />
+          <Property Name="ErrorEntityType" Type="int" Nullable="false" />
+          <Property Name="ErrorCode" Type="int" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="CreatedAt" Type="datetime2" Precision="7" Nullable="false" />
+        </EntityType>
         <EntityType Name="Catalog">
           <Key>
             <PropertyRef Name="ID" />
@@ -273,13 +304,13 @@
           <Property Name="NewCatalogID" Type="int" />
           <Property Name="IsBookActive" Type="bit" Nullable="false" />
           <Property Name="HasPendingPriceVerification" Type="bit" Nullable="false" />
-          <Property Name="HasUnexpectedPriceChange" Type="bit" Nullable="false" />
           <Property Name="State" Type="int" Nullable="false" />
           <Property Name="Status" Type="int" Nullable="false" />
           <Property Name="CreatedAt" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="CreatedBy" Type="nvarchar" MaxLength="256" Nullable="false" />
           <Property Name="UpdatedAt" Type="datetime2" Precision="7" />
           <Property Name="UpdatedBy" Type="nvarchar" MaxLength="256" />
+          <Property Name="HasUnexpectedPriceChange" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="CatalogGroup">
           <Key>
@@ -321,6 +352,7 @@
           <Property Name="OfficeSlipDate" Type="datetime2" Precision="7" />
           <Property Name="CreatedBy" Type="nvarchar" MaxLength="256" Nullable="false" />
           <Property Name="CreatedAt" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="PdfType" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="CatalogLog">
           <Key>
@@ -461,7 +493,7 @@
           <Property Name="RegionID" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'EudoxusOsy.dbo.KostologisiPrice' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'Eudoxus-Osy03.dbo.KostologisiPrice' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="KostologisiPrice">
           <Key>
             <PropertyRef Name="ID" />
@@ -528,6 +560,7 @@ warning 6002: The table/view 'EudoxusOsy.dbo.KostologisiPrice' does not have a p
           <Property Name="CreatedBy" Type="nvarchar" MaxLength="256" Nullable="false" />
           <Property Name="UpdatedAt" Type="datetime2" Precision="7" />
           <Property Name="UpdatedBy" Type="nvarchar" MaxLength="256" />
+          <Property Name="PhaseAmountMinistry" Type="decimal" Precision="10" Scale="2" />
         </EntityType>
         <EntityType Name="PriceModificationReason">
           <Key>
@@ -719,6 +752,7 @@ warning 6002: The table/view 'EudoxusOsy.dbo.KostologisiPrice' does not have a p
           <Property Name="IBAN" Type="nvarchar" MaxLength="34" Nullable="false" />
           <Property Name="CreatedAt" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="CreatedBy" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="IBANCertificateID" Type="int" />
         </EntityType>
         <EntityType Name="SupplierPhase">
           <Key>
@@ -742,6 +776,33 @@ warning 6002: The table/view 'EudoxusOsy.dbo.KostologisiPrice' does not have a p
           <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
           <Property Name="LastRunTime" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Eudoxus-Osy03.dbo.TempAmountDiffs' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="TempAmountDiffs">
+          <Key>
+            <PropertyRef Name="SupplierID" />
+          </Key>
+          <Property Name="SupplierID" Type="int" Nullable="false" />
+          <Property Name="SupplierPhaseAmount" Type="decimal" Precision="12" Scale="4" />
+          <Property Name="CatalogsSumAmount" Type="decimal" Precision="12" Scale="4" />
+          <Property Name="AmountDiff" Type="decimal" Precision="13" Scale="4" />
+        </EntityType>
+        <EntityType Name="TempArchive">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KPSArchiveID" Type="int" Nullable="false" />
+          <Property Name="BookID" Type="int" Nullable="false" />
+          <Property Name="Year" Type="int" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="6" Scale="2" />
+          <Property Name="SuggestedPrice" Type="decimal" Precision="6" Scale="2" Nullable="false" />
+          <Property Name="Fek" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastUpdate" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="DecisionNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="PriceComments" Type="nvarchar" MaxLength="500" />
+          <Property Name="CheckedPrice" Type="bit" />
+        </EntityType>
         <EntityType Name="UsersInRoles">
           <Key>
             <PropertyRef Name="ReporterID" />
@@ -751,7 +812,7 @@ warning 6002: The table/view 'EudoxusOsy.dbo.KostologisiPrice' does not have a p
           <Property Name="RoleID" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'EudoxusOsy.dbo.Verify' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'Eudoxus-Osy03.dbo.Verify' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Verify">
           <Key>
             <PropertyRef Name="BookKpsID" />
@@ -802,6 +863,95 @@ warning 6002: The table/view 'EudoxusOsy.dbo.Verify' does not have a primary key
           <Property Name="CreatedBy" Type="nvarchar" MaxLength="256" Nullable="false" />
           <Property Name="UpdatedAt" Type="datetime2" Precision="7" />
           <Property Name="UpdatedBy" Type="nvarchar" MaxLength="256" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Eudoxus-Osy03.dbo.BookPricesGridV' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="BookPricesGridV">
+          
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="BookID" Type="int" Nullable="false" />
+          <Property Name="BookKpsID" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Author" Type="nvarchar(max)" />
+          <Property Name="Publisher" Type="nvarchar" MaxLength="500" />
+          <Property Name="ISBN" Type="nvarchar" MaxLength="100" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreatedAt" Type="datetime2" Precision="7" />
+          <Property Name="SuggestedPrice" Type="decimal" Precision="5" Scale="2" />
+          <Property Name="Price" Type="decimal" Precision="5" Scale="2" />
+          <Property Name="HasPendingPriceVerification" Type="bit" Nullable="false" />
+          <Property Name="HasUnexpectedPriceChange" Type="bit" Nullable="false" />
+          <Property Name="ChangeYear" Type="int" />
+          <Property Name="PriceChecked" Type="bit" />
+          <Property Name="BookPriceID" Type="int" />
+          <Property Name="ID" Type="bigint" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Eudoxus-Osy03.dbo.BookPricesV' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="BookPricesV">
+          <Key>
+            <PropertyRef Name="ID" />
+            
+            
+            
+            
+            
+            
+            
+            
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="BookID" Type="int" Nullable="false" />
+          <Property Name="BookKpsID" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="BookPriceChangeID" Type="int" Nullable="false" />
+          <Property Name="CreatedAt" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="SuggestedPrice" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="5" Scale="2" />
+          <Property Name="PriceChecked" Type="bit" Nullable="false" />
+          <Property Name="PendingCommitteePriceVerification" Type="bit" />
+          <Property Name="HasUnexpectedPriceChangePhaseID" Type="int" />
+          <Property Name="ChangeYear" Type="int" Nullable="false" />
+          <Property Name="Approved" Type="bit" />
+          <Property Name="RowNum" Type="bigint" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Eudoxus-Osy03.dbo.EditCatalogsGridV' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="EditCatalogsGridV">
+          <Key>
+            <PropertyRef Name="ID" />
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="GroupID" Type="int" />
+          <Property Name="PhaseID" Type="int" />
+          <Property Name="SupplierKpsID" Type="int" Nullable="false" />
+          <Property Name="Percentage" Type="decimal" Precision="5" Scale="2" />
+          <Property Name="LibraryKpsID" Type="int" />
+          <Property Name="SecretaryKpsID" Type="int" />
+          <Property Name="SecretaryOrLibaryID" Type="int" />
+          <Property Name="BookKpsID" Type="int" Nullable="false" />
+          <Property Name="BookCount" Type="int" Nullable="false" />
+          <Property Name="DiscountPercentage" Type="decimal" Precision="3" Scale="2" Nullable="false" />
+          <Property Name="Amount" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="GroupState" Type="int" />
+          <Property Name="CreatedAt" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="Status" Type="int" Nullable="false" />
+          <Property Name="State" Type="int" Nullable="false" />
+          <Property Name="CatalogType" Type="int" Nullable="false" />
+          <Property Name="HasPendingPriceVerification" Type="bit" Nullable="false" />
+          <Property Name="HasUnexpectedPriceChange" Type="bit" Nullable="false" />
         </EntityType>
         <Association Name="FK__aspnet_Me__UserI__2A164134">
           <End Role="aspnet_Users" Type="Self.aspnet_Users" Multiplicity="1" />
@@ -1441,6 +1591,18 @@ warning 6002: The table/view 'EudoxusOsy.dbo.Verify' does not have a primary key
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_SupplierIBAN_File">
+          <End Role="File" Type="Self.File" Multiplicity="0..1" />
+          <End Role="SupplierIBAN" Type="Self.SupplierIBAN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="File">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SupplierIBAN">
+              <PropertyRef Name="IBANCertificateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_SupplierIBAN_Supplier">
           <End Role="Supplier" Type="Self.Supplier" Multiplicity="1" />
           <End Role="SupplierIBAN" Type="Self.SupplierIBAN" Multiplicity="*" />
@@ -1552,8 +1714,12 @@ warning 6002: The table/view 'EudoxusOsy.dbo.Verify' does not have a primary key
         <Function Name="CreateCatalogsForPhase" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="myPhaseID" Type="int" Mode="In" />
         </Function>
+        <Function Name="FillArchiveFromTempArchive" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetCoAuthors" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="myPhaseID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetSupplierMoneyDiffs" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PhaseID" Type="int" Mode="In" />
         </Function>
         <Function Name="sp_GetSuppliersStatsForExport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="phaseID" Type="int" Mode="In" />
@@ -1561,6 +1727,7 @@ warning 6002: The table/view 'EudoxusOsy.dbo.Verify' does not have a primary key
         <Function Name="sp_GetSuppllierFullStatistics" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="supplier_kpsid" Type="int" Mode="In" />
           <Parameter Name="afm" Type="nvarchar" Mode="In" />
+          <Parameter Name="PhaseID" Type="int" Mode="In" />
           <Parameter Name="name" Type="nvarchar" Mode="In" />
           <Parameter Name="supplier_type" Type="int" Mode="In" />
           <Parameter Name="Count" Type="int" Mode="InOut" />
@@ -1569,6 +1736,9 @@ warning 6002: The table/view 'EudoxusOsy.dbo.Verify' does not have a primary key
           <Parameter Name="path" Type="nvarchar" Mode="In" />
           <Parameter Name="inputDataFileName" Type="nvarchar" Mode="In" />
           <Parameter Name="mode" Type="int" Mode="In" />
+        </Function>
+        <Function Name="spCatalogsReport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="phaseId" Type="int" Mode="In" />
         </Function>
         <Function Name="spCompareReceipts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="phaseId" Type="int" Mode="In" />
@@ -1596,11 +1766,17 @@ warning 6002: The table/view 'EudoxusOsy.dbo.Verify' does not have a primary key
         <Function Name="spSuppliersNoLogisticBooks" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="year" Type="int" Mode="In" />
         </Function>
+        <Function Name="spBasicStats" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="report">
+          <Parameter Name="phaseId" Type="int" Mode="In" />
+        </Function>
         <Function Name="spCacheStats" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="report">
           <Parameter Name="phaseId" Type="int" Mode="In" />
         </Function>
+        <Function Name="spRest_PP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="report" />
+        <Function Name="spSuppliersFullStatistics_PP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="report" />
         <EntityContainer Name="DBEntitiesModelStoreContainer">
           <EntitySet Name="ApplicationData" EntityType="Self.ApplicationData" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Archive" EntityType="Self.Archive" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="aspnet_Membership" EntityType="Self.aspnet_Membership" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="aspnet_Users" EntityType="Self.aspnet_Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AuditReceipt" EntityType="Self.AuditReceipt" Schema="dbo" store:Type="Tables" />
@@ -1613,6 +1789,7 @@ warning 6002: The table/view 'EudoxusOsy.dbo.Verify' does not have a primary key
           <EntitySet Name="BookPriceRequest" EntityType="Self.BookPriceRequest" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BookPriceRequestVolume" EntityType="Self.BookPriceRequestVolume" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BookSupplier" EntityType="Self.BookSupplier" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BusinessLogicErrorsKPS" EntityType="Self.BusinessLogicErrorsKPS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Catalog" EntityType="Self.Catalog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CatalogGroup" EntityType="Self.CatalogGroup" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CatalogGroupLog" EntityType="Self.CatalogGroupLog" Schema="dbo" store:Type="Tables" />
@@ -1644,6 +1821,7 @@ warning 6002: The table/view 'EudoxusOsy.dbo.Verify' does not have a primary key
           <EntitySet Name="SupplierIBAN" EntityType="Self.SupplierIBAN" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SupplierPhase" EntityType="Self.SupplierPhase" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TaskLastRunTime" EntityType="Self.TaskLastRunTime" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TempArchive" EntityType="Self.TempArchive" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UsersInRoles" EntityType="Self.UsersInRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WelfareRecord" EntityType="Self.WelfareRecord" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WelfareRecordEntry" EntityType="Self.WelfareRecordEntry" Schema="dbo" store:Type="Tables" />
@@ -1657,12 +1835,81 @@ warning 6002: The table/view 'EudoxusOsy.dbo.Verify' does not have a primary key
 [KostologisiPrice].[ColorValue] AS [ColorValue]
 FROM [dbo].[KostologisiPrice] AS [KostologisiPrice]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="TempAmountDiffs" EntityType="Self.TempAmountDiffs" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[TempAmountDiffs].[SupplierID] AS [SupplierID], 
+[TempAmountDiffs].[SupplierPhaseAmount] AS [SupplierPhaseAmount], 
+[TempAmountDiffs].[CatalogsSumAmount] AS [CatalogsSumAmount], 
+[TempAmountDiffs].[AmountDiff] AS [AmountDiff]
+FROM [dbo].[TempAmountDiffs] AS [TempAmountDiffs]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="Verify" EntityType="Self.Verify" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
 [Verify].[BookKpsID] AS [BookKpsID], 
 [Verify].[Fek] AS [Fek], 
 [Verify].[Price] AS [Price]
 FROM [dbo].[Verify] AS [Verify]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="BookPricesGridV" EntityType="Self.BookPricesGridV" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[BookPricesGridV].[BookID] AS [BookID], 
+[BookPricesGridV].[BookKpsID] AS [BookKpsID], 
+[BookPricesGridV].[Title] AS [Title], 
+[BookPricesGridV].[Author] AS [Author], 
+[BookPricesGridV].[Publisher] AS [Publisher], 
+[BookPricesGridV].[ISBN] AS [ISBN], 
+[BookPricesGridV].[IsActive] AS [IsActive], 
+[BookPricesGridV].[CreatedAt] AS [CreatedAt], 
+[BookPricesGridV].[SuggestedPrice] AS [SuggestedPrice], 
+[BookPricesGridV].[Price] AS [Price], 
+[BookPricesGridV].[HasPendingPriceVerification] AS [HasPendingPriceVerification], 
+[BookPricesGridV].[HasUnexpectedPriceChange] AS [HasUnexpectedPriceChange], 
+[BookPricesGridV].[ChangeYear] AS [ChangeYear], 
+[BookPricesGridV].[PriceChecked] AS [PriceChecked], 
+[BookPricesGridV].[BookPriceID] AS [BookPriceID], 
+[BookPricesGridV].[ID] AS [ID]
+FROM [dbo].[BookPricesGridV] AS [BookPricesGridV]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="BookPricesV" EntityType="Self.BookPricesV" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[BookPricesV].[ID] AS [ID], 
+[BookPricesV].[BookID] AS [BookID], 
+[BookPricesV].[BookKpsID] AS [BookKpsID], 
+[BookPricesV].[Title] AS [Title], 
+[BookPricesV].[BookPriceChangeID] AS [BookPriceChangeID], 
+[BookPricesV].[CreatedAt] AS [CreatedAt], 
+[BookPricesV].[SuggestedPrice] AS [SuggestedPrice], 
+[BookPricesV].[Price] AS [Price], 
+[BookPricesV].[PriceChecked] AS [PriceChecked], 
+[BookPricesV].[PendingCommitteePriceVerification] AS [PendingCommitteePriceVerification], 
+[BookPricesV].[HasUnexpectedPriceChangePhaseID] AS [HasUnexpectedPriceChangePhaseID], 
+[BookPricesV].[ChangeYear] AS [ChangeYear], 
+[BookPricesV].[Approved] AS [Approved], 
+[BookPricesV].[RowNum] AS [RowNum]
+FROM [dbo].[BookPricesV] AS [BookPricesV]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="EditCatalogsGridV" EntityType="Self.EditCatalogsGridV" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[EditCatalogsGridV].[ID] AS [ID], 
+[EditCatalogsGridV].[GroupID] AS [GroupID], 
+[EditCatalogsGridV].[PhaseID] AS [PhaseID], 
+[EditCatalogsGridV].[SupplierKpsID] AS [SupplierKpsID], 
+[EditCatalogsGridV].[Percentage] AS [Percentage], 
+[EditCatalogsGridV].[LibraryKpsID] AS [LibraryKpsID], 
+[EditCatalogsGridV].[SecretaryKpsID] AS [SecretaryKpsID], 
+[EditCatalogsGridV].[SecretaryOrLibaryID] AS [SecretaryOrLibaryID], 
+[EditCatalogsGridV].[BookKpsID] AS [BookKpsID], 
+[EditCatalogsGridV].[BookCount] AS [BookCount], 
+[EditCatalogsGridV].[DiscountPercentage] AS [DiscountPercentage], 
+[EditCatalogsGridV].[Amount] AS [Amount], 
+[EditCatalogsGridV].[GroupState] AS [GroupState], 
+[EditCatalogsGridV].[CreatedAt] AS [CreatedAt], 
+[EditCatalogsGridV].[Status] AS [Status], 
+[EditCatalogsGridV].[State] AS [State], 
+[EditCatalogsGridV].[CatalogType] AS [CatalogType], 
+[EditCatalogsGridV].[HasPendingPriceVerification] AS [HasPendingPriceVerification], 
+[EditCatalogsGridV].[HasUnexpectedPriceChange] AS [HasUnexpectedPriceChange]
+FROM [dbo].[EditCatalogsGridV] AS [EditCatalogsGridV]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK__aspnet_Me__UserI__2A164134" Association="Self.FK__aspnet_Me__UserI__2A164134">
             <End Role="aspnet_Users" EntitySet="aspnet_Users" />
@@ -1875,6 +2122,10 @@ FROM [dbo].[Verify] AS [Verify]</DefiningQuery>
           <AssociationSet Name="FK_SupplierDetails_Kap_Prefectures" Association="Self.FK_SupplierDetails_Kap_Prefectures">
             <End Role="Kap_Prefectures" EntitySet="Kap_Prefectures" />
             <End Role="SupplierDetails" EntitySet="SupplierDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplierIBAN_File" Association="Self.FK_SupplierIBAN_File">
+            <End Role="File" EntitySet="File" />
+            <End Role="SupplierIBAN" EntitySet="SupplierIBAN" />
           </AssociationSet>
           <AssociationSet Name="FK_SupplierIBAN_Supplier" Association="Self.FK_SupplierIBAN_Supplier">
             <End Role="Supplier" EntitySet="Supplier" />
@@ -2232,16 +2483,6 @@ FROM [dbo].[Verify] AS [Verify]</DefiningQuery>
           <FunctionImport Name="CacheStats">
           <Parameter Name="phaseId" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="GetSupplierFullStatistics" ReturnType="Collection(DBEntitiesModel.SupplierFullStatistics)">
-            <Parameter Name="supplier_kpsid" Mode="In" Type="Int32" />
-            <Parameter Name="afm" Mode="In" Type="String" />
-            <Parameter Name="name" Mode="In" Type="String" />
-            <Parameter Name="supplier_type" Mode="In" Type="Int32" />
-            <Parameter Name="Count" Mode="InOut" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="GetSuppliersStatsForExport" ReturnType="Collection(DBEntitiesModel.SuppliersStatsForExport)">
-          <Parameter Name="phaseID" Mode="In" Type="Int32" />
-          </FunctionImport>
           <FunctionImport Name="InsertToReceiptsFromXml">
           <Parameter Name="phaseId" Mode="In" Type="Int32" />
           </FunctionImport>
@@ -2276,6 +2517,40 @@ FROM [dbo].[Verify] AS [Verify]</DefiningQuery>
             <End Role="Book" EntitySet="Books" />
             <End Role="BookPriceChange" EntitySet="BookPriceChanges" />
           </AssociationSet>
+          <FunctionImport Name="GetSupplierFullStatistics" ReturnType="Collection(DBEntitiesModel.SupplierFullStatistics)">
+            <Parameter Name="supplier_kpsid" Mode="In" Type="Int32" />
+            <Parameter Name="afm" Mode="In" Type="String" />
+            <Parameter Name="PhaseID" Mode="In" Type="Int32" />
+            <Parameter Name="name" Mode="In" Type="String" />
+            <Parameter Name="supplier_type" Mode="In" Type="Int32" />
+            <Parameter Name="Count" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="Rest_PP" />
+          <FunctionImport Name="SuppliersFullStatistics_PP" />
+          <EntitySet Name="BusinessLogicErrorsKPS" EntityType="DBEntitiesModel.BusinessLogicErrorsKP" />
+          <FunctionImport Name="GetBasicStats" ReturnType="Collection(DBEntitiesModel.BasicStats)">
+          <Parameter Name="phaseId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="Archives" EntityType="DBEntitiesModel.Archive" />
+          <EntitySet Name="TempArchives" EntityType="DBEntitiesModel.TempArchive" />
+          <FunctionImport Name="FillArchiveFromTempArchive" />
+          <EntitySet Name="BookPricesVs" EntityType="DBEntitiesModel.BookPricesV" />
+          <EntitySet Name="BookPricesGridVs" EntityType="DBEntitiesModel.BookPricesGridV" />
+          <AssociationSet Name="FK_SupplierIBAN_File" Association="DBEntitiesModel.FK_SupplierIBAN_File">
+            <End Role="File" EntitySet="Files" />
+            <End Role="SupplierIBAN" EntitySet="SupplierIBANs" />
+          </AssociationSet>
+          <EntitySet Name="EditCatalogsGridVs" EntityType="DBEntitiesModel.EditCatalogsGridV" />
+          <EntitySet Name="TempAmountDiffs" EntityType="DBEntitiesModel.TempAmountDiff" />
+          <FunctionImport Name="GetSupplierMoneyDiffs">
+          <Parameter Name="PhaseID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spCatalogsReport" ReturnType="Collection(DBEntitiesModel.CatalogsReportItems)">
+          <Parameter Name="phaseId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_GetSuppliersStatsForExport" ReturnType="Collection(DBEntitiesModel.SuppliersStatsForExport)">
+            <Parameter Name="phaseID" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="Bank">
           <Key>
@@ -2377,6 +2652,7 @@ FROM [dbo].[Verify] AS [Verify]</DefiningQuery>
           <Property Name="UpdatedBy" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Book" Relationship="DBEntitiesModel.FK_BookPrice_Book" FromRole="BookPrice" ToRole="Book" />
           <NavigationProperty Name="Catalogs" Relationship="DBEntitiesModel.FK_Catalog_BookPrice" FromRole="BookPrice" ToRole="Catalog" />
+          <Property Name="IsChecked" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="BookPriceRequest">
           <Key>
@@ -2648,6 +2924,7 @@ FROM [dbo].[Verify] AS [Verify]</DefiningQuery>
           <NavigationProperty Name="FileSelfPublishers" Relationship="DBEntitiesModel.FK_FileSelfPublisher_File" FromRole="File" ToRole="FileSelfPublisher" />
           <NavigationProperty Name="PaymentOrders" Relationship="DBEntitiesModel.FK_PaymentOrder_File" FromRole="File" ToRole="PaymentOrder" />
           <Property Name="PdfNotes" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="SupplierIBANs" Relationship="DBEntitiesModel.FK_SupplierIBAN_File" FromRole="File" ToRole="SupplierIBAN" />
         </EntityType>
         <EntityType Name="FileSelfPublisher">
           <Key>
@@ -2776,6 +3053,7 @@ FROM [dbo].[Verify] AS [Verify]</DefiningQuery>
           <NavigationProperty Name="SupplierPhases" Relationship="DBEntitiesModel.FK_SupplierPhase_Phase" FromRole="Phase" ToRole="SupplierPhase" />
           <Property Name="CatalogsCreated" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Catalogs1" Relationship="DBEntitiesModel.FK_Catalog_OriginalPhase" FromRole="Phase" ToRole="Catalog" />
+          <Property Name="PhaseAmountMinistry" Type="Decimal" Precision="10" Scale="2" />
         </EntityType>
         <EntityType Name="PriceModificationReason">
           <Key>
@@ -2981,6 +3259,8 @@ FROM [dbo].[Verify] AS [Verify]</DefiningQuery>
           <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="CatalogGroups" Relationship="DBEntitiesModel.FK_CatalogGroup_SupplierIBAN" FromRole="SupplierIBAN" ToRole="CatalogGroup" />
           <NavigationProperty Name="Supplier" Relationship="DBEntitiesModel.FK_SupplierIBAN_Supplier" FromRole="SupplierIBAN" ToRole="Supplier" />
+          <Property Name="IBANCertificateID" Type="Int32" />
+          <NavigationProperty Name="File" Relationship="DBEntitiesModel.FK_SupplierIBAN_File" FromRole="SupplierIBAN" ToRole="File" />
         </EntityType>
         <EntityType Name="SupplierPhase">
           <Key>
@@ -3788,6 +4068,7 @@ FROM [dbo].[Verify] AS [Verify]</DefiningQuery>
           <Property Name="PdfNotes" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="OfficeSlipNumber" Type="Int32" />
           <Property Name="OfficeSlipDate" Type="DateTime" Precision="7" />
+          <Property Name="PdfTypeInt" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="FK_CatalogGroupLog_CatalogGroup1">
           <End Type="DBEntitiesModel.CatalogGroup" Role="CatalogGroup" Multiplicity="1">
@@ -3954,31 +4235,6 @@ FROM [dbo].[Verify] AS [Verify]</DefiningQuery>
           <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="StatusInt" Type="Int32" />
         </EntityType>
-        <ComplexType Name="SupplierFullStatistics">
-          <Property Type="Int32" Name="supplier_id" Nullable="true" />
-          <Property Type="Int32" Name="supplier_kpsid" Nullable="true" />
-          <Property Type="String" Name="publicFinancialOffice" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="paymentPfo" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="contact_name" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="taxRoll_number" Nullable="true" MaxLength="20" />
-          <Property Type="String" Name="official_name" Nullable="true" MaxLength="200" />
-          <Property Type="Int32" Name="supplierType" Nullable="true" />
-          <Property Type="Double" Name="totalprice" Nullable="true" />
-          <Property Type="Double" Name="totalpayment" Nullable="true" />
-          <Property Type="Double" Name="totalofferprice" Nullable="true" />
-          <Property Type="Double" Name="totaltoyde" Nullable="true" />
-          <Property Type="Int32" Name="phase_id" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="SuppliersStatsForExport">
-          <Property Type="Int32" Name="ID" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="512" />
-          <Property Type="Int32" Name="supplierType" Nullable="false" />
-          <Property Type="Int32" Name="books_registered" Nullable="true" />
-          <Property Type="Double" Name="totalPrice" Nullable="true" />
-          <Property Type="Double" Name="totalpayment" Nullable="true" />
-          <Property Type="Double" Name="totaltoyde" Nullable="true" />
-          <Property Type="Int32" Name="books_registeredNOTPRICED" Nullable="true" />
-        </ComplexType>
         <EntityType Name="ApplicationData">
           <Key>
             <PropertyRef Name="ID" />
@@ -4020,6 +4276,8 @@ FROM [dbo].[Verify] AS [Verify]</DefiningQuery>
           <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="Book" Relationship="DBEntitiesModel.FK_BookPriceChanges_Book" FromRole="BookPriceChange" ToRole="Book" />
           <Property Name="Approved" Type="Boolean" />
+          <Property Name="IsUnexpected" Type="Boolean" />
+          <Property Name="Year" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="FK_BookPriceChanges_Book">
           <End Type="DBEntitiesModel.Book" Role="Book" Multiplicity="1" />
@@ -4033,6 +4291,185 @@ FROM [dbo].[Verify] AS [Verify]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="BasicStats">
+          <Property Type="Int32" Name="totalbooks" Nullable="true" />
+          <Property Type="Int32" Name="pricedBooks" Nullable="true" />
+          <Property Type="Decimal" Name="avgPricedBooks" Nullable="true" Precision="10" Scale="2" />
+          <Property Type="Decimal" Name="TotalCost" Nullable="true" Precision="10" Scale="2" />
+          <Property Type="Decimal" Name="TotalToYDE" Nullable="true" Precision="10" Scale="2" />
+        </ComplexType>
+        <ComplexType Name="SupplierFullStatistics">
+          <Property Type="Int32" Name="supplier_id" Nullable="true" />
+          <Property Type="Int32" Name="supplier_kpsid" Nullable="true" />
+          <Property Type="String" Name="publicFinancialOffice" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="paymentPfo" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="contact_name" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="taxRoll_number" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="official_name" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="supplierType" Nullable="true" />
+          <Property Type="Decimal" Name="totalprice" Nullable="true" Precision="10" Scale="2" />
+          <Property Type="Decimal" Name="totalpayment" Nullable="true" Precision="10" Scale="2" />
+          <Property Type="Decimal" Name="totalofferprice" Nullable="true" Precision="10" Scale="2" />
+          <Property Type="Decimal" Name="totaltoyde" Nullable="true" Precision="10" Scale="2" />
+          <Property Type="Int32" Name="phase_id" Nullable="true" />
+          <Property Type="Int32" Name="booksPriced" Nullable="true" />
+          <Property Type="Int32" Name="booksNotPriced" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="SuppliersStatsForExport">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="512" />
+          <Property Type="Int32" Name="supplierType" Nullable="false" />
+          <Property Type="Int32" Name="booksPriced" Nullable="true" />
+          <Property Type="Decimal" Name="totalPrice" Nullable="true" Precision="10" Scale="2" />
+          <Property Type="Decimal" Name="totalpayment" Nullable="true" Precision="10" Scale="2" />
+          <Property Type="Decimal" Name="totaltoyde" Nullable="true" Precision="10" Scale="2" />
+          <Property Type="Int32" Name="booksNotPriced" Nullable="true" />
+          <Property Type="Int32" Name="phaseId" Nullable="true" />
+        </ComplexType>
+        <EntityType Name="BusinessLogicErrorsKP">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="EntityID" Type="Int32" Nullable="false" />
+          <Property Name="ErrorEntityTypeInt" Type="Int32" Nullable="false" />
+          <Property Name="ErrorCodeInt" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="7" />
+        </EntityType>
+        <EntityType Name="Archive">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="KPSArchiveID" Type="Int32" Nullable="false" />
+          <Property Name="Year" Type="Int32" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="6" Scale="2" />
+          <Property Name="SuggestedPrice" Type="Decimal" Nullable="false" Precision="6" Scale="2" />
+          <Property Name="LastUpdate" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="DecisionNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PriceComments" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CheckedPrice" Type="Boolean" />
+          <Property Name="BookKpsID" Type="Int32" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="Fek" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="TempArchive">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="KPSArchiveID" Type="Int32" Nullable="false" />
+          <Property Name="BookID" Type="Int32" Nullable="false" />
+          <Property Name="Year" Type="Int32" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="6" Scale="2" />
+          <Property Name="SuggestedPrice" Type="Decimal" Nullable="false" Precision="6" Scale="2" />
+          <Property Name="LastUpdate" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="DecisionNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PriceComments" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CheckedPrice" Type="Boolean" />
+          <Property Name="Fek" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="BookPricesV">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="BookID" Type="Int32" Nullable="false" />
+          <Property Name="BookKpsID" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="BookPriceChangeID" Type="Int32" Nullable="false" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="SuggestedPrice" Type="Decimal" Nullable="false" Precision="5" Scale="2" />
+          <Property Name="Price" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="PriceChecked" Type="Boolean" Nullable="false" />
+          <Property Name="PendingCommitteePriceVerification" Type="Boolean" />
+          <Property Name="HasUnexpectedPriceChangePhaseID" Type="Int32" />
+          <Property Name="ChangeYear" Type="Int32" Nullable="false" />
+          <Property Name="RowNum" Type="Int64" />
+          <Property Name="Approved" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="BookPricesGridV">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="BookID" Type="Int32" Nullable="false" />
+          <Property Name="BookKpsID" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Author" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Publisher" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ISBN" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedAt" Type="DateTime" Precision="7" />
+          <Property Name="SuggestedPrice" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="Price" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="HasPendingPriceVerification" Type="Boolean" Nullable="false" />
+          <Property Name="HasUnexpectedPriceChange" Type="Boolean" Nullable="false" />
+          <Property Name="ChangeYear" Type="Int32" />
+          <Property Name="PriceChecked" Type="Boolean" />
+          <Property Name="BookPriceID" Type="Int32" />
+          <Property Name="ID" Type="Int64" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_SupplierIBAN_File">
+          <End Type="DBEntitiesModel.File" Role="File" Multiplicity="0..1" />
+          <End Type="DBEntitiesModel.SupplierIBAN" Role="SupplierIBAN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="File">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SupplierIBAN">
+              <PropertyRef Name="IBANCertificateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="EditCatalogsGridV">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="GroupID" Type="Int32" />
+          <Property Name="PhaseID" Type="Int32" />
+          <Property Name="SupplierKpsID" Type="Int32" Nullable="false" />
+          <Property Name="Percentage" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="LibraryKpsID" Type="Int32" />
+          <Property Name="SecretaryKpsID" Type="Int32" />
+          <Property Name="SecretaryOrLibaryID" Type="Int32" />
+          <Property Name="BookKpsID" Type="Int32" Nullable="false" />
+          <Property Name="BookCount" Type="Int32" Nullable="false" />
+          <Property Name="DiscountPercentage" Type="Decimal" Nullable="false" Precision="3" Scale="2" />
+          <Property Name="Amount" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="GroupState" Type="Int32" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <Property Name="State" Type="Int32" Nullable="false" />
+          <Property Name="CatalogType" Type="Int32" Nullable="false" />
+          <Property Name="HasPendingPriceVerification" Type="Boolean" Nullable="false" />
+          <Property Name="HasUnexpectedPriceChange" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TempAmountDiff">
+          <Key>
+            <PropertyRef Name="SupplierID" />
+          </Key>
+          <Property Name="SupplierID" Type="Int32" Nullable="false" />
+          <Property Name="SupplierPhaseAmount" Type="Decimal" Precision="12" Scale="4" />
+          <Property Name="CatalogsSumAmount" Type="Decimal" Precision="12" Scale="4" />
+          <Property Name="AmountDiff" Type="Decimal" Precision="13" Scale="4" />
+        </EntityType>
+        <ComplexType Name="CatalogsReportItems">
+          <Property Type="String" Name="BookTitle" Nullable="false" MaxLength="500" />
+          <Property Type="Int32" Name="BookKpsID" Nullable="false" />
+          <Property Type="String" Name="SupplierName" Nullable="false" MaxLength="512" />
+          <Property Type="Int32" Name="SupplierKpsID" Nullable="false" />
+          <Property Type="String" Name="Department" Nullable="false" MaxLength="256" />
+          <Property Type="Int32" Name="LibraryKpsID" Nullable="true" />
+          <Property Type="Int32" Name="SecretaryKpsID" Nullable="true" />
+          <Property Type="Decimal" Name="FinalAmount" Nullable="true" Precision="8" Scale="2" />
+          <Property Type="Int32" Name="BookCount" Nullable="false" />
+          <Property Type="Decimal" Name="PricePerBook" Nullable="true" Precision="6" Scale="2" />
+          <Property Type="Int32" Name="FirstRegistrationYear" Nullable="true" />
+          <Property Type="Decimal" Name="DiscountPercentage" Nullable="false" Precision="3" Scale="2" />
+          <Property Type="Decimal" Name="Percentage" Nullable="false" Precision="5" Scale="2" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4114,6 +4551,7 @@ FROM [dbo].[Verify] AS [Verify]</DefiningQuery>
           <EntitySetMapping Name="BookPrices">
             <EntityTypeMapping TypeName="DBEntitiesModel.BookPrice">
               <MappingFragment StoreEntitySet="BookPrice">
+                <ScalarProperty Name="IsChecked" ColumnName="IsChecked" />
                 <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
                 <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
@@ -4456,6 +4894,7 @@ FROM [dbo].[Verify] AS [Verify]</DefiningQuery>
           <EntitySetMapping Name="Phases">
             <EntityTypeMapping TypeName="DBEntitiesModel.Phase">
               <MappingFragment StoreEntitySet="Phase">
+                <ScalarProperty Name="PhaseAmountMinistry" ColumnName="PhaseAmountMinistry" />
                 <ScalarProperty Name="CatalogsCreated" ColumnName="CatalogsCreated" />
                 <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
                 <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
@@ -4652,6 +5091,7 @@ FROM [dbo].[Verify] AS [Verify]</DefiningQuery>
           <EntitySetMapping Name="SupplierIBANs">
             <EntityTypeMapping TypeName="DBEntitiesModel.SupplierIBAN">
               <MappingFragment StoreEntitySet="SupplierIBAN">
+                <ScalarProperty Name="IBANCertificateID" ColumnName="IBANCertificateID" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
                 <ScalarProperty Name="IBAN" ColumnName="IBAN" />
@@ -4750,6 +5190,7 @@ FROM [dbo].[Verify] AS [Verify]</DefiningQuery>
           <EntitySetMapping Name="CatalogGroupLogs">
             <EntityTypeMapping TypeName="DBEntitiesModel.CatalogGroupLog">
               <MappingFragment StoreEntitySet="CatalogGroupLog">
+                <ScalarProperty Name="PdfTypeInt" ColumnName="PdfType" />
                 <ScalarProperty Name="OfficeSlipDate" ColumnName="OfficeSlipDate" />
                 <ScalarProperty Name="OfficeSlipNumber" ColumnName="OfficeSlipNumber" />
                 <ScalarProperty Name="PdfNotes" ColumnName="PdfNotes" />
@@ -4882,39 +5323,6 @@ FROM [dbo].[Verify] AS [Verify]</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="CacheStats" FunctionName="DBEntitiesModel.Store.spCacheStats" />
-          <FunctionImportMapping FunctionImportName="GetSupplierFullStatistics" FunctionName="DBEntitiesModel.Store.sp_GetSuppllierFullStatistics">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DBEntitiesModel.SupplierFullStatistics">
-                <ScalarProperty Name="supplier_id" ColumnName="supplier_id" />
-                <ScalarProperty Name="supplier_kpsid" ColumnName="supplier_kpsid" />
-                <ScalarProperty Name="publicFinancialOffice" ColumnName="publicFinancialOffice" />
-                <ScalarProperty Name="paymentPfo" ColumnName="paymentPfo" />
-                <ScalarProperty Name="contact_name" ColumnName="contact_name" />
-                <ScalarProperty Name="taxRoll_number" ColumnName="taxRoll_number" />
-                <ScalarProperty Name="official_name" ColumnName="official_name" />
-                <ScalarProperty Name="supplierType" ColumnName="supplierType" />
-                <ScalarProperty Name="totalprice" ColumnName="totalprice" />
-                <ScalarProperty Name="totalpayment" ColumnName="totalpayment" />
-                <ScalarProperty Name="totalofferprice" ColumnName="totalofferprice" />
-                <ScalarProperty Name="totaltoyde" ColumnName="totaltoyde" />
-                <ScalarProperty Name="phase_id" ColumnName="phase_id" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetSuppliersStatsForExport" FunctionName="DBEntitiesModel.Store.sp_GetSuppliersStatsForExport">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DBEntitiesModel.SuppliersStatsForExport">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="supplierType" ColumnName="supplierType" />
-                <ScalarProperty Name="books_registered" ColumnName="books_registered" />
-                <ScalarProperty Name="totalPrice" ColumnName="totalPrice" />
-                <ScalarProperty Name="totalpayment" ColumnName="totalpayment" />
-                <ScalarProperty Name="totaltoyde" ColumnName="totaltoyde" />
-                <ScalarProperty Name="books_registeredNOTPRICED" ColumnName="books_registeredNOTPRICED" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="InsertToReceiptsFromXml" FunctionName="DBEntitiesModel.Store.spInsertToReceiptsFromXml" />
           <EntitySetMapping Name="ApplicationDatas">
             <EntityTypeMapping TypeName="DBEntitiesModel.ApplicationData">
@@ -4957,6 +5365,8 @@ FROM [dbo].[Verify] AS [Verify]</DefiningQuery>
           <EntitySetMapping Name="BookPriceChanges">
             <EntityTypeMapping TypeName="DBEntitiesModel.BookPriceChange">
               <MappingFragment StoreEntitySet="BookPriceChange">
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="IsUnexpected" ColumnName="IsUnexpected" />
                 <ScalarProperty Name="Approved" ColumnName="Approved" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
@@ -4970,6 +5380,200 @@ FROM [dbo].[Verify] AS [Verify]</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetSupplierFullStatistics" FunctionName="DBEntitiesModel.Store.sp_GetSuppllierFullStatistics">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DBEntitiesModel.SupplierFullStatistics">
+                <ScalarProperty Name="supplier_id" ColumnName="supplier_id" />
+                <ScalarProperty Name="supplier_kpsid" ColumnName="supplier_kpsid" />
+                <ScalarProperty Name="publicFinancialOffice" ColumnName="publicFinancialOffice" />
+                <ScalarProperty Name="paymentPfo" ColumnName="paymentPfo" />
+                <ScalarProperty Name="contact_name" ColumnName="contact_name" />
+                <ScalarProperty Name="taxRoll_number" ColumnName="taxRoll_number" />
+                <ScalarProperty Name="official_name" ColumnName="official_name" />
+                <ScalarProperty Name="supplierType" ColumnName="supplierType" />
+                <ScalarProperty Name="totalprice" ColumnName="totalprice" />
+                <ScalarProperty Name="totalpayment" ColumnName="totalpayment" />
+                <ScalarProperty Name="totalofferprice" ColumnName="totalofferprice" />
+                <ScalarProperty Name="totaltoyde" ColumnName="totaltoyde" />
+                <ScalarProperty Name="phase_id" ColumnName="phase_id" />
+                <ScalarProperty Name="booksPriced" ColumnName="booksPriced" />
+                <ScalarProperty Name="booksNotPriced" ColumnName="booksNotPriced" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Rest_PP" FunctionName="DBEntitiesModel.Store.spRest_PP" />
+          <FunctionImportMapping FunctionImportName="SuppliersFullStatistics_PP" FunctionName="DBEntitiesModel.Store.spSuppliersFullStatistics_PP" />
+          <EntitySetMapping Name="BusinessLogicErrorsKPS">
+            <EntityTypeMapping TypeName="DBEntitiesModel.BusinessLogicErrorsKP">
+              <MappingFragment StoreEntitySet="BusinessLogicErrorsKPS">
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ErrorCodeInt" ColumnName="ErrorCode" />
+                <ScalarProperty Name="ErrorEntityTypeInt" ColumnName="ErrorEntityType" />
+                <ScalarProperty Name="EntityID" ColumnName="EntityID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetBasicStats" FunctionName="DBEntitiesModel.Store.spBasicStats">
+          <ResultMapping>
+              <ComplexTypeMapping TypeName="DBEntitiesModel.BasicStats">
+                <ScalarProperty Name="totalbooks" ColumnName="totalbooks" />
+                <ScalarProperty Name="pricedBooks" ColumnName="pricedBooks" />
+                <ScalarProperty Name="avgPricedBooks" ColumnName="avgPricedBooks" />
+                <ScalarProperty Name="TotalCost" ColumnName="TotalCost" />
+                <ScalarProperty Name="TotalToYDE" ColumnName="TotalToYDE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="Archives">
+            <EntityTypeMapping TypeName="DBEntitiesModel.Archive">
+              <MappingFragment StoreEntitySet="Archive">
+                <ScalarProperty Name="Fek" ColumnName="Fek" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="BookKpsID" ColumnName="BookKpsID" />
+                <ScalarProperty Name="CheckedPrice" ColumnName="CheckedPrice" />
+                <ScalarProperty Name="PriceComments" ColumnName="PriceComments" />
+                <ScalarProperty Name="DecisionNumber" ColumnName="DecisionNumber" />
+                <ScalarProperty Name="LastUpdate" ColumnName="LastUpdate" />
+                <ScalarProperty Name="SuggestedPrice" ColumnName="SuggestedPrice" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="KPSArchiveID" ColumnName="KPSArchiveID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TempArchives">
+            <EntityTypeMapping TypeName="DBEntitiesModel.TempArchive">
+              <MappingFragment StoreEntitySet="TempArchive">
+                <ScalarProperty Name="Fek" ColumnName="Fek" />
+                <ScalarProperty Name="CheckedPrice" ColumnName="CheckedPrice" />
+                <ScalarProperty Name="PriceComments" ColumnName="PriceComments" />
+                <ScalarProperty Name="DecisionNumber" ColumnName="DecisionNumber" />
+                <ScalarProperty Name="LastUpdate" ColumnName="LastUpdate" />
+                <ScalarProperty Name="SuggestedPrice" ColumnName="SuggestedPrice" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="BookID" ColumnName="BookID" />
+                <ScalarProperty Name="KPSArchiveID" ColumnName="KPSArchiveID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="FillArchiveFromTempArchive" FunctionName="DBEntitiesModel.Store.FillArchiveFromTempArchive" />
+          <EntitySetMapping Name="BookPricesVs">
+            <EntityTypeMapping TypeName="DBEntitiesModel.BookPricesV">
+              <MappingFragment StoreEntitySet="BookPricesV">
+                <ScalarProperty Name="Approved" ColumnName="Approved" />
+                <ScalarProperty Name="RowNum" ColumnName="RowNum" />
+                <ScalarProperty Name="ChangeYear" ColumnName="ChangeYear" />
+                <ScalarProperty Name="HasUnexpectedPriceChangePhaseID" ColumnName="HasUnexpectedPriceChangePhaseID" />
+                <ScalarProperty Name="PendingCommitteePriceVerification" ColumnName="PendingCommitteePriceVerification" />
+                <ScalarProperty Name="PriceChecked" ColumnName="PriceChecked" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="SuggestedPrice" ColumnName="SuggestedPrice" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="BookPriceChangeID" ColumnName="BookPriceChangeID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="BookKpsID" ColumnName="BookKpsID" />
+                <ScalarProperty Name="BookID" ColumnName="BookID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BookPricesGridVs">
+            <EntityTypeMapping TypeName="DBEntitiesModel.BookPricesGridV">
+              <MappingFragment StoreEntitySet="BookPricesGridV">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="BookPriceID" ColumnName="BookPriceID" />
+                <ScalarProperty Name="PriceChecked" ColumnName="PriceChecked" />
+                <ScalarProperty Name="ChangeYear" ColumnName="ChangeYear" />
+                <ScalarProperty Name="HasUnexpectedPriceChange" ColumnName="HasUnexpectedPriceChange" />
+                <ScalarProperty Name="HasPendingPriceVerification" ColumnName="HasPendingPriceVerification" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="SuggestedPrice" ColumnName="SuggestedPrice" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="ISBN" ColumnName="ISBN" />
+                <ScalarProperty Name="Publisher" ColumnName="Publisher" />
+                <ScalarProperty Name="Author" ColumnName="Author" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="BookKpsID" ColumnName="BookKpsID" />
+                <ScalarProperty Name="BookID" ColumnName="BookID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EditCatalogsGridVs">
+            <EntityTypeMapping TypeName="DBEntitiesModel.EditCatalogsGridV">
+              <MappingFragment StoreEntitySet="EditCatalogsGridV">
+                <ScalarProperty Name="HasUnexpectedPriceChange" ColumnName="HasUnexpectedPriceChange" />
+                <ScalarProperty Name="HasPendingPriceVerification" ColumnName="HasPendingPriceVerification" />
+                <ScalarProperty Name="CatalogType" ColumnName="CatalogType" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="GroupState" ColumnName="GroupState" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="DiscountPercentage" ColumnName="DiscountPercentage" />
+                <ScalarProperty Name="BookCount" ColumnName="BookCount" />
+                <ScalarProperty Name="BookKpsID" ColumnName="BookKpsID" />
+                <ScalarProperty Name="SecretaryOrLibaryID" ColumnName="SecretaryOrLibaryID" />
+                <ScalarProperty Name="SecretaryKpsID" ColumnName="SecretaryKpsID" />
+                <ScalarProperty Name="LibraryKpsID" ColumnName="LibraryKpsID" />
+                <ScalarProperty Name="Percentage" ColumnName="Percentage" />
+                <ScalarProperty Name="SupplierKpsID" ColumnName="SupplierKpsID" />
+                <ScalarProperty Name="PhaseID" ColumnName="PhaseID" />
+                <ScalarProperty Name="GroupID" ColumnName="GroupID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TempAmountDiffs">
+            <EntityTypeMapping TypeName="DBEntitiesModel.TempAmountDiff">
+              <MappingFragment StoreEntitySet="TempAmountDiffs">
+                <ScalarProperty Name="AmountDiff" ColumnName="AmountDiff" />
+                <ScalarProperty Name="CatalogsSumAmount" ColumnName="CatalogsSumAmount" />
+                <ScalarProperty Name="SupplierPhaseAmount" ColumnName="SupplierPhaseAmount" />
+                <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetSupplierMoneyDiffs" FunctionName="DBEntitiesModel.Store.GetSupplierMoneyDiffs" />
+          <FunctionImportMapping FunctionImportName="spCatalogsReport" FunctionName="DBEntitiesModel.Store.spCatalogsReport">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DBEntitiesModel.CatalogsReportItems">
+                <ScalarProperty Name="BookTitle" ColumnName="BookTitle" />
+                <ScalarProperty Name="BookKpsID" ColumnName="BookKpsID" />
+                <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
+                <ScalarProperty Name="SupplierKpsID" ColumnName="SupplierKpsID" />
+                <ScalarProperty Name="Department" ColumnName="Department" />
+                <ScalarProperty Name="LibraryKpsID" ColumnName="LibraryKpsID" />
+                <ScalarProperty Name="SecretaryKpsID" ColumnName="SecretaryKpsID" />
+                <ScalarProperty Name="FinalAmount" ColumnName="FinalAmount" />
+                <ScalarProperty Name="BookCount" ColumnName="BookCount" />
+                <ScalarProperty Name="PricePerBook" ColumnName="PricePerBook" />
+                <ScalarProperty Name="FirstRegistrationYear" ColumnName="FirstRegistrationYear" />
+                <ScalarProperty Name="DiscountPercentage" ColumnName="DiscountPercentage" />
+                <ScalarProperty Name="Percentage" ColumnName="Percentage" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_GetSuppliersStatsForExport" FunctionName="DBEntitiesModel.Store.sp_GetSuppliersStatsForExport">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DBEntitiesModel.SuppliersStatsForExport">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="supplierType" ColumnName="supplierType" />
+                <ScalarProperty Name="booksPriced" ColumnName="booksPriced" />
+                <ScalarProperty Name="totalPrice" ColumnName="totalPrice" />
+                <ScalarProperty Name="totalpayment" ColumnName="totalpayment" />
+                <ScalarProperty Name="totaltoyde" ColumnName="totaltoyde" />
+                <ScalarProperty Name="booksNotPriced" ColumnName="booksNotPriced" />
+                <ScalarProperty Name="phaseId" ColumnName="phaseId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -5106,6 +5710,14 @@ FROM [dbo].[Verify] AS [Verify]</DefiningQuery>
         <EntityTypeShape EntityType="DBEntitiesModel.ApplicationData" Width="1.5" PointX="8.375" PointY="16.75" />
         <EntityTypeShape EntityType="DBEntitiesModel.BookPriceChange" Width="1.5" PointX="18" PointY="16" />
         <AssociationConnector Association="DBEntitiesModel.FK_BookPriceChanges_Book" />
+        <EntityTypeShape EntityType="DBEntitiesModel.BusinessLogicErrorsKP" Width="1.5" PointX="8.375" PointY="19.75" />
+        <EntityTypeShape EntityType="DBEntitiesModel.Archive" Width="1.5" PointX="21.375" PointY="8.75" />
+        <EntityTypeShape EntityType="DBEntitiesModel.TempArchive" Width="1.5" PointX="24.375" PointY="0.75" />
+        <EntityTypeShape EntityType="DBEntitiesModel.BookPricesV" Width="1.5" PointX="8.375" PointY="22.75" />
+        <EntityTypeShape EntityType="DBEntitiesModel.BookPricesGridV" Width="1.5" PointX="24.375" PointY="19.75" />
+        <AssociationConnector Association="DBEntitiesModel.FK_SupplierIBAN_File" />
+        <EntityTypeShape EntityType="DBEntitiesModel.EditCatalogsGridV" Width="1.5" PointX="11.375" PointY="25.75" />
+        <EntityTypeShape EntityType="DBEntitiesModel.TempAmountDiff" Width="1.5" PointX="24.375" PointY="4.75" />
       </Diagram>
     </Diagrams>
   </Designer>

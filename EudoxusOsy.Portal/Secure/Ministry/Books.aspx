@@ -16,7 +16,7 @@
             btnExportBookCatalogsHidden.DoClick();
         }
     </script>
-    <my:BookSearchFilters ID="ucSearchFilters" runat="server" />
+    <my:BookSearchFilters ID="ucSearchFilters" Mode="Normal" runat="server" />
 
     <div class="filterButtons">
         <table>
@@ -25,7 +25,7 @@
                     <dx:ASPxButton ID="btnSearch" runat="server" Text="Αναζήτηση" Image-Url="~/_img/iconView.png">
                         <ClientSideEvents Click="function(s,e) { cmdRefresh(); }" />
                     </dx:ASPxButton>
-                    <dx:ASPxButton ID="btnExport" runat="server" Text="Εξαγωγή Στοιχείων Βιβλίου" Image-Url="~/_img/iconExcel.png" OnClick="btnExport_Click">
+                    <dx:ASPxButton ID="btnExport" runat="server" Text="Εξαγωγή Στοιχείων Βιβλίων" Image-Url="~/_img/iconExcel.png" OnClick="btnExport_Click">
                     </dx:ASPxButton>
                     <dx:ASPxButton ID="btnExportBookCatalogs" runat="server" Text="Εξαγωγή Διανομών Βιβλίου" Image-Url="~/_img/iconExcel.png">
                         <ClientSideEvents Click="showExportBookCatalogs" />
@@ -35,7 +35,7 @@
         </table>
     </div>
 
-    <my:BooksGridView ID="gvBooks" ClientInstanceName="gv" runat="server" DataSourceID="odsBooks" Mode="BooksPage" OnCustomCallback="gvBooks_CustomCallback">
+    <my:BooksGridView ID="gvBooks" ClientInstanceName="gv" runat="server" DataSourceID="odsBooks" Mode="BooksPage" OnCustomCallback="gvBooks_CustomCallback" >
         <Columns>
             <dx:GridViewDataTextColumn FieldName="IsActive" Name="IsActive" Caption="Δυνατότητα τιμολόγησης και αποζημίωσης" Width="70px" VisibleIndex="7">
                 <HeaderStyle HorizontalAlign="Center" Wrap="true" />
@@ -55,7 +55,8 @@
         </Columns>
     </my:BooksGridView>
 
-    <my:BooksGridView ID="gvBooksExport" GridClientVisible="false" DataSourceForceStandardPaging="false" ClientInstanceName="gvBooksExport" runat="server" Mode="BooksPage" OnCustomCallback="gvBooks_CustomCallback">
+    <my:BooksGridView ID="gvBooksExport" GridClientVisible="false" DataSourceForceStandardPaging="false"  OnExporterRenderBrick="gvBooks_ExporterRenderBrick"
+        ClientInstanceName="gvBooksExport" runat="server" Mode="BooksPage" OnCustomCallback="gvBooks_CustomCallback">
     </my:BooksGridView>
 
 

@@ -24,6 +24,8 @@ namespace EudoxusOsy.BusinessModel
         public const string Supplier = "Supplier";
         public const string MinistryWelfare = "MinistryWelfare";
         public const string MinistryPayments = "MinistryPayments";
+        public const string MinistryAuditor = "MinistryAuditor";
+        public const string SuperMinistry = "SuperMinistry";
     }
 
     public static class TaskNames
@@ -31,6 +33,7 @@ namespace EudoxusOsy.BusinessModel
         public const string GenerateReportFiles = "GenerateReportFiles";
         public const string UpdateReceiptsFromAuditReceipts = "UpdateReceiptsFromAuditReceipts";
         public const string CacheStats = "CacheStats";
+        public const string CacheStatsPP = "CacheStatsPP";
         public const string CompareXmlReceipts = "CompareXmlReceipts";
         public const string UpdateBooks = "UpdateBooks";
     }

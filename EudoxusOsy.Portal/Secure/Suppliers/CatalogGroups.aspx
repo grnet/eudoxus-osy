@@ -53,8 +53,8 @@
 
         <asp:View ID="vManageCatalogGroups" runat="server">
             <script type="text/javascript">
-                function IncludeInPayment(catalogID) {
-                    gvCatalogGroups.PerformCallback('include:' + catalogID);
+                function IncludeInPayment(catalogID, previousState) {
+                    gvCatalogGroups.PerformCallback('include:' + catalogID + ":"+previousState);
                 }
 
                 function confirmUngroup(s, e) {
@@ -68,13 +68,23 @@
                         gvCatalogGroups.cpError = null;
                     }
                     else if (gvCatalogGroups.cpexport == null) {
+                        if (gvCatalogGroups.cpMessage)
+                        {
+                            showAlertBox(gvCatalogGroups.cpMessage);
+                        }
                         cbpStatistics.PerformCallback();
+                        gvCatalogGroups.cpMessage = null;
                     }
                 }
 
                 function exportCatalogData(catalogID) {
                     $('#<%= hfExportCatalogID.ClientID %>').val(catalogID);
                     btnExportHidden.DoClick();
+                }
+
+                function exportCatalogInvoice(catalogID) {
+                    $('#<%= hfExportCatalogID.ClientID %>').val(catalogID);
+                    btnExportPdfHidden.DoClick();
                 }
             </script>
 
@@ -86,8 +96,13 @@
             <div class="br"></div>
 
             <div class="alert info">
-                Με την υποβολή τιμολογίου προς την αρμόδια Διεύθυνση Οικονομικής Διαχείρισης του ΥΠΠΕΘ ή την έναρξη της διαδικασίας πληρωμής, ο εκδότης/διαθέτης/δικαιούχος δηλώνει ότι αποδέχεται την καθορισθείσα τιμή κοστολόγησης 
+                Με την υποβολή παραστατικού προς την αρμόδια Διεύθυνση Οικονομικής Διαχείρισης του ΥΠΠΕΘ ή την έναρξη της διαδικασίας πληρωμής, ο εκδότης/διαθέτης/δικαιούχος δηλώνει ότι αποδέχεται την καθορισθείσα τιμή κοστολόγησης 
                 και παραιτείται του δικαιώματος ένστασης που προβλέπεται από την παρ. 5 του άρθρο 3 της Φ12/97315/2011-Β3 30.08.2011 ΚΥΑ (Β’ 1915) 
+            </div>
+            <div class="br"></div>
+            <div class="br"></div>
+            <div runat="server" id="divGroupsCreationLockedMessage" class="reminder">
+                Δεν είναι δυνατή προσωρινά η δημιουργία καταστάσεων για την επιλεγμένη περίοδο πληρωμών, λόγω εργασιών συγχρονισμού των διανομών. Ζητούμε συγγνώμη για την ταλαιπωρία.
             </div>
 
             <div class="br"></div>
@@ -100,9 +115,10 @@
                 </PanelCollection>
             </dx:ASPxCallbackPanel>
 
-            <dx:ASPxButton runat="server" ID="btnUngroupHidden" ClientInstanceName="btnUngroupHidden" ClientVisible="false" Image-Url="~/_img/iconDelete.png" OnClick="btnUngroupCatalogs_Click" />
-            <dx:ASPxButton runat="server" ID="btnExportHidden" ClientInstanceName="btnExportHidden" ClientVisible="false" Image-Url="~/_img/iconDelete.png" OnClick="btnExportHidden_Click" />
-            <input type="hidden" runat="server" id="hfExportCatalogID" />
+            <dx:ASPxButton runat="server" ID="btnUngroupHidden" ClientInstanceName="btnUngroupHidden" ClientVisible="false" OnClick="btnUngroupCatalogs_Click" />
+            <dx:ASPxButton runat="server" ID="btnExportHidden" ClientInstanceName="btnExportHidden" ClientVisible="false" OnClick="btnExportHidden_Click" />
+            <dx:ASPxButton runat="server" ID="btnExportPdfHidden" ClientInstanceName="btnExportPdfHidden" ClientVisible="false" OnClick="btnExportPdfHidden_OnClick" />            
+            <input type="hidden" runat="server" id="hfExportCatalogID" />            
 
             <div class="br"></div>
             <div class="br"></div>
@@ -144,10 +160,10 @@
                                     <table>
                                         <tr>
                                             <td>
-                                                <dx:ASPxButton ID="btnGroupCatalogs" runat="server" ClientInstanceName="btnGroupCatalogs" Text="Ομαδοποίηση διανομών ανά Ίδρυμα" Image-Url="~/_img/iconEdit.png" OnClick="btnGroupCatalogs_Click" />
+                                                <dx:ASPxButton ID="btnGroupCatalogs" runat="server" ClientInstanceName="btnGroupCatalogs" Text="Ομαδοποίηση διανομών ανά Ίδρυμα" OnClick="btnGroupCatalogs_Click" />
                                             </td>
                                             <td>
-                                                <dx:ASPxButton runat="server" ClientInstanceName="btnUngroupCatalogs" ID="btnUngroupCatalogs" Text="Αποσύνδεση Διανομών" Image-Url="~/_img/iconDelete.png">
+                                                <dx:ASPxButton runat="server" ClientInstanceName="btnUngroupCatalogs" ID="btnUngroupCatalogs" Text="Αποσύνδεση Διανομών">
                                                     <ClientSideEvents Click="confirmUngroup" />
                                                 </dx:ASPxButton>
                                             </td>
@@ -184,7 +200,7 @@
                                     <HeaderStyle HorizontalAlign="Center" Wrap="true" />
                                     <CellStyle HorizontalAlign="Center" />
                                     <DataItemTemplate>
-                                        <input type="checkbox" runat="server" onclick='<%# string.Format("IncludeInPayment({0})", ((CatalogGroupInfo)Container.DataItem).ID) %>' checked="<%# ((CatalogGroupInfo)Container.DataItem).GroupStateInt >= (int)enCatalogGroupState.Selected %>" />
+                                        <input type="checkbox" runat="server" onclick='<%# string.Format("IncludeInPayment({0}, {1})", ((CatalogGroupInfo)Container.DataItem).ID, ((CatalogGroupInfo)Container.DataItem).GroupStateInt) %>' checked="<%# ((CatalogGroupInfo)Container.DataItem).GroupStateInt >= (int)enCatalogGroupState.Selected %>" />
                                     </DataItemTemplate>
                                 </dx:GridViewDataTextColumn>
                                 <dx:GridViewDataTextColumn FieldName="IsTransfered" Name="BankTransfer" Caption="Εκχώρηση σε Τράπεζα" Width="70px" VisibleIndex="4">
@@ -220,6 +236,9 @@
                                             onclick='<%# string.Format("showManageInvoicesPopup({0})", ((CatalogGroupInfo)Container.DataItem).ID) %>'>
                                             <img src="/_img/iconMoney.png" alt="Διαχείριση Παραστατικών" />
                                             <span runat="server" class="buttonbadge" visible="<%# ((CatalogGroupInfo)Container.DataItem).InvoiceCount > 0 %>"><%# ((CatalogGroupInfo)Container.DataItem).InvoiceCount %></span></a>
+                                        <a runat="server" class="img-btn tooltip" title="Εκτύπωση Κατάστασης"
+                                           href='javascript:void(0);' onclick='<%# string.Format("exportCatalogInvoice({0})", ((CatalogGroupInfo)Container.DataItem).ID) %>'>
+                                            <img src="/_img/iconPdf.gif" alt="Εξαγωγή σε Pdf" /></a>
                                         <a runat="server" class="img-btn tooltip" title="Εξαγωγή Κατάστασης σε Excel"
                                             href='javascript:void(0);'
                                             onclick='<%# string.Format("exportCatalogData({0})", ((CatalogGroupInfo)Container.DataItem).ID) %>'>
@@ -302,6 +321,13 @@
                                                 OnHtmlRowPrepared="gvCatalogs_HtmlRowPrepared"
                                                 OnCustomDataCallback="gvCatalogs_CustomDataCallback">
                                                 <Columns>
+                                                    <dx:GridViewDataTextColumn Name="Warnings" Caption=" " Width="30px" VisibleIndex="0">
+                                                        <CellStyle HorizontalAlign="Center" />
+                                                        <DataItemTemplate>
+                                                            <img runat="server" class="img-btn tooltip" src="~/_img/iconWarning.png" alt="Warning" title='<%# InabilityToCreateGroup((Catalog)Container.Grid.GetRow(Container.VisibleIndex)) %>'
+                                                                visible='<%# InabilityToCreateGroup((Catalog)Container.Grid.GetRow(Container.VisibleIndex)) != "" %>' />                                                                       
+                                                        </DataItemTemplate>
+                                                    </dx:GridViewDataTextColumn>
                                                     <dx:GridViewDataTextColumn Name="Actions" Caption="Δημιουργία Καστάστασης" Width="50px" VisibleIndex="8">
                                                         <HeaderStyle HorizontalAlign="Center" Wrap="true" />
                                                         <CellStyle HorizontalAlign="Center" />
@@ -309,7 +335,7 @@
                                                             <a runat="server" class="img-btn tooltip" title="Δημιουργία Κατάστασης"
                                                                 href="javascript:void(0);"
                                                                 onclick='<%# string.Format("createGroup({0});", Eval("ID")) %>'
-                                                                visible='<%# CanCreateGroup((Catalog)Container.DataItem) %>'>
+                                                                visible='<%# SelectedPhase.ID == Config.HideGroupCreationForPhase ? false :  CanCreateGroup((Catalog)Container.DataItem) %>'>
                                                                 <img src="/_img/iconAddNewItem.png" alt="Δημιουργία Κατάστασης" /></a>
                                                         </DataItemTemplate>
                                                     </dx:GridViewDataTextColumn>

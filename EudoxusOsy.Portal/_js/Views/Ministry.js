@@ -342,9 +342,26 @@ function exportOfficeSlipPopup(pdfOutput) {
         popUp.show(popupUrl, 'Εξαγωγή Διαβιβαστικού σε Excel', null, 500, 400);
     }
     hideAllButtons();
-    btnSubmit.SetVisible(true);
+    btnExport.SetVisible(true);
 }
 
+function exportOfficeSlipSupplierPopup() {
+    var popupUrl = ministryUrls.ExportOfficeSlipSupplierPopupUrl;
+    
+    popUp.show(popupUrl, 'Εξαγωγή Κατάστασης δαπάνης ανά εκδότη σε Excel', null, 500, 400);
+    
+    hideAllButtons();
+    btnExport.SetVisible(true);
+}
+
+function exportTransferPerIssuerPopup() {
+    var popupUrl = ministryUrls.ExportTransferPerIssuerPopupUrl;
+
+    popUp.show(popupUrl, 'Εξαγωγή Διαβιβαστικού ανά εκδότη σε Excel', null, 500, 400);
+
+    hideAllButtons();
+    btnExport.SetVisible(true);
+}
 
 function exportCatalogInvoicePopup(groupID) {
     var popupUrl = ministryUrls.ExportCatalogInvoicePopupUrl;;
@@ -365,6 +382,13 @@ function showExportNoLogisticBooks() {
 function showExportSupplierStats() {
     var popupUrl = [ministryUrls.SelectPhasePopupUrl, "?type=supplierstats"].join('');
     popUp.show(popupUrl, 'Εξαγωγή στατιστικών εκδοτών', null, 500, 350);
+    hideAllButtons();
+    btnExport.SetVisible(true);
+}
+
+function showExportCatalogsReport() {
+    var popupUrl = [ministryUrls.SelectPhasePopupUrl, "?type=catalogsreport"].join('');
+    popUp.show(popupUrl, 'Εξαγωγή αναφοράς διανομών', null, 500, 350);
     hideAllButtons();
     btnExport.SetVisible(true);
 }

@@ -22,5 +22,7 @@ namespace EudoxusOsy.BusinessModel
         public string Comments { get; set; }
         public string PageCount { get; set;}
         public string Subtitle { get; set; }
+        public int DiscountID { get; set; }
+        //public int CatalogType { get; set; }
     }
 }

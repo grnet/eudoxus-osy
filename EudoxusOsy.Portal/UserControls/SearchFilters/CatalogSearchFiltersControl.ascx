@@ -119,4 +119,10 @@
             <dx:ASPxComboBox ID="ddlCatalogState" runat="server" OnInit="ddlCatalogState_Init" TabIndex="16" />
         </td>
     </tr>
+    <tr>
+        <th>Κλειδωμένη</th>
+        <td>
+            <dx:ASPxComboBox ID="ddlIsLocked" runat="server" OnInit="ddlIsLocked_Init" TabIndex="12" />
+        </td>
+    </tr>
 </table>

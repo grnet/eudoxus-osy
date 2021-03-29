@@ -12,6 +12,18 @@
             </colgroup>
             <tr>
                 <th>
+                    Εισαγωγή XML
+                </th>
+                <td>
+                    <dx:ASPxTextBox runat="server" ID="txtXmlPath">                        
+                    </dx:ASPxTextBox>
+                </td>
+                <td>
+                    <dx:ASPxButton runat="server" ID="btnInsertXml" OnClick="btnInsertXml_OnClick" Text="Εισαγωγή"></dx:ASPxButton>
+                </td>
+            </tr>
+            <tr>
+                <th>
                     Εισαγωγή Διορθωμένων αρχείων
                 </th>
                 <td>

@@ -8,6 +8,7 @@
 
         SupplierCreated,
         SupplierUpdated,
+        SupplierInsertionFailed,
 
         MinistryPaymentsUserCreated,
         MinistryPaymentsUserUpdated,
@@ -17,5 +18,8 @@
 
         KpsBooksInsertionSucceeded,
         KpsBooksInsertionFailed,
+
+        CoAuthorsInsertionSucceeded,
+        CoAuthorsInsertionFailed,
     }
 }

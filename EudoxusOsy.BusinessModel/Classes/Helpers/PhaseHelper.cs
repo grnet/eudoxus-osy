@@ -7,6 +7,14 @@ namespace EudoxusOsy.BusinessModel
 {
     public static class PhaseHelper
     {
+        public static List<Phase> GetPhasesOfYear(int year)
+        {
+            return EudoxusOsyCacheManager<Phase>.Current.GetItems().Where(x => x.Year == year).ToList();
+        }
+        public static int MaxYear()
+        {
+            return EudoxusOsyCacheManager<Phase>.Current.GetItems().Where(x => x.IsActive).Max(x => x.Year);
+        }
         /// <summary>
         /// Set the money for the selected Phase
         /// </summary>
@@ -18,6 +26,7 @@ namespace EudoxusOsy.BusinessModel
             decimal insertedMoney = phaseAmount;
             decimal insertedMoneyLimit = amountLimit;
             decimal totalOwedMoney = 0m;
+            decimal? totalDiffAmount = 0m;
 
 
             using (IUnitOfWork uow = UnitOfWorkFactory.Create())
@@ -25,20 +34,50 @@ namespace EudoxusOsy.BusinessModel
                 /** 
                     Get all the active Suppliers for the Phase
                 */
-                var suppliers = new SupplierRepository(uow).GetAllActive();
-                var supplierIDs = suppliers.Select(x => x.ID);
+                var suppliers = new SupplierRepository(uow).LoadAll(x => x.SupplierIBANs);
+                SupplierAmountDiffRepository _supplierAmountDiffRepository = new SupplierAmountDiffRepository();
 
                 List<SupplierInfo> SuppliersInfo = new List<SupplierInfo>();
                 List<SupplierInfo> ZeroSuppliersInfo = new List<SupplierInfo>();
 
+                List<TempAmountDiff> supplierAmountDiffs = new List<TempAmountDiff>();
+
+                /**
+                 * Fix all the Amount Diffs from previous money distribution
+                 */
+                #region [ Fix all the Amount Diffs from previous money distribution ]
+
+                // Use extra logic only if EnableMoneyDiffRecalculation app setting is enabled
+                if (Config.EnableMoneyDiffRecalculation == true)
+                {
+                    try
+                    {
+                        _supplierAmountDiffRepository.RefreshAmountDiffs(selectedPhaseID);
+                    }
+                    catch
+                    {
+                        return false;
+                    }
+                    supplierAmountDiffs = _supplierAmountDiffRepository.LoadAll().ToList();
+                    totalDiffAmount = supplierAmountDiffs.Sum(x => x.AmountDiff);
+                    insertedMoney = insertedMoney + totalDiffAmount.Value;
+                }
+
+                #endregion
+
 
                 foreach (var supplier in suppliers)
-                {
+                {                    
                     /**
                         calculate the debt to the supplier
                     */
                     var totalDebtFromSupplierCatalogs = supplier.GetSupplierMoneyDebt(selectedPhaseID);
                     var supplierGroups = new CatalogGroupRepository().FindBySupplierIDAndPhaseIDWithCatalogs(supplier.ID, selectedPhaseID);
+
+                    if (totalDebtFromSupplierCatalogs == 0 && supplier.Status != enSupplierStatus.Active)
+                    {
+                        continue;
+                    }
 
                     decimal supplierAssignedMoney = 0m;
 
@@ -47,6 +86,16 @@ namespace EudoxusOsy.BusinessModel
                         totalDebtFromSupplierCatalogs = 0;
                     }
 
+                    // We have to subtract the diff amount when calculating the Supplier phase money (only if the app setting is enabled will it have an impact [supplierAmountDiffs != empty list])
+                    var currentSupplierAmount = supplierAmountDiffs.SingleOrDefault(x => x.SupplierID == supplier.ID);
+
+                    decimal supplierDiff = 0;
+                    if (currentSupplierAmount != null)
+                    {
+                        supplierDiff = currentSupplierAmount.AmountDiff.Value;
+                    }
+
+
                     var supplierInfo = new SupplierInfo()
                     {
                         ID = supplier.ID,
@@ -54,7 +103,8 @@ namespace EudoxusOsy.BusinessModel
                         TotalDebtFromSupplierCatalogs = totalDebtFromSupplierCatalogs ?? 0m,
                         SupplierType = supplier.SupplierType,
                         HasLogisticsBooks = supplier.HasLogisticBooks,
-                        Groups = supplierGroups
+                        Groups = supplierGroups,
+                        IBANID = supplier.GetLatestIBANID()
                     };
 
                     var currentSupplierPhase = new SupplierPhaseRepository(uow).GetSupplierPhase(supplier.ID, selectedPhaseID);
@@ -66,8 +116,8 @@ namespace EudoxusOsy.BusinessModel
                     }
                     else
                     {
-                        supplierInfo.AssignedMoney = (decimal)currentSupplierPhase.TotalDebt;
-                        supplierAssignedMoney = (decimal)currentSupplierPhase.TotalDebt;
+                        supplierInfo.AssignedMoney = (decimal)currentSupplierPhase.TotalDebt - supplierDiff;
+                        supplierAssignedMoney = (decimal)currentSupplierPhase.TotalDebt - supplierDiff;
                     }
 
 
@@ -108,7 +158,7 @@ namespace EudoxusOsy.BusinessModel
                         supplierInfo.OwedMoney = supplierInfo.TotalDebtFromSupplierCatalogs.Value - supplierPaidCatalogsMoney; // OwedMoney το ποσό που απομένει και δεν έχει ακόμη ανατεθεί στον εκδότη
                     }
 
-                    if(supplierInfo.OwedMoney > 0)
+                    if (supplierInfo.OwedMoney > 0)
                     {
                         SuppliersInfo.Add(supplierInfo);
                     }
@@ -127,7 +177,7 @@ namespace EudoxusOsy.BusinessModel
                     {
                         SuppliersInfo[i].AssignedMoney += SuppliersInfo[i].OwedMoney;
                         insertedMoney -= SuppliersInfo[i].OwedMoney;
-                        if(insertedMoney < 0)
+                        if (insertedMoney < 0)
                         {
                             return false;
                         }
@@ -177,7 +227,7 @@ namespace EudoxusOsy.BusinessModel
                         {
                             PhaseID = selectedPhaseID,
                             SupplierID = supplierInfo.ID,
-                            TotalDebt = Math.Round((double)supplierInfo.AssignedMoney, 2),
+                            TotalDebt = Math.Round((double)supplierInfo.AssignedMoney, 4),
                             CreatedAt = DateTime.Today,
                             CreatedBy = username,
                             IsActive = true
@@ -188,7 +238,7 @@ namespace EudoxusOsy.BusinessModel
                     }
                     else
                     {
-                        supplierPhase.TotalDebt = Math.Round((double)supplierInfo.AssignedMoney, 2);
+                        supplierPhase.TotalDebt = Math.Round((double)supplierInfo.AssignedMoney, 4);
                         supplierPhase.UpdatedBy = username;
                         supplierPhase.UpdatedAt = DateTime.Today;
                         newSupplierPhases.Add(supplierPhase);
@@ -197,7 +247,7 @@ namespace EudoxusOsy.BusinessModel
                     if (supplierInfo.SupplierType == enSupplierType.SelfPublisher && (!supplierInfo.HasLogisticsBooks.HasValue || supplierInfo.HasLogisticsBooks == false))
                     {
 
-                        CatalogGroupHelper.GroupCatalogsByInstitution(supplierInfo.ID, selectedPhaseID, uow);
+                        CatalogGroupHelper.GroupCatalogsByInstitution(supplierInfo.ID, supplierInfo.IBANID, selectedPhaseID, uow);
                         var remaining = supplierInfo.AssignedMoney - supplierInfo.RemainingMoney;
 
                         if (remaining < 0)
@@ -213,6 +263,8 @@ namespace EudoxusOsy.BusinessModel
                                 if (groupTotal < remaining)
                                 {
                                     remaining -= (decimal)groupTotal;
+                                    group.DeductionID = null;
+                                    group.Vat = null;
                                     group.State = enCatalogGroupState.Approved;
                                     group.UpdatedAt = DateTime.Today;
                                     group.UpdatedBy = username;
@@ -228,7 +280,8 @@ namespace EudoxusOsy.BusinessModel
                 }
                 //var supplierPhases = new SupplierPhaseRepository(uow).GetAllActive(selectedPhaseID);
                 var currentPhase = new PhaseRepository(uow).Load(selectedPhaseID);
-                currentPhase.PhaseAmount = Math.Round((double)newSupplierPhases.Sum(x => x.TotalDebt), 2);
+                // fix the Total amount if EnableMoneyDiffRecalculation app setting is true
+                currentPhase.PhaseAmount = Math.Round((double)newSupplierPhases.Sum(x => x.TotalDebt), 4);
                 currentPhase.UpdatedAt = DateTime.Today;
                 currentPhase.UpdatedBy = username;
                 uow.Commit();
@@ -237,11 +290,12 @@ namespace EudoxusOsy.BusinessModel
             return true;
         }
 
+        #region Supplier Statistics
         public static List<SupplierPhaseStatistics> GetSupplierPhaseStatistics(int supplierID, int? phaseID = null)
         {
             var statistics = new List<SupplierPhaseStatistics>();
 
-            var phases = new PhaseRepository().LoadAll().OrderBy(x => x.ID);
+            var phases = new PhaseRepository().GetAllActive().OrderBy(x => x.ID);
 
             foreach (var phase in phases)
             {
@@ -265,10 +319,13 @@ namespace EudoxusOsy.BusinessModel
 
                 decimal selectedForPaymentAmount = 0;
 
+                var totalDebtBySupplierAndPhase = new CatalogRepository().GetTotalDebtBySupplierAndPhase(supplierID, phase.ID);
+
+                if (totalDebtBySupplierAndPhase != null)
+                    phaseStatistics.OwedAmount = (decimal)totalDebtBySupplierAndPhase;
+
                 foreach (var group in supplierGroups)
                 {
-                    phaseStatistics.OwedAmount += (decimal)group.Catalogs.Sum(x => x.Amount);
-
                     if (group.State == enCatalogGroupState.Sent)
                     {
                         phaseStatistics.PaidAmount += (decimal)group.Catalogs.Where(x => x.Status == enCatalogStatus.Active && (x.State == enCatalogState.FromMove || x.State == enCatalogState.Normal)).Sum(x => x.Amount);
@@ -292,31 +349,6 @@ namespace EudoxusOsy.BusinessModel
         {
             return GetSupplierPhaseStatistics(supplierID, phaseID)[0];
         }
-    }
-
-    public class SupplierInfo
-    {
-        public int ID { get; set; }
-        public int KpsID { get; set; }
-        public decimal? TotalDebtFromSupplierCatalogs { get; set; }
-        public enSupplierType SupplierType { get; set; }
-        public bool? HasLogisticsBooks { get; set; }
-        public decimal AssignedMoney { get; set; }
-        public decimal PaidMoney { get; set; }
-        public decimal OwedMoney { get; set; }
-        public double Percent { get; set; }
-        public decimal Difference { get; set; }
-        public decimal RemainingMoney { get; set; }
-        public IList<CatalogGroup> Groups { get; set; }
-    }
-
-    public class SupplierPhaseStatistics
-    {
-        public int SupplierID { get; set; }
-        public Phase Phase { get; set; }
-        public decimal OwedAmount { get; set; }
-        public decimal AllocatedAmount { get; set; }
-        public decimal RemainingAmount { get; set; }
-        public decimal PaidAmount { get; set; }
+        #endregion
     }
 }

@@ -4,6 +4,7 @@
         <siteMapNode url="~/Admin/IncidentTypeManagement.aspx" title="Διαχείριση Τύπων Συμβάντων" />        
         <siteMapNode url="~/Admin/EndOfPhaseProcedures.aspx" title="Διαδικασίες λήξης εξαμήνου" />
         <siteMapNode url="~/Admin/RefreshCache.aspx" title="Ενημέρωση Cache" />
+        <siteMapNode url="~/Admin/Test.aspx" title="Test" />
         <siteMapNode url="~/Admin/LoginAsUser.aspx" title="Σύνδεση ως χρήστης" />        
     </siteMapNode>
 </siteMap>

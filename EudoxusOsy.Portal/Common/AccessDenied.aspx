@@ -1,9 +1,12 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Portal.master" AutoEventWireup="true"
     CodeBehind="AccessDenied.aspx.cs" Inherits="EudoxusOsy.Portal.Common.AccessDenied"
-    Title="Απαγορεύεται η πρόσβαση" %>
+    Title="Δεν έχετε δικαίωμα πρόσβασης" %>
 <asp:Content ID="Content2" ContentPlaceHolderID="cphMain" runat="server">
-    <h2>Απαγορεύεται η πρόσβαση</h2>
-    <p>Απαγορεύεται η πρόσβαση σε αυτή τη σελίδα</p>
+    <h2>Δεν έχετε δικαίωμα πρόσβασης</h2>
+    <p>
+        Δεν έχετε δικαίωμα πρόσβασης σε αυτή τη σελίδα. 
+        Για περισσότερες πληροφορίες απευθυνθείτε στο Γραφείο Αρωγής Χρηστών της υπηρεσίας Εύδοξος.
+    </p>
     <asp:LoginView ID="LoginView1" runat="server">
         <LoggedInTemplate>
             <p>

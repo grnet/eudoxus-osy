@@ -34,6 +34,11 @@ namespace EudoxusOsy.Portal.UserControls.SearchFilters
             ddlGroupState.FillFromEnum<enCatalogGroupState>("-- αδιάφορο --", true, true);
         }
 
+        protected void ddlIsLocked_Init(object sender, EventArgs e)
+        {
+            ddlIsLocked.FillTrueFalse();
+        }
+
         #endregion
 
         #region [ Search Filters ]
@@ -58,6 +63,7 @@ namespace EudoxusOsy.Portal.UserControls.SearchFilters
             filters.GroupState = ddlGroupState.GetSelectedInteger();
             filters.CatalogType = ddlCatalogType.GetSelectedEnum<enCatalogType>();
             filters.IsForLibrary = ddlIsLibrary.GetSelectedInteger();
+            filters.IsLocked = ddlIsLocked.GetSelectedBoolean();
             //filters.CatalogStatus = ddlCatalogStatus.GetSelectedEnum<enCatalogStatus>();
 
             return filters;
@@ -117,6 +123,10 @@ namespace EudoxusOsy.Portal.UserControls.SearchFilters
                 ddlIsLibrary.SelectedItem = ddlIsLibrary.Items.FindByValue(filters.IsForLibrary);
             }
 
+            if (filters.IsLocked.HasValue)
+            {
+                ddlIsLocked.SelectedItem = ddlIsLocked.Items.FindByValue(filters.IsLocked.Value);
+            }
             //if(filters.CatalogStatus.HasValue)
             //{
             //    ddlCatalogStatus.SelectedItem = ddlCatalogStatus.Items.FindByValue(filters.CatalogStatus);
@@ -134,5 +144,7 @@ namespace EudoxusOsy.Portal.UserControls.SearchFilters
         {
             //ddlCatalogStatus.FillFromEnum<enCatalogStatus>(includeZeroValue: true);
         }
+
+        
     }
 }

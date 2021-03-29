@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace EudoxusOsy.BusinessModel
 {
-    public class CatalogRepository : DomainRepository<DBEntities, Catalog, int>
+    public class CatalogRepository : DomainRepository<DBEntities, Catalog, int>, ICatalogRepository
     {
         #region [ Base .ctors ]
 
@@ -30,13 +30,20 @@ namespace EudoxusOsy.BusinessModel
                 .Include(x => x.BookPrice)
                 .Include(x => x.Phase)
                 .Include(x => x.CatalogGroup.PaymentOrders)
-                    .Where(x => x.BookID == bookID && x.StatusInt >= (int)enCatalogStatus.Active).ToList();
+                    .Where(x => x.BookID == bookID && x.StatusInt >= (int)enCatalogStatus.Active)
+                    .Where(x => x.Phase.IsActive)
+                    .ToList();
         }
 
         public List<Catalog> FindByPhaseID(int phaseID)
         {
             return BaseQuery
                     .Where(x => x.PhaseID == phaseID).ToList();
+        }
+
+        public int CountByPhaseID(int phaseID)
+        {
+            return BaseQuery.Count(x => x.PhaseID == phaseID);
         }
 
         public List<Catalog> FindByGroupID(int groupID)
@@ -50,6 +57,7 @@ namespace EudoxusOsy.BusinessModel
             return BaseQuery
                 .Include(x => x.Book)
                 .Include(x => x.BookPrice)
+                .Include(x => x.Discount)
                     .Where(x => x.GroupID == groupID).ToList();
         }
 
@@ -149,11 +157,10 @@ namespace EudoxusOsy.BusinessModel
                 .Include(x => x.Department.Institution);
 
 
-
+            //TODO: Fix the recalculation Period
             var query = myQuery
                         .Where(x => x.PhaseID == phaseID
-                        && x.BookID == bookID
-                        && x.PhaseID == phaseID
+                        && x.BookID == bookID                        
                         && x.PhaseID >= 13
                         && (!x.GroupID.HasValue || (x.CatalogGroup.StateInt == (int)enCatalogGroupState.New))
                         && (x.StateInt == (int)enCatalogState.FromMove || x.StateInt == (int)enCatalogState.Normal)
@@ -175,11 +182,10 @@ namespace EudoxusOsy.BusinessModel
                 .Include(x => x.CatalogGroup)
                 .Include(x => x.Department.Institution);
 
-
+            //TODO: Fix the recalculation Period
             var query = myQuery
                         .Where(x => x.PhaseID == phaseID
-                        && x.BookID == bookID
-                        && x.PhaseID == phaseID
+                        && x.BookID == bookID                        
                         && x.PhaseID >= 13
                         && (x.GroupID.HasValue && (x.CatalogGroup.StateInt > (int)enCatalogGroupState.New))
                         && (x.StateInt == (int)enCatalogState.FromMove || x.StateInt == (int)enCatalogState.Normal)
@@ -235,7 +241,58 @@ namespace EudoxusOsy.BusinessModel
         }
 
         /// <summary>
-        /// Finds the debt (for active normal and 'from move' cataloga for a given supplier and phase)
+        /// Find if there are any special or reversal catalogs created for the book in the given phase
+        /// for phase 13 and beyond
+        /// </summary>
+        /// <param name="supplierID"></param>
+        /// <param name="bookID"></param>
+        /// <param name="departmentID"></param>
+        /// <param name="amount"></param>
+        /// <returns></returns>
+        public IList<Catalog> GetSpecialOrReversalCatalogsForBook(int bookID, int phaseID)
+        {
+            //TODO: Anadromiki isxii
+            var myQuery = BaseQuery.Include(x => x.CatalogGroup);
+            var query = myQuery
+                        .Where(x => x.BookID == bookID
+                        && x.PhaseID == phaseID                         
+                        && x.StatusInt == (int)enCatalogStatus.Active
+                        && (x.CatalogTypeInt == (int)enCatalogType.Reversal || x.CatalogTypeInt == (int)enCatalogType.Special));
+
+            return query
+                    .OrderBy(x => x.ID)
+                    .ToArray<Catalog>();
+        }
+
+        public Dictionary<int, decimal?> GetSupplierAmountPerPhase(int phaseID)
+        {
+            var query = BaseQuery.Where(x => x.PhaseID == phaseID
+                                 && x.StatusInt == (int) enCatalogStatus.Active)
+                        .GroupBy(x => x.SupplierID)
+                        .Select(x => new {SupplierID = x.Key, Amount = x.Sum(y => y.Amount)}).OrderBy(a => a.SupplierID);
+
+            return query.ToDictionary(x => x.SupplierID, x => x.Amount);
+        }
+        /// <summary>
+        /// Finds the total debt (for active catalogs for a given supplier and phase)
+        /// </summary>
+        /// <param name="supplierID"></param>
+        /// <param name="phaseID"></param>
+        /// <returns></returns>
+        public decimal? GetTotalDebtBySupplierAndPhase(int supplierID, int phaseID)
+        {
+            decimal? amount = 0m;
+
+            amount = BaseQuery.Where(x => x.SupplierID == supplierID
+                                          && x.PhaseID == phaseID
+                                          && x.StatusInt == (int)enCatalogStatus.Active)
+                .Sum(x => x.Amount);
+
+            return amount;
+        }
+
+        /// <summary>
+        /// Finds the debt (for active normal and 'from move' catalogs for a given supplier and phase)
         /// </summary>
         /// <param name="supplierID"></param>
         /// <param name="phaseID"></param>
@@ -307,5 +364,23 @@ namespace EudoxusOsy.BusinessModel
             }
             ctx.CreateCatalogsForPhase(phaseID);
         }
+
+
+        public List<int> GetBooksWithCatalogsInYear(IEnumerable<int> bookIDs, int year)
+        {
+            return BaseQuery.Where(x => x.StatusInt == (int)enCatalogStatus.Active
+                && (x.StateInt == (int)enCatalogState.FromMove || x.StateInt == (int)enCatalogState.Normal) && x.Phase.Year == year)
+                .Where(x => bookIDs.Contains(x.BookID))
+                .Select(x => x.BookID).ToList();
+        }
+
+        public IQueryable<CatalogsReportItems> GetCatalogsReport(int phaseID)
+        {
+            var ctx = GetCurrentObjectContext();            
+            var list = ctx.spCatalogsReport(phaseID).ToList().AsQueryable();
+            
+            return list;
+        }
+
     }
 }

@@ -52,10 +52,11 @@ namespace EudoxusOsy.BusinessModel
                 TradeName = dto.PublisherTradeName,
                 AFM = dto.PublisherAFM,
                 DOY = dto.PublisherDOY,
-                Email = dto.Email,
+                Email = dto.PublisherEmail,
                 VerificationStatusInt = dto.VerificationStatus,
+                HasLogisticBooks = HasLogisticCondition(dto.HasLogisticBooks, dto.PublisherType),
                 IsActivated = dto.IsActivated,
-                Status = enSupplierStatus.Active,
+                Status = (enVerificationStatus)dto.VerificationStatus == enVerificationStatus.Verified ? enSupplierStatus.Active : enSupplierStatus.Inactive,
                 CreatedAt = DateTime.Now,
                 CreatedBy = "sysadmin"
             };
@@ -152,7 +153,7 @@ namespace EudoxusOsy.BusinessModel
             {
                 if (ex.StatusCode == MembershipCreateStatus.DuplicateUserName)
                 {
-                    throw new Exception(string.Format("Το UserName ({0}) χρησιμοποιείται", dto.Username));
+                    throw new Exception(string.Format("Το UserName ({0}) χρησιμοποιείται (Duplicate)", dto.Username));
                 }
             }
         }
@@ -165,9 +166,12 @@ namespace EudoxusOsy.BusinessModel
             supplier.TradeName = dto.PublisherTradeName;
             supplier.AFM = dto.PublisherAFM;
             supplier.DOY = dto.PublisherDOY;
-            supplier.Email = dto.Email;
+            supplier.Email = dto.PublisherEmail;
             supplier.VerificationStatusInt = dto.VerificationStatus;
+            //supplier.HasLogisticBooks = HasLogisticCondition(dto.HasLogisticBooks, dto.PublisherType);
             supplier.IsActivated = dto.IsActivated;
+            supplier.Status = (enVerificationStatus)dto.VerificationStatus == enVerificationStatus.Verified ? enSupplierStatus.Active : enSupplierStatus.Inactive;
+
 
             var supplierDetail = supplier.SupplierDetail;
 
@@ -219,10 +223,20 @@ namespace EudoxusOsy.BusinessModel
 
             aspnet_membership.Password = dto.Password;
             aspnet_membership.PasswordSalt = dto.PasswordSalt;
+            aspnet_membership.IsLockedOut = false;
 
             UnitOfWork.Commit();
         }
 
+        private bool? HasLogisticCondition(bool? hasLogistic, int publisherType)
+        {
+            if (enSupplierType.LegalPerson == (enSupplierType)publisherType)
+            {
+                return true;
+            }
+
+            return hasLogistic;
+        }
         public Reporter SyncMinistryPaymentsUser(SyncMinistryPaymentsUserDto dto, out bool? userCreated)
         {
             var ministryPaymentsUser = new ReporterRepository(UnitOfWork).Load(dto.ID);
@@ -321,6 +335,7 @@ namespace EudoxusOsy.BusinessModel
 
             aspnet_membership.Password = dto.Password;
             aspnet_membership.PasswordSalt = dto.PasswordSalt;
+            aspnet_membership.IsLockedOut = false;
 
             UnitOfWork.Commit();
         }

@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+﻿using DevExpress.Web;
 using EudoxusOsy.BusinessModel;
 using EudoxusOsy.Portal.Controls;
+using System;
+using System.Collections.Generic;
 using System.Drawing;
-using Imis.Domain;
-using DevExpress.Web;
+using System.Linq;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 
 namespace EudoxusOsy.Portal.Secure.Suppliers
 {
-    public partial class EditCatalogGroup : BaseEntityPortalPage<CatalogGroupInfo>
+    public partial class EditCatalogGroup : BaseSecureEntityPortalPage<CatalogGroupInfo>
     {
         #region [ Entity Fill ]
 
@@ -42,6 +40,11 @@ namespace EudoxusOsy.Portal.Secure.Suppliers
             }
         }
 
+        protected override bool Authorize()
+        {
+            return Entity.SupplierID == CurrentSupplier.ID || EudoxusOsyRoleProvider.IsAuthorizedEditorUser();
+        }
+
         private void LoadEntities(int catalogGroupID)
         {
             Entity = new CatalogGroupRepository(UnitOfWork).GetByID(catalogGroupID);
@@ -62,7 +65,16 @@ namespace EudoxusOsy.Portal.Secure.Suppliers
             BindGroupInfo();
             BindConnectedCatalogs();
 
+            ucConnectedCatalogSearchFilters.SetInstitution(Entity.InstitutionID);
             ucCatalogSearchFilters.SetInstitution(Entity.InstitutionID);
+        }
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if(!IsAuthorized)
+            {
+                Response.Redirect(string.Format("CatalogGroups.aspx?pID={0}&t=true", SelectedPhaseID), true);
+            }
         }
 
         private void Bind()
@@ -82,7 +94,6 @@ namespace EudoxusOsy.Portal.Secure.Suppliers
 
         private void BindConnectedCatalogs()
         {
-            gvConnectedCatalogs.DataSource = _connectedCatalogs;
             gvConnectedCatalogs.DataBind();
         }
 
@@ -121,25 +132,35 @@ namespace EudoxusOsy.Portal.Secure.Suppliers
             var catalogID = int.Parse(hfCatalogID.Value);
             var catalog = new CatalogRepository(UnitOfWork).Load(catalogID);
 
-            catalog.GroupID = null;
-            UnitOfWork.Commit();
-
-            LoadEntities(Entity.ID);
-
-            if (_connectedCatalogs.Count() == 0)
+            if (CatalogGroupHelper.CanEditGroup(Entity))
             {
-                var catalogGroup = new CatalogGroupRepository(UnitOfWork).Load(Entity.ID, x => x.CatalogGroupLogs, x => x.Invoices);
-
-                catalogGroup.Invoices.ToList().ForEach(y => { UnitOfWork.MarkAsDeleted(y); });
-                catalogGroup.CatalogGroupLogs.ToList().ForEach(y => UnitOfWork.MarkAsDeleted(y));
-                UnitOfWork.MarkAsDeleted(catalogGroup);
-
+                catalog.GroupID = null;
                 UnitOfWork.Commit();
 
-                Response.Redirect(string.Format("CatalogGroups.aspx?pID={0}&t=true", SelectedPhaseID));
-            }
+                LoadEntities(Entity.ID);
 
-            Bind();
+                if (!_connectedCatalogs.Any())
+                {
+                    var catalogGroup = new CatalogGroupRepository(UnitOfWork).Load(Entity.ID, x => x.CatalogGroupLogs, x => x.Invoices);
+
+                    catalogGroup.Invoices.ToList().ForEach(y => { UnitOfWork.MarkAsDeleted(y); });
+
+                    if (catalogGroup.State == enCatalogGroupState.New)
+                    {
+                        catalogGroup.CatalogGroupLogs.ToList().ForEach(y => UnitOfWork.MarkAsDeleted(y));
+                        UnitOfWork.MarkAsDeleted(catalogGroup);
+                    }
+
+                    UnitOfWork.Commit();
+
+                    Response.Redirect(string.Format("CatalogGroups.aspx?pID={0}&t=true", SelectedPhaseID));
+                }
+                Bind();
+            }
+            else
+            {
+                ClientScript.RegisterStartupScript(GetType(), "alertCanNotDelete", "window.showAlertBox('Δεν επιτρέπεται η επεξεργασία της κατάστασης.');", true);
+            }
         }
 
         protected void btnSearch_Click(object sender, EventArgs e)
@@ -147,10 +168,38 @@ namespace EudoxusOsy.Portal.Secure.Suppliers
             gvNotConnectedCatalogs.DataBind();
         }
 
+        protected void btnSearchConnected_OnClick(object sender, EventArgs e)
+        {
+            gvConnectedCatalogs.DataBind();
+        }
         #endregion
 
         #region [ DataSource Events ]
+        protected void odsConnectedCatalogs_OnSelecting(object sender, ObjectDataSourceSelectingEventArgs e)
+        {
+            Criteria<Catalog> criteria = new Criteria<Catalog>();
 
+            criteria.Include(x => x.Book)
+                .Include(x => x.Department);
+
+            var filters = ucConnectedCatalogSearchFilters.GetSearchFilters();
+            criteria.Expression = filters.GetExpression();
+
+            if (criteria.Expression == null)
+            {
+                criteria.Expression = Imis.Domain.EF.Search.Criteria<Catalog>.Empty;
+            }
+
+            criteria.Expression =
+                criteria.Expression.Where(x => x.PhaseID, SelectedPhaseID)
+                    .Where(x => x.SupplierID, Entity.SupplierID)
+                    .Where(x => x.Department.InstitutionID, Entity.InstitutionID)
+                    .Where(x => x.GroupID, Entity.ID)
+                    .Where(x => x.Status, enCatalogStatus.Active)
+                    .Where(string.Format("it.StateInt IN MULTISET ({0}, {1})", enCatalogState.Normal.GetValue(), enCatalogState.FromMove.GetValue()));
+
+            e.InputParameters["criteria"] = criteria;
+        }
         protected void odsNotConnectedCatalogs_Selecting(object sender, ObjectDataSourceSelectingEventArgs e)
         {
             Criteria<Catalog> criteria = new Criteria<Catalog>();
@@ -196,7 +245,7 @@ namespace EudoxusOsy.Portal.Secure.Suppliers
             var catalogID = int.Parse(parameters[1]);
             var catalog = new CatalogRepository(UnitOfWork).Load(catalogID);
 
-            if (action == "addtogroup")
+            if (action == "addtogroup" && CanAddToGroup(catalog) && CatalogGroupHelper.CanEditGroup(Entity))
             {
                 catalog.GroupID = Entity.ID;
                 UnitOfWork.Commit();
@@ -204,8 +253,6 @@ namespace EudoxusOsy.Portal.Secure.Suppliers
                 _connectedCatalogs = new CatalogRepository(UnitOfWork).FindConnectedCatalogsByGroupID(Entity.ID);
 
                 gvNotConnectedCatalogs.DataBind();
-
-                gvConnectedCatalogs.DataSource = _connectedCatalogs;
                 gvConnectedCatalogs.DataBind();
             }
         }
@@ -219,5 +266,29 @@ namespace EudoxusOsy.Portal.Secure.Suppliers
             return CatalogGroupHelper.CanAddToGroup(catalog);
         }
         #endregion
+
+        protected void gvConnectedCatalogs_HtmlRowPrepared(object sender, ASPxGridViewTableRowEventArgs e)
+        {
+            if (e.RowType != GridViewRowType.Data) return;
+
+            Catalog catalog = (Catalog)gvConnectedCatalogs.GetRow(e.VisibleIndex);
+
+            if (catalog != null && ( catalog.HasPendingPriceVerification || catalog.HasUnexpectedPriceChange))
+            {
+                e.Row.BackColor = Color.LightSalmon;
+            }
+        }
+
+        protected void gvNotConnectedCatalogs_OnHtmlRowPreparedatalogs_HtmlRowPrepared(object sender, ASPxGridViewTableRowEventArgs e)
+        {
+            if (e.RowType != GridViewRowType.Data) return;
+
+            Catalog catalog = (Catalog)gvNotConnectedCatalogs.GetRow(e.VisibleIndex);
+
+            if (catalog != null && (catalog.HasPendingPriceVerification || catalog.HasUnexpectedPriceChange))
+            {
+                e.Row.BackColor = Color.LightSalmon;
+            }
+        }
     }
 }

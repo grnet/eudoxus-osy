@@ -7,6 +7,8 @@ using System.Data.Objects.DataClasses;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Runtime.Remoting.Messaging;
+using System.Text.RegularExpressions;
 using System.Web;
 
 namespace EudoxusOsy.BusinessModel
@@ -152,11 +154,7 @@ namespace EudoxusOsy.BusinessModel
                         GroupID = catalog.GroupID.HasValue ? catalog.GroupID.ToString() : string.Empty,
                         Title = catalog.Book.Title,
                         Department = EudoxusOsyCacheManager<Department>.Current.Get(catalog.DepartmentID).Name,
-                        Institution =
-                            catalog.GroupID.HasValue
-                                ? EudoxusOsyCacheManager<Institution>.Current.Get(catalog.CatalogGroup.InstitutionID)
-                                    .Name
-                                : string.Empty,
+                        Institution = EudoxusOsyCacheManager<Institution>.Current.Get(EudoxusOsyCacheManager<Department>.Current.Get(catalog.DepartmentID).InstitutionID).Name,
                         BookPrice = catalog.BookPrice.Price.ToString("c"),
                         PaymentPrice =
                             (catalog.BookCount > 0 ? (decimal)catalog.Amount / catalog.BookCount : 0m).ToString("c"),
@@ -448,11 +446,44 @@ namespace EudoxusOsy.BusinessModel
 
         public static decimal RecalculateAmount(this Catalog selectedCatalog, decimal? newPrice)
         {
+            /**
+             * RETURN @BookCount * 
+			ROUND(@BookUnitPrice * 
+					(@Percentage/100) *
+					(@BookDiscountPercentage - @PerYearDiscountPercentage)
+				,2)
+            */
             return selectedCatalog.BookCount *
-                     Math.Round(selectedCatalog.Discount.DiscountPercentage *
+                     Math.Round(((selectedCatalog.Discount.DiscountPercentage == 0 ? 1 : selectedCatalog.Discount.DiscountPercentage) - selectedCatalog.Book.FirstRegistrationYearDiscountPercentage(selectedCatalog.PhaseID.Value)) *
                     (newPrice.HasValue ? newPrice.Value : selectedCatalog.BookPrice.Price) *
-                    (selectedCatalog.Percentage.Value / 100) *
-                    selectedCatalog.Book.FirstRegistrationYearDiscountPercentage(selectedCatalog.PhaseID.Value), 2);
+                    (selectedCatalog.Percentage.Value / 100)
+                    , 2, MidpointRounding.AwayFromZero);
+        }
+
+        public static BookDTO ToBookDTO(this BookDTOSlim x)
+        {
+            var newBook = new BookDTO()
+            {
+                id = x.id,
+                active = x.active,
+                title = x.title,
+                subtitle = x.subtitle,
+                authors = x.authors,
+                isbn = x.isbn,
+                firstPostYear = x.firstPostYear,
+                pages = x.pages,
+                suggestedPrice = x.suggestedPrice,
+                type = x.type,
+                publisherId = x.publisherId,
+                publisherName = x.publisherName,
+                price = x.price,
+                checkedPrice = x.checkedPrice,
+                priceComments = x.priceComments,
+                decisionNumber = x.decisionNumber,
+                fek = x.fek,
+                archives = x.archives
+            };
+            return newBook;
         }
 
         public static Book ToOsyBook(this BookDTO x)
@@ -461,13 +492,14 @@ namespace EudoxusOsy.BusinessModel
             {
                 BookKpsID = x.id,
                 Author = x.authors,
-                BookType = enBookType.Regular,
+                Publisher = x.publisherName,
+                BookType = BookHelper.MapKindBookToBookType(x.type),
                 IsActive = x.active,
                 Title = x.title,
                 Subtitle = x.subtitle,
                 ISBN = x.isbn,
-                //FirstRegistrationYear
-                SupplierCode = x.supplierCode,
+                FirstRegistrationYear = x.firstPostYear.HasValue ? x.firstPostYear : null,
+                SupplierCode = x.publisherId,
                 CreatedAt = DateTime.Now,
                 CreatedBy = "getNewBooksService"
             };
@@ -476,46 +508,110 @@ namespace EudoxusOsy.BusinessModel
 
         public static Book UpdateBookFromDto(this Book book, BookDTO dto)
         {
-            //book.BookType = dto.B,[BookType] dto.kindBook
             book.Title = dto.title;
             book.Subtitle = dto.subtitle;
             book.Author = dto.authors;
-            book.Publisher = dto.publisher;
+            book.Publisher = dto.publisherName;
             book.Pages = dto.pages;
             book.ISBN = dto.isbn;
-            book.FirstRegistrationYear = dto.firstRegistrationYear.HasValue ? dto.firstRegistrationYear : null;
-            book.SupplierCode = dto.supplierCode;
+            book.FirstRegistrationYear = dto.firstPostYear.HasValue ? dto.firstPostYear : null;
+
+            book.SupplierCode = dto.publisherId;
             book.IsActive = dto.active;
-            //[PendingCommitteePriceVerification]
 
             return book;
         }
 
-        public static BookPriceChange BookPriceChangeFromDto(this Book book, BookDTO dto)
+        public static BookDTO ArchiveDtoToBookDto(this ArchiveDTO archiveDto)
+        {
+            BookDTO dto = new BookDTO
+            {
+                price = archiveDto.price,
+                suggestedPrice = archiveDto.suggestedPrice,
+                fek = archiveDto.fek,
+                decisionNumber = archiveDto.decisionNumber,
+                priceComments = archiveDto.priceComments,
+                checkedPrice = archiveDto.checkedPrice ?? false
+            };
+            
+
+            return dto;
+        }
+
+        public static BookPriceChange BookPriceChangeFromDto(this Book book, BookDTO dto, int year = 0)
         {
             BookPriceChange bookPriceChange = new BookPriceChange();
 
             bookPriceChange.BookID = book.ID;
             bookPriceChange.SuggestedPrice = dto.suggestedPrice;
-            bookPriceChange.Price = dto.price.HasValue ? dto.price.Value : 0m;
+            bookPriceChange.Price = dto.price.HasValue ? (decimal?)dto.price.Value : null;
             bookPriceChange.DecisionNumber = dto.decisionNumber ?? "default Value";
             bookPriceChange.PriceComments = dto.priceComments ?? string.Empty;
             bookPriceChange.PriceChecked = dto.checkedPrice;
+            bookPriceChange.Year = year;
 
             bookPriceChange.CreatedAt = DateTime.Now;
             bookPriceChange.CreatedBy = "sysadmin";
             return bookPriceChange;
         }
 
-        public static decimal FirstRegistrationYearDiscountPercentage(this Book book, int phaseID)
+        public static BookDTO ArchiveToBookDto(this Archive archive)
         {
-            var currentPhase = EudoxusOsyCacheManager<Phase>.Current.Get(phaseID);
-            if (book.FirstRegistrationYear.HasValue && currentPhase.Year - book.FirstRegistrationYear > 8)
+            //Update book dto with current archive values
+            //to make it work with the old code          
+            BookDTO dto = new BookDTO
             {
-                return 1 - Math.Min(currentPhase.Year - book.FirstRegistrationYear.Value - 8, 5) * 0.02m;
-            }
-            return 1;
+                price = archive.Price,
+                suggestedPrice = archive.SuggestedPrice,
+                fek = archive.Fek,
+                decisionNumber = archive.DecisionNumber,
+                priceComments = archive.PriceComments,
+                checkedPrice = archive.CheckedPrice ?? false
+            };
+
+            return dto;
         }
 
+        public static decimal FirstRegistrationYearDiscountPercentage(this Book book, int phaseID)
+        {
+            /**
+             * if (ISNULL(@BookFirstRegistrationYear, 0) > 0) AND (@diff_years > 7)
+		        Begin			
+			        Select @PerYearDiscountPercentage = IIF((@diff_years-7)* 0.02 > 0.10, 0.10, (@diff_years-7)* 0.02)		
+		        end
+             */
+            var currentPhase = EudoxusOsyCacheManager<Phase>.Current.Get(phaseID);
+            if (book.FirstRegistrationYear.HasValue)
+            {
+                var diff_years = currentPhase.Year - book.FirstRegistrationYear.Value;
+                if(diff_years > 7)
+                    return  Math.Min(diff_years - 7, 5) * 0.02m;
+            }
+            return 0;
+        }
+
+        public static int? GetLatestIBANID(this Supplier supplier)
+        {
+            int? id = null;
+
+            if (supplier.SupplierIBANs != null && supplier.SupplierIBANs.Any())
+            {
+                    id = supplier.SupplierIBANs.OrderByDescending(x => x.CreatedAt).First().ID;
+            }
+
+            return id;
+        }
+
+        public static string GetLatestIBAN(this Supplier supplier, bool SplitIban)
+        {
+            string iban = string.Empty;
+
+            if (supplier.SupplierIBANs != null && supplier.SupplierIBANs.Any())
+            {
+                iban = supplier.SupplierIBANs.OrderByDescending(x => x.CreatedAt).First().IBAN;
+            }
+
+            return SplitIban ? Regex.Replace(iban, ".{4}", "$0 ").Trim() : iban;
+        }
     }
 }

@@ -101,12 +101,17 @@
                 <%# ((Catalog)Container.DataItem).CatalogType.GetLabel() %>
             </DataItemTemplate>
         </dx:GridViewDataTextColumn>
+        <dx:GridViewDataTextColumn Name="IsLocked" Caption="Κλ." ToolTip="Κλειδωμένη">
+            <HeaderStyle Wrap="true" />                        
+            <DataItemTemplate>                
+                <%# ((Catalog)Container.Grid.GetRow(Container.VisibleIndex)).IsLocked? "ΝΑΙ":"ΟΧΙ"  %>
+            </DataItemTemplate>    
+        </dx:GridViewDataTextColumn>       
         <dx:GridViewDataTextColumn FieldName="IsDeleteAllowed" Name="IsDeleteAllowed" Visible="false">
             <DataItemTemplate>
                 <%# Eval("IsDeleteAllowed") %>
             </DataItemTemplate>
-        </dx:GridViewDataTextColumn>
-
+        </dx:GridViewDataTextColumn>       
     </Columns>
 </dx:ASPxGridView>
 

@@ -20,10 +20,11 @@ namespace EudoxusOsy.Services.Models
         public string nextVolume { get; set; }
         public int publicationNumber { get; set; }
         public int publicationYear { get; set; }
+        public int? firstPostYear { get; set; }
         public int previousEdition { get; set; }
         public int nextEdition { get; set; }
         public string editorialHouse { get; set; }
-        public int supplierCode { get; set; }
+        public int publisherId { get; set; }
         public string publisher { get; set; }
         public string dimensions { get; set; }
         public int pages { get; set; }

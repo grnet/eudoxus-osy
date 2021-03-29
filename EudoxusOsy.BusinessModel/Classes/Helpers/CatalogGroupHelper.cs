@@ -1,6 +1,5 @@
 ﻿using Imis.Domain;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
@@ -8,7 +7,7 @@ namespace EudoxusOsy.BusinessModel
 {
     public static class CatalogGroupHelper
     {
-        public static void GroupCatalogsByInstitution(int supplierID, int phaseID, IUnitOfWork uow)
+        public static void GroupCatalogsByInstitution(int supplierID, int? supplierIBANID, int phaseID, IUnitOfWork uow)
         {
             var ungroupedCatalogs = new CatalogRepository(uow).GetUngroupedCatalogsBySupplierAndPhase(supplierID, phaseID);
             var groupedCatalogs = ungroupedCatalogs.GroupBy(x => x.Department.InstitutionID);
@@ -21,6 +20,7 @@ namespace EudoxusOsy.BusinessModel
                 {
                     PhaseID = phaseID,
                     SupplierID = supplierID,
+                    SupplierIBANID = supplierIBANID,
                     InstitutionID = item.Key,
                     State = enCatalogGroupState.New,
                     IsActive = true
@@ -29,7 +29,7 @@ namespace EudoxusOsy.BusinessModel
                 if (deduction != null)
                 {
                     group.DeductionID = deduction.ID;
-                }
+                }                
 
                 foreach (Catalog catalog in item)
                 {
@@ -73,6 +73,15 @@ namespace EudoxusOsy.BusinessModel
 
         public static Deduction FindActiveDeductionForSupplier(int supplierID)
         {
+            //Check for zero vat eligibility
+            Supplier supplier = new SupplierRepository().Load(supplierID);
+
+            if (supplier.ZeroVatEligible)
+            {
+                return null;
+            }
+
+            //---------------------------
             var deduction = new CatalogGroupRepository().FindActiveDeductionForSupplier(supplierID);
 
             if (deduction == null)
@@ -101,10 +110,19 @@ namespace EudoxusOsy.BusinessModel
             if (catalog == null)
                 return false;
 
-            bool condition = catalog.BookPriceID.HasValue && catalog.IsBookActive;
+            bool condition = catalog.BookPriceID.HasValue && catalog.IsBookActive && catalog.GroupID == null;
             condition = PendingPriceVerificationCondition(catalog, condition);
 
             return condition;
+        }
+
+        public static bool CanApproveGroup(CatalogGroupInfo group)
+        {
+            if (group == null)
+                return false;
+
+            return group.CanBePaid
+                    && group.GroupStateInt == enCatalogGroupState.Selected.GetValue();
         }
 
         public static bool CanMovePhase(Catalog catalog)
@@ -117,6 +135,62 @@ namespace EudoxusOsy.BusinessModel
 
             return condition;
         }
+
+        public static bool CanRevertApproval(CatalogGroupInfo group)
+        {
+            if (group == null)
+                return false;
+
+            return !group.IsLocked
+                    && group.GroupStateInt == enCatalogGroupState.Approved.GetValue();
+        }
+
+        public static bool CanSendToYDE(CatalogGroupInfo group)
+        {
+            if (group == null)
+                return false;
+
+            return group.CanBePaid
+                    && (group.GroupStateInt == enCatalogGroupState.Approved.GetValue()
+                        || group.GroupStateInt == enCatalogGroupState.Returned.GetValue());
+        }
+
+        public static bool CanReturnFromYDE(CatalogGroupInfo group)
+        {
+            if (group == null)
+                return false;
+
+            return !group.IsLocked
+                    && group.GroupStateInt == enCatalogGroupState.Sent.GetValue();
+        }
+
+        public static bool CanEditGroup(CatalogGroupInfo group)
+        {
+            if (group == null)
+                return false;
+
+            return !group.IsLocked
+                    && (group.GroupStateInt == enCatalogGroupState.New.GetValue()
+                    || group.GroupStateInt == enCatalogGroupState.Selected.GetValue()
+                    || group.GroupStateInt == enCatalogGroupState.Returned.GetValue());
+        }
+
+        public static bool CanDeleteGroup(CatalogGroupInfo group)
+        {
+            if (group == null)
+                return false;
+
+            return !group.IsLocked
+                    && group.GroupStateInt == enCatalogGroupState.New.GetValue();
+        }
+
+        public static bool CanAddInvoice(CatalogGroup group, EudoxusOsyPrincipal user)
+        {
+            return !(group.IsLocked
+                || group.State == enCatalogGroupState.Sent
+                || (user.IsInRole(RoleNames.Supplier) && group.StateInt > (int)enCatalogGroupState.New));
+        }
+
 
         private static bool PendingPriceVerificationCondition(Catalog catalog, bool condition)
         {
@@ -135,18 +209,18 @@ namespace EudoxusOsy.BusinessModel
         /// <param name="bookID"></param>
         /// <param name="phaseID"></param>
         /// <param name="uow"></param>
-        public static void RecalculateCatalogsForBook(int bookID, int phaseID, decimal newPrice, int newBookPriceID,  IUnitOfWork uow)
+        public static void RecalculateCatalogsForBook(int bookID, int phaseID, decimal newPrice, int newBookPriceID, IUnitOfWork uow)
         {
             /** step 1. Find the ungrouped catalogs or the catalogs that are in groups of state NEW
                 these are the catalogs to recalculate.
             */
             var catalogsToRecalculate = new CatalogRepository(uow).FindCatalogsToRecalculate(bookID, phaseID).ToList();
 
-            catalogsToRecalculate.ForEach(x =>
+            foreach (var catalog in catalogsToRecalculate)
             {
-                x.Amount = x.BookCount * Math.Round(x.Discount.DiscountPercentage * newPrice * (x.Percentage.Value / 100) * x.Book.FirstRegistrationYearDiscountPercentage(x.PhaseID.Value), 2);
-                x.BookPriceID = newBookPriceID;
-            });
+                catalog.Amount = catalog.RecalculateAmount(newPrice);
+                catalog.BookPriceID = newBookPriceID;
+            }
 
             uow.Commit();
         }
@@ -155,9 +229,6 @@ namespace EudoxusOsy.BusinessModel
         // create new catalogs with the price difference for books that have already processed groups
         public static void CreatePriceDifferenceCatalogsForBook(int bookID, int phaseID, decimal newPrice, int newBookPriceID, IUnitOfWork uow)
         {
-            var currentPhase = EudoxusOsyCacheManager<Phase>.Current.Get(phaseID);
-            var newCatalogs = new List<Catalog>();
-
             var catalogsForPriceDifference = new CatalogRepository(uow).FindCatalogsForPriceDifferenceReversal(bookID, phaseID).ToList();
             catalogsForPriceDifference.ForEach(x =>
             {
@@ -185,10 +256,68 @@ namespace EudoxusOsy.BusinessModel
                 };
 
                 uow.MarkAsNew(newCatalog);
-                newCatalogs.Add(newCatalog);
+                uow.Commit();
             });
+        }
 
-            uow.Commit();
+        public static string InabilityToCreateGroup(Catalog catalog)
+        {
+            if (!catalog.IsBookActive)
+            {
+                return "Το βιβλίο είναι ανενεργό.";
+            }
+            else if (catalog.HasPendingPriceVerification)
+            {
+                return "Η τιμή του βιβλίου ελέγχεται από την επιτροπή κοστολόγησης.";
+            }
+            else if (catalog.HasUnexpectedPriceChange)
+            {
+                return "Το βιβλίο έχει μη αναμενόμενη αλλαγή τιμής.";
+            }
+
+            return "";
+        }
+
+        public static enPaymentOrderState MapCatalogGroupStateToPaymentOrderState(enCatalogGroupState catalogGroupState)
+        {
+            switch (catalogGroupState)
+            {
+                case enCatalogGroupState.New:
+                    return enPaymentOrderState.New;
+                case enCatalogGroupState.Approved:
+                    return enPaymentOrderState.Approved;
+                case enCatalogGroupState.Returned:
+                    return enPaymentOrderState.Returned;
+                case enCatalogGroupState.Selected:
+                    return enPaymentOrderState.Selected;
+                case enCatalogGroupState.Sent:
+                    return enPaymentOrderState.Sent;
+            }
+
+            return enPaymentOrderState.New;
+        }
+
+        public static CatalogGroupInfo ToCatalogGroupInfo(this CatalogGroup group)
+        {
+            return new CatalogGroupInfo()
+            {
+                ID = group.ID,
+                SupplierID = group.SupplierID,
+                InstitutionID = group.InstitutionID,
+                GroupStateInt = group.StateInt,
+                ContainsInActiveBooks = group.Catalogs.Any(y => !y.IsBookActive),
+                HasPendingPriceVerification = group.PhaseID >= 13 && group.Catalogs.Any(c => c.HasPendingPriceVerification),
+                HasUnexpectedPriceChange = group.PhaseID >= 13 && group.Catalogs.Any(c => c.HasUnexpectedPriceChange),
+                IsLocked = group.IsLocked,
+                CatalogCount = group.Catalogs.Where(y => y.StateInt == (int)enCatalogState.Normal || y.StateInt == (int)enCatalogState.FromMove).Count(),
+                TotalAmount = group.Catalogs.Where(y => y.StateInt == (int)enCatalogState.Normal || y.StateInt == (int)enCatalogState.FromMove).Sum(y => y.Amount),
+                InvoiceCount = group.Invoices.Where(y => y.IsActive).Count(),
+                InvoiceSum = group.Invoices.Where(y => y.IsActive).Sum(y => y.InvoiceValue),
+                Deduction = group.Deduction,
+                Vat = group.Vat,
+                IsTransfered = group.IsTransfered,
+                TransferedBankID = group.BankID
+            };
         }
 
     }

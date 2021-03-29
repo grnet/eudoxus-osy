@@ -37,7 +37,7 @@ namespace EudoxusOsy.Portal.Secure
         }
 
 
-        List<OfficeSlip> officeSlips = new List<OfficeSlip>();
+        List<OfficeSlip> officeSlips = new List<OfficeSlip>();        
         decimal TotalAmount;
 
         protected override void DoProcessRequest()
@@ -61,6 +61,7 @@ namespace EudoxusOsy.Portal.Secure
                     officeSlips.Add(os);
                 });
                 TotalAmount = officeSlips.Sum(x => x.Amount);
+
                 Response.Clear();
                 Response.ContentType = "application/octet-stream";
                 Response.AddHeader("Content-Disposition", string.Format("attachment; filename=OfficeSlip-{0}.pdf", OfficeSlipDate.ToShortDateString()));
@@ -76,8 +77,8 @@ namespace EudoxusOsy.Portal.Secure
 
                 string deviceInfo = @"<DeviceInfo>
                     <OutputFormat>PDF</OutputFormat>
-                    <PageHeight>21cm</PageHeight>
-                    <PageWidth>29.7cm</PageWidth>
+                    <PageHeight>29.7cm</PageHeight>
+                    <PageWidth>21cm</PageWidth>
                     <MarginTop>0.5in</MarginTop>
                     <MarginLeft>0.0in</MarginLeft>
                     <MarginRight>0.0in</MarginRight>
@@ -106,7 +107,7 @@ namespace EudoxusOsy.Portal.Secure
         }
 
         private void ConfigureReport(LocalReport localReport)
-        {
+        {            
             localReport.ReportPath = HttpContext.Current.Server.MapPath("~/_rdlc/OfficeSlip.rdlc");
 
             List<ReportParameter> parameters = new List<ReportParameter>();
@@ -116,13 +117,14 @@ namespace EudoxusOsy.Portal.Secure
             parameters.Add(new ReportParameter("OfficeSlipDate", OfficeSlipDate.ToShortDateString()));
             parameters.Add(new ReportParameter("ProtocolNumber", ProtocolNumber));
             parameters.Add(new ReportParameter("Decision", Decision));
-            parameters.Add(new ReportParameter("SupervisorName", "ΜΑΡΙΑ ΚΟΛΕΘΡΑ"));
+            parameters.Add(new ReportParameter("SupervisorName", "ΝΙΚΗ ΚΕΡΑΜΕΩΣ"));
 
             localReport.SetParameters(parameters);
 
-            ReportDataSource ds = new ReportDataSource("OfficeSlipSchema_OfficeSlip", officeSlips.ToDataTable());
+            ReportDataSource ds = new ReportDataSource("OfficeSlipSchema_OfficeSlip", officeSlips.ToDataTable());            
             localReport.DataSources.Clear();
             localReport.DataSources.Add(ds);
+            
             localReport.Refresh();
         }
     }

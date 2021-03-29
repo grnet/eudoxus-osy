@@ -3,10 +3,6 @@ using EudoxusOsy.BusinessModel;
 using EudoxusOsy.Portal.Controls;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace EudoxusOsy.Portal.UserControls.ExportGridViews
 {
@@ -63,7 +59,7 @@ namespace EudoxusOsy.Portal.UserControls.ExportGridViews
                     Grid.Columns.FindByName("Subtitle").Visible = false;
                 }
             }
-            else if(Mode == enBookGridViewMode.GroupExport)
+            else if (Mode == enBookGridViewMode.GroupExport)
             {
                 if (Grid.Columns.FindByName("PageCount") != null)
                 {
@@ -73,6 +69,11 @@ namespace EudoxusOsy.Portal.UserControls.ExportGridViews
                 if (Grid.Columns.FindByName("Subtitle") != null)
                 {
                     Grid.Columns.FindByName("Subtitle").Visible = false;
+                }
+
+                if (Grid.Columns.FindByName("BookType") != null)
+                {
+                    Grid.Columns.FindByName("BookType").Visible = false;
                 }
             }
         }
@@ -97,7 +98,7 @@ namespace EudoxusOsy.Portal.UserControls.ExportGridViews
             Grid.DataBind();
 
             Exporter.FileName = fileName;
-            Exporter.WriteXlsxToResponse(true);
+            Exporter.ExportWithDefaults();
         }
         #endregion
     }

@@ -13,13 +13,31 @@ namespace EudoxusOsy.Portal.Secure.Ministry {
     public partial class BookKpsServices {
         
         /// <summary>
-        /// btnGetModifiedBooks control.
+        /// btnRunStats control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxButton btnGetModifiedBooks;
+        protected global::DevExpress.Web.ASPxButton btnRunStats;
+        
+        /// <summary>
+        /// txtBooksList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtBooksList;
+        
+        /// <summary>
+        /// btnGetSpecificBooks control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxButton btnGetSpecificBooks;
         
         /// <summary>
         /// btnGetNewBooks control.
@@ -31,22 +49,58 @@ namespace EudoxusOsy.Portal.Secure.Ministry {
         protected global::DevExpress.Web.ASPxButton btnGetNewBooks;
         
         /// <summary>
-        /// txtUpdateBookStatusID control.
+        /// btnGetModifiedBooks control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxTextBox txtUpdateBookStatusID;
+        protected global::DevExpress.Web.ASPxButton btnGetModifiedBooks;
         
         /// <summary>
-        /// btnUpdateBookStatus control.
+        /// btnUpdateModifiedBooks control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxButton btnUpdateBookStatus;
+        protected global::DevExpress.Web.ASPxButton btnUpdateModifiedBooks;
+        
+        /// <summary>
+        /// btnUpdateModifiedBooksPrices control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxButton btnUpdateModifiedBooksPrices;
+        
+        /// <summary>
+        /// btnUpdateNewBooksDirectly control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxButton btnUpdateNewBooksDirectly;
+        
+        /// <summary>
+        /// btnUpdateModifiedBooksDirectly control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxButton btnUpdateModifiedBooksDirectly;
+        
+        /// <summary>
+        /// lblPRogress control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxLabel lblPRogress;
         
         /// <summary>
         /// upResults control.

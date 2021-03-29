@@ -1,12 +1,13 @@
-﻿using System;
+﻿using EudoxusOsy.BusinessModel;
+using EudoxusOsy.Portal.Controls;
+using EudoxusOsy.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using EudoxusOsy.Portal.Controls;
-using EudoxusOsy.BusinessModel;
-using EudoxusOsy.Utils;
+using System.Text;
+using System.Threading.Tasks;
+using EudoxusOsy.BusinessModel.Classes.Helpers;
+using EudoxusOsy.BusinessModel.Interfaces;
 
 namespace EudoxusOsy.Portal.Secure.Ministry
 {
@@ -16,270 +17,216 @@ namespace EudoxusOsy.Portal.Secure.Ministry
         {
 
         }
-
-        protected void btnUpdateBookStatus_Click(object sender, EventArgs e)
+        protected void ReportProgress(int progress)
         {
-            var id = txtUpdateBookStatusID.GetInteger();
-            var book = new BookRepository(UnitOfWork).Load(id.Value);
-            UpdateBookStatusRequest req = new UpdateBookStatusRequest();
-            req.bsaId = id.Value;
-            req.id = book.BookKpsID;
-            req.bsaStatus = "FULL";
-            BookServicesClients.UpdateBookStatus(req);
+            lblPRogress.Text = string.Format("{0} % completed \r\n", progress);
         }
-
-        protected void btnGetModifiedBooks_Click(object sender, EventArgs e)
+        //UPDATE FROM SERVICE
+        protected async void btnGetModifiedBooks2_Click(object sender, EventArgs e)
         {
             try
             {
-                txtResults.Text = "";
-                txtResults.Text += "get modified books started \r\n";
-                // 1. Call the GetModifiedBooks KPS Service
-                GetBooksResponse booksResponse = BookServicesClients.GetModifiedBooks();
-                var currentPhase = new PhaseRepository(UnitOfWork).GetCurrentPhase();
+                UpdatePricesFromKPS kps = new UpdatePricesFromKPS(false);
 
-                txtResults.Text += string.Format("booksResponse: {0} \r\n", booksResponse);
-                txtResults.Text += string.Format("booksResponse results count : {0} \r\n", booksResponse.numResults);
-
-                if (booksResponse != null && booksResponse.books != null && booksResponse.books.Count > 0)
+                await Task.Run(() =>
                 {
-                    BookRepository bookRepository = new BookRepository(UnitOfWork);
-
-                    txtResults.Text += string.Format("Book Count: {0} \r\n", booksResponse.books.Count);
-                    txtResults.Text += string.Format("books: {0} \r\n", booksResponse.books);
-
-                     //2. Update the Book data on the Book table and the BookPriceChange table (if needed)
-                    foreach (BookDTO dto in booksResponse.books)
-                    {
-                        var bookPriceHasChanged = false;
-                        Book book = new Book();
-                        txtResults.Text += string.Format("looking for book : {0} {1} \r\n", (int)dto.id, dto.title);
-                        book = bookRepository.FindByBookKpsID((int)dto.id).FirstOrDefault();
-
-                        if (book != null)
-                        {
-                            txtResults.Text += string.Format("processing book : {0} \r\n", book.ID);
-                        }
-                        else
-                        {
-                            txtResults.Text += string.Format("ERROR, book not found (kps id): {0} \r\n", dto.id);
-                        }
-
-                        //Error management ? 
-                        if (book.ID != 0)
-                        {
-                            book = book.UpdateBookFromDto(dto);
-                            UnitOfWork.Commit();
-                        }
-
-                        //Check if price has changed
-                        //find the current price of the book
-                        //check if that price has changed
-                        var bookPrice = new BookPriceRepository(UnitOfWork).FindByBookIDAndYear(book.ID, currentPhase.Year);
-                        if (bookPrice != null &&  bookPrice.Price != (dto.price.HasValue? dto.price: dto.suggestedPrice))
-                        {
-                            bookPriceHasChanged = true;
-                            txtResults.Text += string.Format("BookPrice change spotted for Book: {0} \r\n", book.ID);
-                        }
-                        else if(bookPrice == null)
-                        {
-                            txtResults.Text += string.Format("could not find BookPrice for Book: {0} \r\n", book.ID);
-                        }
-
-                        if (bookPriceHasChanged)
-                        {
-                            BookPriceChange bookPriceChange = book.BookPriceChangeFromDto(dto);
-                            UnitOfWork.MarkAsNew(bookPriceChange);
-
-                            // if the book is not marked as pending price verification by committee, then do mark it as unexpected Price Change
-                            if(!book.PendingCommitteePriceVerification.HasValue || book.PendingCommitteePriceVerification == false)
-                            {
-                                //Toggle Unexpected Price change 
-                                BookHelper.ToggleUnexpectedPriceChange(UnitOfWork, book.ID, true);
-                            }
-
-                            UnitOfWork.Commit();
-                        }
-
-                        // 3. Call the UpdateBookStatus KPS Service for each Book that was processed
-                        if (book.ID != 0)
-                        {
-                            UpdateBookStatusRequest bookStatusRequest = new UpdateBookStatusRequest();
-                            bookStatusRequest.id = dto.id;
-                            bookStatusRequest.bsaId = book.ID;
-                            bookStatusRequest.bsaStatus = "Full";
-                            //Refactoring for TEST cases!!!
-                            BookServicesClients.UpdateBookStatus(bookStatusRequest);
-                            txtResults.Text += string.Format("book update in KPS: {0} \r\n", book.ID);
-                        }
-                        else
-                        {
-                            txtResults.Text += string.Format("Won't update book in KPS: {0} \r\n", book.ID);
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                txtResults.Text += string.Format("exception: {0} \r\n", ex.InnerException != null ? ex.InnerException.Message : ex.Message);
-                Notify(ex.InnerException != null ? ex.InnerException.Message : ex.Message);
-            }
-
-            Notify("Η ενημέρωση των βιβλίων ολοκληρώθηκε επιτυχώς");
-        }
-
-        protected void btnGetNewBooks_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                txtResults.Text = "";
-                LogHelper.LogMessage<UpdateBooksHelper>("updateNewBooks started");
-
-                /**
-                    1. Call the KPS GetNewBooksService
-                */
-                var newBooksResponse = BookServicesClients.GetNewBooks();
-
-                //TODO: handle the inactive - active status of a book if needed
-                /**
-                    2.Insert the bookData to the table
-                */
-                List<Book> books = new List<Book>();
-                List<Book> existingBooks = new List<Book>();
-                if (newBooksResponse != null && newBooksResponse.books != null && newBooksResponse.books.Count > 0)
-                {
-                    txtResults.Text += string.Format("booksResponse: {0} \r\n", newBooksResponse);
-                    txtResults.Text += string.Format("booksResponse results count : {0} \r\n", newBooksResponse.numResults);
-
-                    BookRepository bookRepository = new BookRepository(UnitOfWork);
-                    newBooksResponse.books.ForEach(x =>
-                    {
-                        Book book = new Book();
-                        txtResults.Text += string.Format("looking for book : {0} {1} \r\n", (int)x.id, x.title);
-                        book = bookRepository.FindByBookKpsID((int)x.id).FirstOrDefault();
-
-                        if (book == null)
-                        {
-                            Book newBook = x.ToOsyBook();
-
-                            UnitOfWork.MarkAsNew(newBook);
-                            books.Add(newBook);
-                        }
-                        else
-                        {
-                            book.UpdateBookFromDto(x);
-                            existingBooks.Add(book);
-                            txtResults.Text += string.Format("book: {0} {1} ALREADY EXISTS \r\n", (int)x.id, x.title);
-                        }
-                    });
-                    UnitOfWork.Commit();
-                }
-
-                /**
-                    3.Call the UpdateBookStatus Service for each book
-                */
-
-                foreach (var newBook in books)
-                {
-                    UpdateBookStatusRequest updateRequest = new UpdateBookStatusRequest();
-                    updateRequest.bsaId = newBook.ID;
-                    updateRequest.id = newBook.BookKpsID;
-                    updateRequest.bsaStatus = "Full";
-                    BookServicesClients.UpdateBookStatus(updateRequest);
-                    txtResults.Text += string.Format("book update in KPS (Full): {0} \r\n", newBook.ID);
-                }
-
-                foreach (var existingBook in existingBooks)
-                {
-                    UpdateBookStatusRequest updateRequest = new UpdateBookStatusRequest();
-                    updateRequest.bsaId = existingBook.ID;
-                    updateRequest.id = existingBook.BookKpsID;
-                    updateRequest.bsaStatus = "Modified";
-                    BookServicesClients.UpdateBookStatus(updateRequest);
-                    txtResults.Text += string.Format("existing book update in KPS (Modified): {0} \r\n", existingBook.ID);
-                }
+                    txtResults.Text += kps.ManageModifiedBooksStage1();
+                    //Notify("Η ενημέρωση των βιβλίων ολοκληρώθηκε επιτυχώς");
+                }).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
                 Notify(ex.InnerException != null ? ex.InnerException.Message : ex.Message);
+                txtResults.Text += ex.InnerException != null ? ex.InnerException.Message : ex.Message;
             }
+        }
+        
+        /// <summary>
+        /// The new books get inserted in the OSY database, the bookPrice entry is also created
+        /// If the book already exists, then its fields gets updated (not the price) and its status in KPS
+        /// is set to "Modified" so that a possible price change will be processed by the GetModifiedBooks algorithm
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected async void btnGetNewBooks_Click(object sender, EventArgs e)
+        {            
+            try
+            {
+                UpdatePricesFromKPS kps = new UpdatePricesFromKPS(false);
 
-            Notify("Η εισαγωγή των βιβλίων ολοκληρώθηκε επιτυχώς");
+                await Task.Run(() =>
+                    {
+                    txtResults.Text += kps.ManageNewBooks();
+                        //Notify("Η εισαγωγή των βιβλίων ολοκληρώθηκε επιτυχώς");
+                    }).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                Notify(ex.InnerException != null ? ex.InnerException.Message : ex.Message);
+                txtResults.Text += ex.InnerException != null ? ex.InnerException.Message : ex.Message;
+            }            
         }
 
-        protected void btnInitKpsNewBooks_Click(object sender, EventArgs e)
+        //UPDATE FROM FILE
+        protected async void btnUpdateNewBooksDirectly_Click(object sender, EventArgs e)
         {
-            BookRepository bookRepository = new BookRepository(UnitOfWork);
+            StringBuilder result = new StringBuilder();
             var newBooksResponse = BookServicesClients.GetNewBooks();
+            BookRepository bookRepository = new BookRepository(UnitOfWork);
             List<Book> books = new List<Book>();
-            List<Book> existingBooks = new List<Book>();
-            var currentPhase = new PhaseRepository(UnitOfWork).GetCurrentPhase();
 
-            txtResults.Text = "";
-            txtResults.Text += "get new books Started \r\n";
-            LogHelper.LogMessage<UpdateBooksHelper>("updateNewBooks started");
+            result.Append("get new books Started \r\n");
+            LogHelper.LogMessage<UpdateBooksHelper>("DIRECT updateNewBooks started");
 
-            if (newBooksResponse != null && newBooksResponse.books != null && newBooksResponse.books.Count > 0)
+            await Task.Run(() =>
             {
                 newBooksResponse.books.ForEach(x =>
                 {
-                    var bookPriceHasChanged = false;
-                    var book = bookRepository.FindByBookKpsID((int)x.id).FirstOrDefault();
-
-                    if (book == null)
+                    var book = bookRepository.FindByBookKpsID(x.id).FirstOrDefault();
+                    if (book != null)
                     {
-                        Book newBook = x.ToOsyBook();
+                        result.AppendFormat("book kps: {0}, book osy: {1} found. \r\n", x.id, book.ID);
 
-                        UnitOfWork.MarkAsNew(newBook);
-                        books.Add(newBook);
+                        if (Config.EnableKPSUpdate)
+                        {
+
+                            UpdateBookStatusRequest updateRequest = new UpdateBookStatusRequest();
+                            updateRequest.bsaId = book.ID;
+                            updateRequest.id = book.BookKpsID;
+                            updateRequest.bsaStatus = "Full";
+                            BookServicesClients.UpdateBookStatus(updateRequest);
+                            result.AppendFormat("book update in KPS: osyID: {0}, kpsID: {1} \r\n", book.ID, book.BookKpsID);
+                        }
                     }
                     else
                     {
-                        txtResults.Text += string.Format("'new' book: {0} {1} ALREADY EXISTS \r\n", x.id, x.title);
-                        book.UpdateBookFromDto(x);
-
-                        //Check if price has changed
-                        //find the current price of the book
-                        //check if that price has changed
-                        var bookPrice = new BookPriceRepository(UnitOfWork).FindByBookIDAndYear(book.ID, currentPhase.Year);
-                        if (bookPrice != null && bookPrice.Price != (x.price.HasValue ? x.price : x.suggestedPrice))
-                        {
-                            bookPriceHasChanged = true;
-                            txtResults.Text += string.Format("BookPrice change spotted for Book: {0} \r\n", book.ID);
-                        }
-                        else if (bookPrice == null)
-                        {
-                            txtResults.Text += string.Format("could not find BookPrice for Book: {0} \r\n", book.ID);
-                        }
-
-                        if (bookPriceHasChanged)
-                        {
-                            BookPriceChange bookPriceChange = book.BookPriceChangeFromDto(x);
-                            UnitOfWork.MarkAsNew(bookPriceChange);
-
-                            // if the book is not marked as pending price verification by committee, then do mark it as unexpected Price Change
-                            if (!book.PendingCommitteePriceVerification.HasValue || book.PendingCommitteePriceVerification == false)
-                            {
-                                //Toggle Unexpected Price change 
-                                BookHelper.ToggleUnexpectedPriceChange(UnitOfWork, book.ID, true);
-                            }
-                        }
-
-                        books.Add(book);
-                        txtResults.Text += string.Format("book: {0} {1} ALREADY EXISTS \r\n", x.id, x.title);
+                        result.AppendFormat("book kps: {0} NOT found. \r\n", x.id);
                     }
                 });
-                UnitOfWork.Commit();
+            }).ConfigureAwait(false);
 
-                foreach (var newBook in books)
+            txtResults.Text = result.ToString();
+        }
+        protected async void btnUpdateModifiedBooksDirectly_Click(object sender, EventArgs e)
+        {
+            StringBuilder result = new StringBuilder();
+            var modifiedBooksResponse = BookServicesClients.GetModifiedBooks();
+            BookRepository bookRepository = new BookRepository(UnitOfWork);
+            List<Book> books = new List<Book>();
+
+            result.Append("get modified books Started \r\n");
+            LogHelper.LogMessage<UpdateBooksHelper>("DIRECT updateModifiedBooks started");
+
+            await Task.Run(() =>
+            {
+                modifiedBooksResponse.books.ForEach(x =>
                 {
-                    UpdateBookStatusRequest updateRequest = new UpdateBookStatusRequest();
-                    updateRequest.bsaId = newBook.ID;
-                    updateRequest.id = newBook.BookKpsID;
-                    updateRequest.bsaStatus = "Full";
-                    BookServicesClients.UpdateBookStatus(updateRequest);
-                    txtResults.Text += string.Format("book update in KPS: {0} \r\n", newBook.ID);
+                    var book = bookRepository.FindByBookKpsID((int)x.id).FirstOrDefault();
+                    if (book != null)
+                    {
+                        result.AppendFormat("book kps: {0}, book osy: {1} found. \r\n", x.id, book.ID);
+
+                        if (Config.EnableKPSUpdate)
+                        {
+                            UpdateBookStatusRequest updateRequest = new UpdateBookStatusRequest();
+                            updateRequest.bsaId = book.ID;
+                            updateRequest.id = book.BookKpsID;
+                            updateRequest.bsaStatus = "Full";
+                            BookServicesClients.UpdateBookStatus(updateRequest);
+                            result.AppendFormat("book update in KPS: osyID: {0}, kpsID: {1} \r\n", book.ID, book.BookKpsID);
+                        }
+
+                    }
+                    else
+                    {
+                        result.AppendFormat("book kps: {0} NOT found. \r\n", x.id);
+                    }
+                });
+            }).ConfigureAwait(false);
+
+
+            txtResults.Text = result.ToString();
+        }
+        //---------------------------------------------------------------
+        protected async void btnRunStats_OnClick(object sender, EventArgs e)
+        {
+            StringBuilder result = new StringBuilder();
+            result.Append("Refresh Statistics Started \r\n");
+            LogHelper.LogMessage<UpdateBooksHelper>("DIRECT refresh of Statistics started");
+
+            await Task.Run(() =>
+            {
+                using (var ctx = UnitOfWorkFactory.Create())
+                {
+                    ((DBEntities)ctx).CommandTimeout = 600;
+                    ((DBEntities)ctx).CacheStats(0);
+                    ((DBEntities)ctx).Rest_PP();
+                    ((DBEntities)ctx).SuppliersFullStatistics_PP();
                 }
+                result.Append("Refresh Statistics Finished \r\n");
+            }).ConfigureAwait(false);
+
+            txtResults.Text = result.ToString();
+        }
+
+        protected async void btnUpdateModifiedBooks_OnClick(object sender, EventArgs e)
+        {
+            try
+            {
+                UpdatePricesFromKPS kps = new UpdatePricesFromKPS(false);
+
+                await Task.Run(() =>
+                {
+                    txtResults.Text += kps.ManageModifiedBooksStage2();
+                    //Notify("Η ενημέρωση των βιβλίων ολοκληρώθηκε επιτυχώς");
+                }).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                Notify(ex.InnerException != null ? ex.InnerException.Message : ex.Message);
+                txtResults.Text += ex.InnerException != null ? ex.InnerException.Message : ex.Message;
+            }
+        }
+
+        protected async void btnUpdateModifiedBooksPrices_OnClick(object sender, EventArgs e)
+        {
+            try
+            {
+                UpdatePricesFromKPS kps = new UpdatePricesFromKPS(false);
+
+                await Task.Run(() =>
+                {
+                    txtResults.Text += kps.ManageModifiedBooksStage3();
+                    //Notify("Η ενημέρωση των βιβλίων ολοκληρώθηκε επιτυχώς");
+                }).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                Notify(ex.InnerException != null ? ex.InnerException.Message : ex.Message);
+                txtResults.Text += ex.InnerException != null ? ex.InnerException.Message : ex.Message;
+            }
+        }
+
+        protected async void btnGetSpecificBooks_OnClick(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtBooksList.Text))
+            {
+                return;
+            }
+                
+            try
+            {
+                UpdatePricesFromKPS kps = new UpdatePricesFromKPS(false);
+
+                await Task.Run(() =>
+                {
+                    txtResults.Text += kps.ManageSpecificBooks(txtBooksList.Text);                    
+                }).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                Notify(ex.InnerException != null ? ex.InnerException.Message : ex.Message);
+                txtResults.Text += ex.InnerException != null ? ex.InnerException.Message : ex.Message;
             }
         }
     }

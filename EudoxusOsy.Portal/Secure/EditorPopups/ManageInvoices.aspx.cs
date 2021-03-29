@@ -41,9 +41,7 @@ namespace EudoxusOsy.Portal.Secure.EditorPopups
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Entity.IsLocked
-                || Entity.State == enCatalogGroupState.Sent
-                || (Roles.IsUserInRole(RoleNames.Supplier) && Entity.StateInt > (int)enCatalogGroupState.New))
+            if (!CatalogGroupHelper.CanAddInvoice(Entity, User))
             {
                 btnAddInvoice.Visible = false;
                 gvInvoices.Columns.Where(x => x.Name == "Actions").First().Visible = false;

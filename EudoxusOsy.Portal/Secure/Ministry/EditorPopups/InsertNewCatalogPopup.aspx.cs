@@ -1,11 +1,7 @@
 ﻿using EudoxusOsy.BusinessModel;
 using EudoxusOsy.Portal.Controls;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace EudoxusOsy.Portal.Secure.Ministry.EditorPopups
 {
@@ -13,8 +9,7 @@ namespace EudoxusOsy.Portal.Secure.Ministry.EditorPopups
     {
         protected override bool Authenticate()
         {
-            return User.IsInRole(RoleNames.MinistryPayments)
-                    || User.IsInRole(RoleNames.SystemAdministrator);
+            return EudoxusOsyRoleProvider.IsAuthorizedEditorUser();
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -23,7 +18,7 @@ namespace EudoxusOsy.Portal.Secure.Ministry.EditorPopups
             {
 
             }
-       }
+        }
 
         protected void btnSubmitHidden_Click(object sender, EventArgs e)
         {
@@ -41,7 +36,10 @@ namespace EudoxusOsy.Portal.Secure.Ministry.EditorPopups
 
                 newCatalog.BookID = book.ID;
 
-                var department = EudoxusOsyCacheManager<Department>.Current.GetItems().FirstOrDefault(x => x.SecretaryKpsID == Convert.ToInt32(txtSecretary.Text));
+                var department = EudoxusOsyCacheManager<Department>.Current.GetItems().FirstOrDefault(x => 
+                    x.SecretaryKpsID == Convert.ToInt32(txtSecretary.Text)
+                    || x.LibraryKpsID == Convert.ToInt32(txtSecretary.Text));
+
                 if (department != null)
                 {
                     newCatalog.DepartmentID = department.ID;
@@ -88,7 +86,7 @@ namespace EudoxusOsy.Portal.Secure.Ministry.EditorPopups
                             /**
                                 Prepare the log entry
                             */
-                            var catalogLog = newCatalog.CreateCatalogLog(enCatalogLogAction.Create,User.Identity.Name, User.Identity.ReporterID);
+                            var catalogLog = newCatalog.CreateCatalogLog(enCatalogLogAction.Create, User.Identity.Name, User.Identity.ReporterID);
                             UnitOfWork.MarkAsNew(catalogLog);
 
                             UnitOfWork.Commit();

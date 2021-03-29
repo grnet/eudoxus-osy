@@ -49,7 +49,7 @@
         <table class="dv">
             <thead>
                 <tr>
-                    <th colspan="4"  class="popupHeader">Εισαγωγή εκχωρημένου τιμολογίου</th>
+                    <th colspan="4"  class="popupHeader">Εισαγωγή εκχωρημένου παραστατικού</th>
                 </tr>
             </thead>
             <tbody>

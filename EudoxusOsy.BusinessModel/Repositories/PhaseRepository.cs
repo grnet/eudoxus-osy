@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using Imis.Domain.EF;
+﻿using Imis.Domain.EF;
 using Imis.Domain.EF.Extensions;
-using System.Data.Objects;
+using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 
 namespace EudoxusOsy.BusinessModel
 {
-    public class PhaseRepository : DomainRepository<DBEntities, Phase, int>
+    public class PhaseRepository : DomainRepository<DBEntities, Phase, int>, IPhaseRepository
     {
         #region [ Base .ctors ]
 
@@ -24,6 +21,30 @@ namespace EudoxusOsy.BusinessModel
                     .OrderByDescending(x => x.ID)
                     .FirstOrDefault();
         }
-        
+
+        /// <summary>
+        /// Returns the phase that is current for catalogs calculations
+        /// and book price changes updates, the 'financial' current phase
+        /// should be currentPhase - 1
+        /// </summary>
+        /// <returns></returns>
+        public Phase GetCurrentCatalogsPhase()
+        {
+            return BaseQuery.Where(x => x.IsActive)
+                    .Where(x=> x.CatalogsCreated)
+                    .OrderByDescending(x => x.ID)
+                    .FirstOrDefault();
+        }
+
+        public List<Phase> GetAllActive()
+        {
+            return BaseQuery.Where(x => x.IsActive).ToList();
+        }
+
+        public bool IsActive(int id)
+        {
+            return BaseQuery.Any(x => x.ID == id && x.IsActive);
+        }
+
     }
 }

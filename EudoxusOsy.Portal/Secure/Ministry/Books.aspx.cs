@@ -1,13 +1,9 @@
 ﻿using EudoxusOsy.BusinessModel;
 using EudoxusOsy.Portal.Controls;
+using Imis.Domain.EF.Search;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
-using DevExpress.Web;
-using System.Web.Security;
 
 namespace EudoxusOsy.Portal.Secure.Ministry
 {
@@ -19,7 +15,7 @@ namespace EudoxusOsy.Portal.Secure.Ministry
 
         protected void odsBooks_Selecting(object sender, ObjectDataSourceSelectingEventArgs e)
         {
-            var criteria = new Criteria<Book>();
+            var criteria = new BusinessModel.Criteria<Book>();
             criteria.Expression = ucSearchFilters.GetSearchFilters().GetExpression();
 
             if (criteria.Expression == null)
@@ -62,13 +58,18 @@ namespace EudoxusOsy.Portal.Secure.Ministry
 
         protected void btnExport_Click(object sender, EventArgs e)
         {
-            var criteria = new Criteria<Book>();
+            var criteria = new BusinessModel.Criteria<Book>();
             criteria.Expression = ucSearchFilters.GetSearchFilters().GetExpression();
 
             if (criteria.Expression == null)
             {
                 criteria.Expression = Imis.Domain.EF.Search.Criteria<Book>.Empty;
             }
+
+            //Remove ebooks and ProfessorNotes
+
+            criteria.Expression = criteria.Expression.Where(x => x.BookTypeInt, (int)enBookType.eBook, enCriteriaOperator.NotEquals);
+            criteria.Expression = criteria.Expression.Where(x => x.BookTypeInt, (int)enBookType.ProfessorNotes, enCriteriaOperator.NotEquals);
 
             int count = 0;
             criteria.UsePaging = false;
@@ -84,5 +85,19 @@ namespace EudoxusOsy.Portal.Secure.Ministry
             }
         }
 
+        protected void gvBooks_ExporterRenderBrick(object sender, DevExpress.Web.ASPxGridViewExportRenderingEventArgs e)
+        {
+            Book book = gvBooksExport.GetRow(e.VisibleIndex) as Book;
+
+            if (book == null)
+                return;
+
+            if (e.Column.Name == "BookType")
+            {
+                e.Text = book.BookType.GetLabel();
+            }
+
+            e.TextValue = e.Text;
+        }
     }
 }

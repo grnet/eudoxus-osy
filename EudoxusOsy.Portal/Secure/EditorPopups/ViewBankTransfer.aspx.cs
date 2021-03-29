@@ -14,7 +14,7 @@ using DevExpress.Web;
 
 namespace EudoxusOsy.Portal.Secure.EditorPopups
 {
-    public partial class ViewBankTransfer : BaseEntityPortalPage<CatalogGroup>
+    public partial class ViewBankTransfer : BaseSecureEntityPortalPage<CatalogGroup>
     {
         #region [ Entity Fill ]
 
@@ -23,12 +23,18 @@ namespace EudoxusOsy.Portal.Secure.EditorPopups
             int groupID;
             if (int.TryParse(Request.QueryString["id"], out groupID) && groupID > 0)
             {
-                Entity = new CatalogGroupRepository(UnitOfWork).Load(groupID, x => x.Bank);
+                Entity = new CatalogGroupRepository(UnitOfWork).Load(groupID, x => x.Bank, x => x.Supplier);
             }
             else
             {
                 ClientScript.RegisterStartupScript(GetType(), "hidePopup", "window.parent.popUp.hide();", true);
             }
+        }
+
+        protected override bool Authorize()
+        {
+            return (EudoxusOsyRoleProvider.IsAuthorizedEditorUser()
+                || Entity.Supplier.ReporterID == User.Identity.ReporterID);
         }
 
         #endregion
@@ -37,7 +43,11 @@ namespace EudoxusOsy.Portal.Secure.EditorPopups
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Entity.BankID.HasValue)
+            if(!IsAuthorized)
+            {
+                ClientScript.RegisterStartupScript(GetType(), "hidePopup", "window.parent.popUp.hide();", true);
+            }
+            else if (Entity.BankID.HasValue)
             {
                 lblBank.Text = Entity.Bank.Name;
             }

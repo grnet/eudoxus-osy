@@ -13,6 +13,24 @@ namespace EudoxusOsy.Portal.Admin {
     public partial class EndOfPhaseProcedures {
         
         /// <summary>
+        /// txtXmlPath control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxTextBox txtXmlPath;
+        
+        /// <summary>
+        /// btnInsertXml control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxButton btnInsertXml;
+        
+        /// <summary>
         /// btnInsertCorrectedFiles control.
         /// </summary>
         /// <remarks>

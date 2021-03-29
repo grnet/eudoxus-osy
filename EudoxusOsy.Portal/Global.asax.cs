@@ -40,15 +40,15 @@ namespace EudoxusOsy.Portal
                     UpdateReceiptsHelper.UpdateReceiptsFromAuditReceipts();
                 });
 
-                var updateBooksRuntime = runTimes.FirstOrDefault(x => x.Name == TaskNames.UpdateBooks);
-                AsyncWorker.Instance.Register(TaskNames.UpdateBooks, updateBooksRuntime == null ? null : (DateTime?)updateBooksRuntime.LastRunTime, () =>
-                {
-                    /**
-                        Daily Task to populate the receipts table from audit_receipts
-                    */
-                    UpdateBooksHelper.UpdateModifiedBooksFromKPS();
-                    UpdateBooksHelper.GetNewBooksFromKPS();
-                });
+                //var updateBooksRuntime = runTimes.FirstOrDefault(x => x.Name == TaskNames.UpdateBooks);
+                //AsyncWorker.Instance.Register(TaskNames.UpdateBooks, updateBooksRuntime == null ? null : (DateTime?)updateBooksRuntime.LastRunTime, () =>
+                //{
+                //    /**
+                //        Daily Task to populate the receipts table from audit_receipts
+                //    */
+                //    UpdateBooksHelper.UpdateModifiedBooksFromKPS();
+                //    UpdateBooksHelper.GetNewBooksFromKPS();
+                //});
 
 
                 var compareXmlReceiptsRunTime = runTimes.FirstOrDefault(x => x.Name == TaskNames.CompareXmlReceipts);
@@ -70,6 +70,20 @@ namespace EudoxusOsy.Portal
                         */
                         ((DBEntities)ctx).CommandTimeout = 600;
                         ((DBEntities)ctx).CacheStats(0);
+                    }
+                });
+
+                var cacheStatsPPRuntime = runTimes.FirstOrDefault(x => x.Name == TaskNames.CacheStatsPP);
+                AsyncWorker.Instance.Register(TaskNames.CacheStatsPP, cacheStatsPPRuntime == null ? null : (DateTime?)cacheStatsPPRuntime.LastRunTime, () =>
+                {
+                    using (var ctx = UnitOfWorkFactory.Create())
+                    {
+                        /**
+                            The task should do the calculations for the previous phases
+                        */
+                        ((DBEntities)ctx).CommandTimeout = 600;
+                        ((DBEntities)ctx).Rest_PP();
+                        ((DBEntities)ctx).SuppliersFullStatistics_PP();
                     }
                 });
 

@@ -9,7 +9,7 @@ using System.Web.UI.WebControls;
 
 namespace EudoxusOsy.Portal.Secure.EditorPopups
 {
-    public partial class InvoiceCollectionEditPopup : BaseEntityPortalPage<CatalogGroup>
+    public partial class InvoiceCollectionEditPopup : BaseSecureEntityPortalPage<CatalogGroup>
     {
         protected CatalogGroupInfo CatalogGroupInfo { get; private set; }
 
@@ -29,7 +29,7 @@ namespace EudoxusOsy.Portal.Secure.EditorPopups
         {
             if (CatalogGroupID.HasValue)
             {
-                Entity = new CatalogGroupRepository(UnitOfWork).FindByID(CatalogGroupID.Value);
+                Entity = new CatalogGroupRepository(UnitOfWork).Load(CatalogGroupID.Value, x => x.Supplier);
                 Entity.Invoices.EnsureLoad();
 
                 CatalogGroupInfo = new CatalogGroupRepository(UnitOfWork).GetByID(CatalogGroupID.Value);
@@ -41,8 +41,21 @@ namespace EudoxusOsy.Portal.Secure.EditorPopups
         }
 
 
+        protected override bool Authorize()
+        {
+            return (EudoxusOsyRoleProvider.IsAuthorizedEditorUser()
+                || Entity.Supplier.ReporterID == Entity.Supplier.ReporterID)
+                && CatalogGroupHelper.CanEditGroup(CatalogGroupInfo);
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
+            if(!IsAuthorized)
+            {
+                ClientScript.RegisterStartupScript(GetType(), "closePopup", "window.parent.popUp.hide();", true);
+                return;
+            }
+
             Entity.Invoices.EnsureLoad();
 
             var banks = EudoxusOsyCacheManager<Bank>.Current.GetItems();
@@ -71,41 +84,44 @@ namespace EudoxusOsy.Portal.Secure.EditorPopups
 
         protected void btnSubmitHidden_Click(object sender, EventArgs e)
         {
-            var invoicesCollection = InvoiceItemsEdit.ExtractValue();
-            var newInvoiceIDs = invoicesCollection.Select(x => x.InvoiceID);
-
-            var existingInvoices = Entity.Invoices.ToList();
-
-            for (int i = existingInvoices.Count - 1; i >= 0; i--)
+            if (IsAuthorized)
             {
-                if (!newInvoiceIDs.Contains(existingInvoices[i].ID))
-                {
-                    UnitOfWork.MarkAsDeleted(existingInvoices[i]);
-                }
-            }
+                var invoicesCollection = InvoiceItemsEdit.ExtractValue();
+                var newInvoiceIDs = invoicesCollection.Select(x => x.InvoiceID);
 
+                var existingInvoices = Entity.Invoices.ToList();
 
-            foreach (var item in invoicesCollection)
-            {
-                if (!item.InvoiceID.HasValue)
+                for (int i = existingInvoices.Count - 1; i >= 0; i--)
                 {
-                    var newInvoice = new Invoice()
+                    if (!newInvoiceIDs.Contains(existingInvoices[i].ID))
                     {
-                        GroupID = Entity.ID,
-                        InvoiceNumber = item.InvoiceNumber,
-                        InvoiceDate = item.Date,
-                        IsActive = true,
-                        InvoiceValue = item.Amount
-                    };
-                    UnitOfWork.MarkAsNew(newInvoice);
+                        UnitOfWork.MarkAsDeleted(existingInvoices[i]);
+                    }
                 }
+
+
+                foreach (var item in invoicesCollection)
+                {
+                    if (!item.InvoiceID.HasValue)
+                    {
+                        var newInvoice = new Invoice()
+                        {
+                            GroupID = Entity.ID,
+                            InvoiceNumber = item.InvoiceNumber,
+                            InvoiceDate = item.Date,
+                            IsActive = true,
+                            InvoiceValue = item.Amount
+                        };
+                        UnitOfWork.MarkAsNew(newInvoice);
+                    }
+                }
+
+                Entity.IsTransfered = hfIsTransferedToBank.Value == "true" ? true : false;
+                Entity.BankID = Entity.IsTransfered ? cmbSelectBank.GetSelectedInteger() : null;
+
+                UnitOfWork.Commit();
+                ClientScript.RegisterStartupScript(GetType(), "closePopup", "window.parent.refresh();window.parent.popUp.hide();", true);
             }
-
-            Entity.IsTransfered = hfIsTransferedToBank.Value == "true"? true : false;
-            Entity.BankID = Entity.IsTransfered ? cmbSelectBank.GetSelectedInteger(): null;
-
-            UnitOfWork.Commit();
-            ClientScript.RegisterStartupScript(GetType(),"closePopup", "window.parent.refresh();window.parent.popUp.hide();", true);
         }
     }
 }

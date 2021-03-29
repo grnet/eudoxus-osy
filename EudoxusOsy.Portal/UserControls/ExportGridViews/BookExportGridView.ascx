@@ -25,6 +25,11 @@
         <dx:GridViewDataTextColumn Name="PaymentPrice" FieldName="PaymentPrice" Caption="Τιμή Πληρωμής (€)" />
         <dx:GridViewDataTextColumn FieldName="BookCount" Name="BookCount" Caption="Αρ. Αντιτύπων" Width="50px" />
         <dx:GridViewDataTextColumn FieldName="TotalAmount" Name="TotalAmount" Caption="Συνολικό Ποσό (χωρίς Φ.Π.Α.)" Width="50px" />
+        <dx:GridViewDataTextColumn FieldName="BookTypeInt" Name="BookType" Caption="Τύπος Βιβλίου" >            
+            <DataItemTemplate>
+                <%# ((enBookType)Eval("BookType")).GetLabel() %>                
+            </DataItemTemplate>    
+        </dx:GridViewDataTextColumn>
     </Columns>
 </dx:ASPxGridView>
 

@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace EudoxusOsy.Portal.Secure.Ministry {
-    
-    
-    public partial class PaymentOrders {
-        
+namespace EudoxusOsy.Portal.Secure.Ministry
+{
+
+
+    public partial class PaymentOrders
+    {
+
         /// <summary>
         /// mvPaymentOrders control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace EudoxusOsy.Portal.Secure.Ministry {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.MultiView mvPaymentOrders;
-        
+
         /// <summary>
         /// vSelectSupplier control.
         /// </summary>
@@ -29,25 +31,25 @@ namespace EudoxusOsy.Portal.Secure.Ministry {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.View vSelectSupplier;
-        
+
         /// <summary>
-        /// btnCreateOfficeSlip control.
+        /// ASPxButton1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxButton btnCreateOfficeSlip;
-        
+        protected global::DevExpress.Web.ASPxButton ASPxButton1;
+
         /// <summary>
-        /// btnExportOfficeSlip control.
+        /// ASPxButton2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxButton btnExportOfficeSlip;
-        
+        protected global::DevExpress.Web.ASPxButton ASPxButton2;
+
         /// <summary>
         /// ucSearchFilters control.
         /// </summary>
@@ -56,7 +58,7 @@ namespace EudoxusOsy.Portal.Secure.Ministry {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::EudoxusOsy.Portal.UserControls.SearchFilters.SupplierSearchFiltersControl ucSearchFilters;
-        
+
         /// <summary>
         /// btnSearch control.
         /// </summary>
@@ -65,7 +67,7 @@ namespace EudoxusOsy.Portal.Secure.Ministry {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxButton btnSearch;
-        
+
         /// <summary>
         /// gvSuppliers control.
         /// </summary>
@@ -74,7 +76,7 @@ namespace EudoxusOsy.Portal.Secure.Ministry {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::EudoxusOsy.Portal.UserControls.GridViews.SuppliersGridView gvSuppliers;
-        
+
         /// <summary>
         /// odsSuppliers control.
         /// </summary>
@@ -83,7 +85,7 @@ namespace EudoxusOsy.Portal.Secure.Ministry {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ObjectDataSource odsSuppliers;
-        
+
         /// <summary>
         /// vSelectPhase control.
         /// </summary>
@@ -92,7 +94,7 @@ namespace EudoxusOsy.Portal.Secure.Ministry {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.View vSelectPhase;
-        
+
         /// <summary>
         /// ltSelectPhase control.
         /// </summary>
@@ -101,7 +103,7 @@ namespace EudoxusOsy.Portal.Secure.Ministry {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl ltSelectPhase;
-        
+
         /// <summary>
         /// gvSupplierPhaseStatistics control.
         /// </summary>
@@ -110,7 +112,7 @@ namespace EudoxusOsy.Portal.Secure.Ministry {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::EudoxusOsy.Portal.UserControls.GridViews.SupplierPhaseStatisticsGridView gvSupplierPhaseStatistics;
-        
+
         /// <summary>
         /// vManagePaymentOrders control.
         /// </summary>
@@ -119,7 +121,7 @@ namespace EudoxusOsy.Portal.Secure.Ministry {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.View vManagePaymentOrders;
-        
+
         /// <summary>
         /// ltSelectedPhase control.
         /// </summary>
@@ -128,7 +130,7 @@ namespace EudoxusOsy.Portal.Secure.Ministry {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal ltSelectedPhase;
-        
+
         /// <summary>
         /// cbpStatistics control.
         /// </summary>
@@ -137,7 +139,7 @@ namespace EudoxusOsy.Portal.Secure.Ministry {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxCallbackPanel cbpStatistics;
-        
+
         /// <summary>
         /// ucSupplierPhaseStatisticsView control.
         /// </summary>
@@ -146,7 +148,7 @@ namespace EudoxusOsy.Portal.Secure.Ministry {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::EudoxusOsy.Portal.UserControls.SupplierControls.ViewControls.SupplierPhaseStatisticsView ucSupplierPhaseStatisticsView;
-        
+
         /// <summary>
         /// btnUngroupHidden control.
         /// </summary>
@@ -155,7 +157,7 @@ namespace EudoxusOsy.Portal.Secure.Ministry {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxButton btnUngroupHidden;
-        
+
         /// <summary>
         /// btnExportHidden control.
         /// </summary>
@@ -164,7 +166,7 @@ namespace EudoxusOsy.Portal.Secure.Ministry {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxButton btnExportHidden;
-        
+
         /// <summary>
         /// btnExportPDFHidden control.
         /// </summary>
@@ -173,7 +175,7 @@ namespace EudoxusOsy.Portal.Secure.Ministry {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxButton btnExportPDFHidden;
-        
+
         /// <summary>
         /// hfExportCatalogID control.
         /// </summary>
@@ -182,7 +184,7 @@ namespace EudoxusOsy.Portal.Secure.Ministry {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputHidden hfExportCatalogID;
-        
+
         /// <summary>
         /// txtGroupID control.
         /// </summary>
@@ -191,7 +193,7 @@ namespace EudoxusOsy.Portal.Secure.Ministry {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxSpinEdit txtGroupID;
-        
+
         /// <summary>
         /// btnSearchGroups control.
         /// </summary>
@@ -200,7 +202,7 @@ namespace EudoxusOsy.Portal.Secure.Ministry {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxButton btnSearchGroups;
-        
+
         /// <summary>
         /// btnGroupCatalogs control.
         /// </summary>
@@ -209,7 +211,7 @@ namespace EudoxusOsy.Portal.Secure.Ministry {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxButton btnGroupCatalogs;
-        
+
         /// <summary>
         /// btnUngroupCatalogs control.
         /// </summary>
@@ -218,7 +220,7 @@ namespace EudoxusOsy.Portal.Secure.Ministry {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxButton btnUngroupCatalogs;
-        
+
         /// <summary>
         /// gvCatalogGroups control.
         /// </summary>
@@ -227,7 +229,7 @@ namespace EudoxusOsy.Portal.Secure.Ministry {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::EudoxusOsy.Portal.UserControls.GridViews.CatalogGroupsGridView gvCatalogGroups;
-        
+
         /// <summary>
         /// lblCatalogGroupError control.
         /// </summary>
@@ -236,7 +238,7 @@ namespace EudoxusOsy.Portal.Secure.Ministry {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxLabel lblCatalogGroupError;
-        
+
         /// <summary>
         /// odsCatalogGroups control.
         /// </summary>
@@ -245,7 +247,7 @@ namespace EudoxusOsy.Portal.Secure.Ministry {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ObjectDataSource odsCatalogGroups;
-        
+
         /// <summary>
         /// btnDeleteGroup control.
         /// </summary>
@@ -254,7 +256,7 @@ namespace EudoxusOsy.Portal.Secure.Ministry {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnDeleteGroup;
-        
+
         /// <summary>
         /// hfCatalogGroupID control.
         /// </summary>
@@ -263,7 +265,7 @@ namespace EudoxusOsy.Portal.Secure.Ministry {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputHidden hfCatalogGroupID;
-        
+
         /// <summary>
         /// lblCatalogError control.
         /// </summary>
@@ -272,7 +274,7 @@ namespace EudoxusOsy.Portal.Secure.Ministry {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxLabel lblCatalogError;
-        
+
         /// <summary>
         /// ucUnconnectedCatalogSearchFilters control.
         /// </summary>
@@ -281,7 +283,7 @@ namespace EudoxusOsy.Portal.Secure.Ministry {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::EudoxusOsy.Portal.UserControls.SearchFilters.UnconnectedCatalogSearchFiltersControl ucUnconnectedCatalogSearchFilters;
-        
+
         /// <summary>
         /// btnSearchCatalogs control.
         /// </summary>
@@ -290,7 +292,7 @@ namespace EudoxusOsy.Portal.Secure.Ministry {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxButton btnSearchCatalogs;
-        
+
         /// <summary>
         /// gvCatalogs control.
         /// </summary>
@@ -299,7 +301,7 @@ namespace EudoxusOsy.Portal.Secure.Ministry {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::EudoxusOsy.Portal.UserControls.GridViews.CatalogsGridView gvCatalogs;
-        
+
         /// <summary>
         /// odsCatalogs control.
         /// </summary>
@@ -308,7 +310,7 @@ namespace EudoxusOsy.Portal.Secure.Ministry {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ObjectDataSource odsCatalogs;
-        
+
         /// <summary>
         /// gvBooks control.
         /// </summary>
@@ -317,7 +319,7 @@ namespace EudoxusOsy.Portal.Secure.Ministry {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::EudoxusOsy.Portal.UserControls.ExportGridViews.BookExportGridView gvBooks;
-        
+
         /// <summary>
         /// btnCreateGroup control.
         /// </summary>
@@ -326,7 +328,7 @@ namespace EudoxusOsy.Portal.Secure.Ministry {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnCreateGroup;
-        
+
         /// <summary>
         /// hfCatalogID control.
         /// </summary>

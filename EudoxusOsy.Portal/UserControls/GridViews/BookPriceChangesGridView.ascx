@@ -3,21 +3,21 @@
 
 <dx:ASPxGridView ID="gvBookPriceChanges" runat="server" DataSourceForceStandardPaging="true">
     <Columns>                       
-        <dx:GridViewDataTextColumn Name="BookKpsID" Caption="Kps ID" Settings-AllowSort ="False">        
+        <dx:GridViewDataTextColumn Name="BookKpsID" Caption="Κωδικός Βιβλίου" Settings-AllowSort ="False">        
          <DataItemTemplate>
                 <%# ((BookPriceChange)Container.DataItem).Book.BookKpsID %>
             </DataItemTemplate>      
         </dx:GridViewDataTextColumn>
-        <dx:GridViewDataTextColumn Name="Title" Caption="Τίτλος" Settings-AllowSort ="False" >
+        <dx:GridViewDataTextColumn Name="Title" Caption="Τίτλος Βιβλίου" Settings-AllowSort ="False" >
          <DataItemTemplate>
                 <%# ((BookPriceChange)Container.DataItem).Book.Title %>
             </DataItemTemplate>      
         </dx:GridViewDataTextColumn>
-        <dx:GridViewDataTextColumn FieldName="SuggestedPrice" Caption="Τιμή Εκδότη"  />
-        <dx:GridViewDataTextColumn FieldName="Price" Caption="Τιμή Υπουργείου"  />
+        <dx:GridViewDataTextColumn FieldName="SuggestedPrice" Caption="Προτεινόμενη Τιμή Εκδότη"  />
+        <dx:GridViewDataTextColumn FieldName="Price" Caption="Εγκεκριμένη Τιμή Υπουργείου"  />
         <dx:GridViewDataTextColumn FieldName="DecisionNumber" Caption="Αριθμός απόφασης"  />
         <dx:GridViewDataTextColumn FieldName="PriceComments" Caption="Σχόλια"  />        
-        <dx:GridViewDataTextColumn FieldName="PriceChecked" Caption="Ελέγχθηκε"  >                     
+        <dx:GridViewDataTextColumn FieldName="PriceChecked" Name="PriceChecked" Caption="Ελέγχθηκε"  >                     
             <DataItemTemplate>                
                 <%# ((BookPriceChange)Container.DataItem).PriceChecked ? "ΝΑΙ" : "ΟΧΙ"   %>
             </DataItemTemplate>      
@@ -27,7 +27,10 @@
                 <%# ((BookPriceChange)Container.DataItem).IsApproved ? "ΝΑΙ" : "ΟΧΙ"   %>
             </DataItemTemplate>      
         </dx:GridViewDataTextColumn>
-        <dx:GridViewDataTextColumn FieldName="CreatedAt" Caption="Δημιουργήθηκε"  />                
+        <dx:GridViewDataTextColumn FieldName="Year" Caption="Έτος"  />                
+        <dx:GridViewDataTextColumn FieldName="CreatedAt" Caption="Αποδοχή αλλαγής τιμής στο ΟΣΥ"  />                
     </Columns>
 </dx:ASPxGridView>
 
+
+<dx:ASPxGridViewExporter ID="gveBookPriceChanges" runat="server" GridViewID="gvBookPriceChanges" OnRenderBrick="gveBookPriceChanges_OnRenderBrick" />

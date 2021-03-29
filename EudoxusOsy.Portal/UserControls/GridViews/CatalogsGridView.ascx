@@ -31,14 +31,7 @@
             <DataItemTemplate>
                 <%# Eval("Department.Name") %>
             </DataItemTemplate>
-        </dx:GridViewDataTextColumn>
-        <dx:GridViewDataTextColumn FieldName="IsBookActive" Name="IsBookActive" Caption="Δυνατότητα τιμολόγησης και αποζημίωσης" Width="50px">
-            <HeaderStyle HorizontalAlign="Center" Wrap="true" />
-            <CellStyle HorizontalAlign="Center" />
-            <DataItemTemplate>
-                <%# ((bool)Eval("IsBookActive")) ? "ΝΑΙ" : "ΟΧΙ" %>
-            </DataItemTemplate>
-        </dx:GridViewDataTextColumn>
+        </dx:GridViewDataTextColumn>        
         <dx:GridViewDataTextColumn FieldName="BookCount" Name="BookCount" Caption="Αριθμός Αντιτύπων" Width="50px">
             <HeaderStyle HorizontalAlign="Right" Wrap="true" />
             <CellStyle HorizontalAlign="Right" />

@@ -13,6 +13,15 @@ namespace EudoxusOsy.Portal.Secure.Ministry {
     public partial class AcademicsStats {
         
         /// <summary>
+        /// btnReturn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxButton btnReturn;
+        
+        /// <summary>
         /// txtInistitutionName control.
         /// </summary>
         /// <remarks>

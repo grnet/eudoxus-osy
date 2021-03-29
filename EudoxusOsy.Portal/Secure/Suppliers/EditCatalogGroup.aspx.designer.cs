@@ -58,6 +58,24 @@ namespace EudoxusOsy.Portal.Secure.Suppliers {
         protected global::DevExpress.Web.ASPxLabel lblTotalAmount;
         
         /// <summary>
+        /// ucConnectedCatalogSearchFilters control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EudoxusOsy.Portal.UserControls.SearchFilters.UnconnectedCatalogSearchFiltersControl ucConnectedCatalogSearchFilters;
+        
+        /// <summary>
+        /// btnSearchConnected control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxButton btnSearchConnected;
+        
+        /// <summary>
         /// gvConnectedCatalogs control.
         /// </summary>
         /// <remarks>
@@ -119,6 +137,15 @@ namespace EudoxusOsy.Portal.Secure.Suppliers {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputHidden hfCatalogID;
+        
+        /// <summary>
+        /// odsConnectedCatalogs control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ObjectDataSource odsConnectedCatalogs;
         
         /// <summary>
         /// odsNotConnectedCatalogs control.

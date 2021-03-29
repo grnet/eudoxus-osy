@@ -31,6 +31,13 @@ namespace EudoxusOsy.Portal.UserControls.ExportGridViews
 
         #region [ GridView Events ]
 
+        protected void ASPxGridView1_CustomColumnDisplayText(object sender, ASPxGridViewColumnDisplayTextEventArgs e)
+        {
+            if (e.Column.Caption == "α/α")
+            {
+                e.DisplayText = (e.VisibleRowIndex + 1).ToString();
+            }
+        }
         protected void gveOfficeSlip_RenderBrick(object sender, ASPxGridViewExportRenderingEventArgs e)
         {
             if (ExporterRenderBrick != null)

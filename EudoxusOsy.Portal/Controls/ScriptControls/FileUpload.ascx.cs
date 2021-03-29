@@ -74,6 +74,19 @@ namespace EudoxusOsy.Portal.Controls.ScriptControls
             hfFileID.Value = file.ID.ToString();
         }
 
+        public void BindFile(int fileID)
+        {
+            var file = new FileRepository().Load(fileID);
+
+            if (file == null)
+                return;
+
+            FileID = file.ID;
+            lnkDownload.InnerText = file.FileName;
+            //lnkDownload.Title = BusinessHelper.ToHumanReadableFileSize(file.FileSize);
+            hfFileID.Value = file.ID.ToString();
+        }
+
         public object ExtractValue()
         {
             int fileID;

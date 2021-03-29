@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace EudoxusOsy.BusinessModel
 {
-    public class SupplierRepository : DomainRepository<DBEntities, Supplier, int>
+    public class SupplierRepository : DomainRepository<DBEntities, Supplier, int>, ISupplierRepository
     {
         #region [ Base .ctors ]
 
@@ -41,7 +41,20 @@ namespace EudoxusOsy.BusinessModel
                     .FirstOrDefault();
         }
 
+        public List<Supplier> FindManyByKpsID(List<int> kpsIDs, params Expression<Func<Supplier, object>>[] includeExpressions)
+        {
+            var query = BaseQuery;
 
+            if (includeExpressions.Length > 0)
+            {
+                foreach (var item in includeExpressions)
+                    query = query.Include(item);
+            }
+
+            return query
+                .Where(x => kpsIDs.Contains(x.SupplierKpsID))
+                .ToList();
+        }
         public Supplier FindByUsername(string username, params Expression<Func<Supplier, object>>[] includeExpressions)
         {
             var query = BaseQuery;
@@ -66,9 +79,17 @@ namespace EudoxusOsy.BusinessModel
                     .FirstOrDefault();
         }
 
-        public IList<Supplier> GetAllActive()
+        public IList<Supplier> GetAllActive(params Expression<Func<Supplier, object>>[] includeExpressions)
         {
-            return BaseQuery.Where(x => x.StatusInt == (int)enSupplierStatus.Active).ToList();
+            var query = BaseQuery;
+
+            if (includeExpressions.Length > 0)
+            {
+                foreach (var item in includeExpressions)
+                    query = query.Include(item);
+            }
+
+            return query.Where(x => x.StatusInt == (int)enSupplierStatus.Active).ToList();
         }
 
         public List<CoAuthors> GetCoAuthors(int phaseID)
@@ -89,11 +110,11 @@ namespace EudoxusOsy.BusinessModel
             return ctx.ExportCommitmentsRegistry(phaseID).ToList();
         }
 
-        public IQueryable<SupplierFullStatistics> GetCurrentPhaseStatistics(int? supplierKpsID, string afm, string name, int? supplierType, out int recordCount)
+        public IQueryable<SupplierFullStatistics> GetCurrentPhaseStatistics(int? supplierKpsID, string afm, string name, int? supplierType, int phaseID, out int recordCount)
         {
             var ctx = GetCurrentObjectContext();
             var returnValue = new System.Data.Objects.ObjectParameter("Count", 0);
-            var list = ctx.GetSupplierFullStatistics(supplierKpsID, afm, name, supplierType, returnValue).ToList().AsQueryable();
+            var list = ctx.GetSupplierFullStatistics(supplierKpsID, afm, phaseID, name, supplierType, returnValue).ToList().AsQueryable();
 
             recordCount = (int)returnValue.Value;
             return list;

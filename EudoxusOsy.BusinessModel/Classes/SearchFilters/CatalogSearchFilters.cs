@@ -28,6 +28,7 @@ namespace EudoxusOsy.BusinessModel
         public enCatalogType? CatalogType { get; set; }
         public enCatalogStatus? CatalogStatus { get; set; }
         public int? IsForLibrary { get; set; }
+        public bool? IsLocked { get; set; }
 
         public override Imis.Domain.EF.Search.Criteria<Catalog> GetExpression()
         {
@@ -123,6 +124,22 @@ namespace EudoxusOsy.BusinessModel
                 {
                     expression = expression.IsNotNull(x => x.Department.SecretaryKpsID);
                 }
+            }
+
+            if (IsLocked.HasValue)
+            {
+                if (IsLocked.Value)
+                {
+                    var orExpression = Imis.Domain.EF.Search.Criteria<Catalog>.Empty;
+                    orExpression = orExpression.Where(x => x.HasPendingPriceVerification, IsLocked).Or(x => x.HasUnexpectedPriceChange, IsLocked);
+                    expression = expression.And(orExpression);                
+                }
+                else
+                {
+                    expression = expression.Where(x => x.HasPendingPriceVerification, false);
+                    expression = expression.Where(x => x.HasUnexpectedPriceChange, false);
+                }
+                
             }
 
             return string.IsNullOrEmpty(expression.CommandText) ? null : expression;

@@ -41,7 +41,7 @@
             <%--<a id="dg-logo" href="http://www.infosoc.gr" target="_blank">&nbsp;</a> <a id="destinpsifiaka-logo"
             href="http://www.destinpsifiaka.gr/" target="_blank">&nbsp;</a>--%>
             <div style="float: left; margin-top: 22px; font-family: Georgia,serif; font-size: 20px;">
-                Ηλεκτρονική Υπηρεσία Απόκτησης Ακαδημαϊκής Ταυτότητας
+                Ο.Σ.Υ.
             </div>
             <%-- User services --%>
             <div id="boUserServices">

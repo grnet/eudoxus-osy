@@ -26,22 +26,7 @@ namespace EudoxusOsy.BusinessModel.Services
             book.BookKpsID = bookDto.idKPS;
 
             string kindbook = bookDto.kindbook;
-
-            switch (kindbook.ToLower())
-            {
-                case "selfpublished":
-                    book.BookType = enBookType.SelfPublished;
-                    break;
-                case "regular":
-                    book.BookType = enBookType.Regular;
-                    break;
-                case "epublished":
-                    book.BookType = enBookType.EPublished;
-                    break;
-                default:
-                    book.BookType = enBookType.Regular;
-                    break;
-            }
+            book.BookType = BookHelper.MapKindBookToBookType(kindbook);
 
             book.Title = bookDto.title;
             book.Subtitle = bookDto.subtitle;
@@ -49,8 +34,8 @@ namespace EudoxusOsy.BusinessModel.Services
             book.Publisher = bookDto.publisher;
             book.Pages = bookDto.pages;
             book.ISBN = bookDto.isbn;
-            book.FirstRegistrationYear = bookDto.publicationYear;
-            book.SupplierCode = bookDto.supplierCode;
+            book.FirstRegistrationYear = bookDto.firstPostYear.HasValue ? bookDto.firstPostYear : null;
+            book.SupplierCode = bookDto.publisherId;
             book.IsActive = true;
 
             UnitOfWork.Commit();

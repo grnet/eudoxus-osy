@@ -27,6 +27,7 @@ namespace EudoxusOsy.BusinessModel
         public decimal? GrandTotalAmount { get; set; }
         public int IncomeTaxPerc { get; set; }
 
+        public bool HideVat { get; set; }
 
         public List<BookInCatalogInfo> IncludedCatalogs;
         public List<DeductionPdfObject> Deductions;

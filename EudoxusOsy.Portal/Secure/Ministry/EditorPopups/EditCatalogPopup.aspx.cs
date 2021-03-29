@@ -21,7 +21,7 @@ namespace EudoxusOsy.Portal.Secure.Ministry.EditorPopups
 
         protected override bool Authorize()
         {
-            return User.IsInRole(RoleNames.MinistryPayments) || User.IsInRole(RoleNames.SystemAdministrator);
+            return EudoxusOsyRoleProvider.IsAuthorizedEditorUser();
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -71,27 +71,11 @@ namespace EudoxusOsy.Portal.Secure.Ministry.EditorPopups
 
         private void RecalculateAmount()
         {
-            var year = EudoxusOsyCacheManager<Phase>.Current.Get(Entity.PhaseID.Value).Year;
-
             if (Entity.BookPriceID.HasValue)
             {
                 var bookPrice = new BookPriceRepository(UnitOfWork).Load(Entity.BookPriceID.Value);
 
-                /** 
-                    TODO: Calculate Discount too, original discount and new discount!! 
-                    If Older catalog then do not apply the newly calculated discount ???
-                */
-                var discount = new DiscountRepository(UnitOfWork).Load(Entity.DiscountID);
-
-                if (discount.DiscountPercentage > 0m)
-                {
-                    Entity.Amount = Entity.BookCount * bookPrice.Price * Entity.Book.GetBookDiscount(year) *
-                                    discount.DiscountPercentage;
-                }
-                else
-                {
-                    Entity.Amount = Entity.BookCount * bookPrice.Price * Entity.Book.GetBookDiscount(year);
-                }
+                Entity.Amount = Entity.RecalculateAmount(bookPrice.Price);
 
                 if (Entity.CatalogType == enCatalogType.Reversal)
                 {

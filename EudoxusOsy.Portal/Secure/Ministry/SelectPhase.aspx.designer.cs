@@ -22,6 +22,51 @@ namespace EudoxusOsy.Portal.Secure.Ministry {
         protected global::EudoxusOsy.Portal.UserControls.GridViews.PhasesGridView gvPhases;
         
         /// <summary>
+        /// ddlSelectSupplierPhase control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxComboBox ddlSelectSupplierPhase;
+        
+        /// <summary>
+        /// btnRemoveExtraSupplierAmount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxButton btnRemoveExtraSupplierAmount;
+        
+        /// <summary>
+        /// ddlSelectSupplierPhaseMinistry control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxComboBox ddlSelectSupplierPhaseMinistry;
+        
+        /// <summary>
+        /// txtPhaseAmountMinistry control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxSpinEdit txtPhaseAmountMinistry;
+        
+        /// <summary>
+        /// btnPhaseAmountMinistry control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxButton btnPhaseAmountMinistry;
+        
+        /// <summary>
         /// ddlSelectPhase control.
         /// </summary>
         /// <remarks>
@@ -37,7 +82,7 @@ namespace EudoxusOsy.Portal.Secure.Ministry {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxTextBox txtPhaseAmount;
+        protected global::DevExpress.Web.ASPxSpinEdit txtPhaseAmount;
         
         /// <summary>
         /// txtAmountLimit control.
@@ -46,7 +91,7 @@ namespace EudoxusOsy.Portal.Secure.Ministry {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxTextBox txtAmountLimit;
+        protected global::DevExpress.Web.ASPxSpinEdit txtAmountLimit;
         
         /// <summary>
         /// btnSubmitAmount control.
@@ -74,6 +119,24 @@ namespace EudoxusOsy.Portal.Secure.Ministry {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxCallback cbSubmitAmount;
+        
+        /// <summary>
+        /// cbRemoveExtraSupplierAmount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxCallback cbRemoveExtraSupplierAmount;
+        
+        /// <summary>
+        /// cbPhaseAmountMinistry control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxCallback cbPhaseAmountMinistry;
         
         /// <summary>
         /// odsPhases control.

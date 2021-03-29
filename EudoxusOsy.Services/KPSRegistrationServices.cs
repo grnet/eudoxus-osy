@@ -114,10 +114,10 @@ namespace EudoxusOsy.Services
     {
         [STAThread]
         public static void doBulkLoad(string fileName)
-        {
+        {            
             try
             {
-                SqlConnection myConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlXmlBulk"].ConnectionString);
+                SqlConnection myConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["LocalSqlServer"].ConnectionString);
                 myConnection.Open();
 
                 SqlCommand truncateCmd = myConnection.CreateCommand();

@@ -1,8 +1,8 @@
 ﻿CREATE TABLE report.StatsNotPricedPerDepartment (		
-		book_id INT NOT NULL,
-		times_registered INT NULL,
-		book_title NVARCHAR(500), 
-		book_kpsid INT, 
-		department_id INT, 
-		phase_id INT NOT NULL
+		[BookID] [int] NOT NULL,
+	[TimesRegistered] [int] NULL,
+	[BookTitle] [nvarchar](500) NULL,
+	[BookKpsID] [int] NULL,
+	[DepartmentID] [int] NULL,
+	[PhaseID] [int] NOT NULL
 	) 

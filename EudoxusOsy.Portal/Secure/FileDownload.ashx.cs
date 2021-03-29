@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using EudoxusOsy.BusinessModel;
+using EudoxusOsy.Portal.Controls;
 using System.IO;
 using System.Linq;
-using System.Web;
 using System.Web.SessionState;
-using EudoxusOsy.BusinessModel;
-using EudoxusOsy.Portal.Controls;
 
 namespace EudoxusOsy.Portal.Secure
 {
@@ -30,7 +27,7 @@ namespace EudoxusOsy.Portal.Secure
                 var fileRepository = new FileRepository(UnitOfWork);
 
                 file = fileRepository.Load(FileID, x => x.FileSelfPublishers);
-                if(file.CreatedBy == User.Identity.Name)
+                if (file.CreatedBy == User.Identity.Name)
                 {
                     isUploader = true;
                 }
@@ -52,6 +49,7 @@ namespace EudoxusOsy.Portal.Secure
             */
             if (file != null && (isRelatedSelfPublisher
                 || isUploader
+                || User.IsInRole(RoleNames.SuperMinistry)
                 || User.IsInRole(RoleNames.MinistryPayments))
                 || User.IsInRole(RoleNames.SystemAdministrator)
                 || User.IsInRole(RoleNames.MinistryWelfare))

@@ -49,7 +49,7 @@ namespace EudoxusOsy.Portal.UserControls.SupplierControls.ViewControls
             lblSupplierFax.Text = Entity.SupplierDetail.PublisherFax;
             lblSupplierEmail.Text = Entity.SupplierDetail.PublisherEmail;
             lblSupplierUrl.Text = Entity.SupplierDetail.PublisherUrl;
-            chkNoLogisticBooks.Checked = Entity.HasLogisticBooks.HasValue ? !Entity.HasLogisticBooks.Value : false;
+            chkNoLogisticBooks.Checked = Entity.HasLogisticBooks.HasValue ? !Entity.HasLogisticBooks.Value : true;
         }
 
         public SupplierChanges Extract()

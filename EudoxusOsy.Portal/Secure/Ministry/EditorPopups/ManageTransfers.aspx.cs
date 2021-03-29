@@ -76,7 +76,7 @@ namespace EudoxusOsy.Portal.Secure.Ministry.EditorPopups
                 return;
             }
 
-            if (action == "delete")
+            if (action == "delete" && EudoxusOsyRoleProvider.IsAuthorizedEditorUser())
             {
                 var id = int.Parse(parameters[1]);
 

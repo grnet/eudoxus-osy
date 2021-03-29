@@ -79,7 +79,7 @@
                 </asp:Login>
             </div>
             <p>
-                Εάν αντιμετωπίζετε πρόβλημα σύνδεσης με το λογαριασμό σας, μπορείτε να επικοινωνήσετε με το <a href='/Browse/ContactForm.aspx'>Γραφείο Αρωγής Χρηστών</a>
+                Εάν αντιμετωπίζετε πρόβλημα σύνδεσης με το λογαριασμό σας, μπορείτε να επικοινωνήσετε με το <a href='http://eudoxus.gr/Contact.aspx'>Γραφείο Αρωγής Χρηστών</a>
             </p>
 
             <asp:Label ID="lblErrors" runat="server" Font-Bold="true" ForeColor="Red" />

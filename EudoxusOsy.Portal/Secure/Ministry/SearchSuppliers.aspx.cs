@@ -3,11 +3,8 @@ using EudoxusOsy.Portal.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using DevExpress.Web;
 using System.Web.Security;
+using System.Web.UI.WebControls;
 
 namespace EudoxusOsy.Portal.Secure.Ministry
 {
@@ -32,26 +29,46 @@ namespace EudoxusOsy.Portal.Secure.Ministry
             criteria.Include(x => x.SupplierIBANs);
             var suppliers = new SupplierRepository(UnitOfWork).FindWithCriteria(criteria, out count);
 
-            var suppliersExport = suppliers.Select(x => new SupplierExportInfo()
+            var suppliersExport = new List<SupplierExportInfo>();
+
+            foreach (var supplier in suppliers)
             {
-                SupplierKpsID = x.SupplierKpsID,
-                Name = x.Name,
-                TradeName = x.TradeName,
-                AFM = x.AFM,
-                ContactName = x.Reporter.ContactName,
-                SupplierType = x.SupplierType.GetLabel(),
-                SupplierStatus = x.Status.GetLabel(),
-                Address = x.SupplierDetail.PublisherAddress,
-                DOY = x.DOY,
-                PaymentDOY = x.PaymentPfoID.HasValue ? EudoxusOsyCacheManager<PublicFinancialOffice>.Current.Get(x.PaymentPfoID.Value).Name : x.PaymentPfo,
-                Telephone = x.SupplierDetail.PublisherPhone,
-                Email = x.SupplierDetail.PublisherEmail,
-                Fax = x.SupplierDetail.PublisherFax,
-                ZipCode = x.SupplierDetail.PublisherZipCode,
-                IBAN = x.SupplierIBANs != null && x.SupplierIBANs.Count > 0 ? x.SupplierIBANs.OrderByDescending(y => y.CreatedAt).First().IBAN : string.Empty,
-                Url = x.SupplierDetail.PublisherUrl,
-                NoLogisticBooks = x.SupplierType != enSupplierType.SelfPublisher ? "ΟΧΙ" : (x.HasLogisticBooks == true ? "ΟΧΙ" : "ΝΑΙ")
-            });
+                var sup = new SupplierExportInfo();
+
+                try
+                {
+                    sup.SupplierKpsID = supplier.SupplierKpsID;
+                    sup.Name = supplier.Name;
+                    sup.TradeName = supplier.TradeName;
+                    sup.AFM = supplier.AFM;
+                    sup.ContactName = supplier.Reporter.ContactName;
+                    sup.SupplierType = supplier.SupplierType.GetLabel();
+                    sup.SupplierStatus = supplier.Status.GetLabel();
+                    sup.Address = supplier.SupplierDetail.PublisherAddress;
+                    sup.DOY = supplier.DOY;
+                    sup.PaymentDOY = supplier.PaymentPfoID.HasValue
+                        ? EudoxusOsyCacheManager<PublicFinancialOffice>.Current.Get(supplier.PaymentPfoID.Value).Name
+                        : supplier.PaymentPfo;
+                    sup.Telephone = supplier.SupplierDetail.PublisherPhone;
+                    sup.Email = supplier.SupplierDetail.PublisherEmail;
+                    sup.Fax = supplier.SupplierDetail.PublisherFax;
+                    sup.ZipCode = supplier.SupplierDetail.PublisherZipCode;
+                    sup.IBAN = supplier.SupplierIBANs != null && supplier.SupplierIBANs.Count > 0
+                        ? supplier.SupplierIBANs.OrderByDescending(y => y.CreatedAt).First().IBAN
+                        : string.Empty;
+                    sup.Url = supplier.SupplierDetail.PublisherUrl;
+                    sup.NoLogisticBooks = supplier.SupplierType != enSupplierType.SelfPublisher
+                        ? "ΟΧΙ"
+                        : (supplier.HasLogisticBooks == true ? "ΟΧΙ" : "ΝΑΙ");
+
+                    suppliersExport.Add(sup);
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
+
             gvSuppliersExport.Export(suppliersExport, "suppliers_info");
         }
 
@@ -101,12 +118,24 @@ namespace EudoxusOsy.Portal.Secure.Ministry
 
         protected string GetIbanChangeCount(Supplier supplier)
         {
-            if (supplier == null)
+            if (supplier == null || supplier.SupplierIBANs == null)
                 return string.Empty;
 
             return supplier.SupplierIBANs.Count().ToString();
         }
 
+        protected bool HasIBANCertificate(Supplier supplier)
+        {            
+            return supplier != null && supplier.CurrentIBAN != null && supplier.CurrentIBAN.IBANCertificateID != null;
+        }
+
         #endregion
+
+        protected bool CanChangeIBAN(Supplier containerDataItem)
+        {
+            var roles = Roles.GetRolesForUser(User.Identity.Name);
+
+            return !roles.Contains(RoleNames.MinistryAuditor);
+        }
     }
 }

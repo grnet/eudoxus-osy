@@ -53,5 +53,6 @@ namespace EudoxusOsy.BusinessModel
         public string Email { get; set; }
         public bool IsActivated { get; set; }
         public int VerificationStatus { get; set; }
+        public bool? HasLogisticBooks { get; set; }
     }
 }

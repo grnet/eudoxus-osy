@@ -5,6 +5,7 @@ using Imis.Domain.EF.Extensions;
 using System.Data.Objects;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Data.Objects.SqlClient;
 
 namespace EudoxusOsy.BusinessModel
 {
@@ -26,7 +27,8 @@ namespace EudoxusOsy.BusinessModel
 
         public int FindMaxOfficeSlipNumber(int year)
         {
-            var maxValue = BaseQuery.Max(x => x.OfficeSlipNumber).ToString();
+            var stringYear = year.ToString();
+            var maxValue = BaseQuery.Where(x => SqlFunctions.StringConvert((double)x.OfficeSlipNumber.Value).StartsWith(stringYear)).Max(x=> x.OfficeSlipNumber).ToString();
             if (string.IsNullOrEmpty(maxValue) || maxValue.Substring(0, 4) != year.ToString())
             {
                 maxValue = "0";

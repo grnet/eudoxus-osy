@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using Imis.Domain.EF;
+﻿using Imis.Domain.EF;
 using Imis.Domain.EF.Extensions;
+using System.Collections.Generic;
 using System.Data.Objects;
 using System.Linq;
-using System.Linq.Expressions;
 
 namespace EudoxusOsy.BusinessModel
 {
-    public class BookSupplierRepository : DomainRepository<DBEntities, BookSupplier, int>
+    public class BookSupplierRepository : DomainRepository<DBEntities, BookSupplier, int>, IBookSupplierRepository
     {
         #region [ Base .ctors ]
 
@@ -42,6 +40,18 @@ namespace EudoxusOsy.BusinessModel
         {
             return BaseBookSupplierQuery
                     .Where(x => x.SupplierID == supplierID && x.BookID == bookID && x.Year == year).ToList();
+        }
+
+        public List<BookSupplier> FindByManySupplierIDsAndBookIDAndYear(List<int> supplierKpsIDs, int bookID, int year)
+        {
+            return BaseBookSupplierQuery.Include(x => x.Supplier)
+                .Where(x => supplierKpsIDs.Contains(x.Supplier.SupplierKpsID) && x.BookID == bookID && x.Year == year).ToList();
+        }
+
+        public List<BookSupplier> FindByManyByBookIDAndYear(int bookID, int year)
+        {
+            return BaseBookSupplierQuery.Include(x => x.Supplier)
+                .Where(x => x.BookID == bookID && x.Year == year).ToList();
         }
 
 

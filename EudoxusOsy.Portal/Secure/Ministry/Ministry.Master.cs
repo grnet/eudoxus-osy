@@ -53,6 +53,8 @@ namespace EudoxusOsy.Portal.Secure.Ministry
                 ApproveGroupUrl = ResolveClientUrl("~/Secure/Ministry/EditorPopups/ApproveGroup.aspx"),
                 RevertApprovalUrl = ResolveClientUrl("~/Secure/Ministry/EditorPopups/RevertApproval.aspx"),
                 ExportOfficeSlipPopupUrl = ResolveClientUrl("~/Secure/Ministry/EditorPopups/ExportOfficeSlipPopup.aspx"),
+                ExportOfficeSlipSupplierPopupUrl = ResolveClientUrl("~/Secure/Ministry/EditorPopups/ExportOfficeSlipSupplierPopup.aspx"),
+                ExportTransferPerIssuerPopupUrl = ResolveClientUrl("~/Secure/Ministry/EditorPopups/ExportTransferPerIssuer.aspx"),
                 ExportCatalogInvoicePopupUrl = ResolveClientUrl("~/Secure/Ministry/EditorPopups/ExportCatalogInvoicePopup.aspx"),
                 AddCatalogUrl = ResolveClientUrl("~/Secure/Ministry/EditorPopups/AddCatalog.aspx"),
                 AddBankUrl = ResolveClientUrl("~/Secure/Ministry/EditorPopups/AddBank.aspx"),

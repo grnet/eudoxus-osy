@@ -13,6 +13,7 @@ namespace EudoxusOsy.BusinessModel
         public string ISBN { get; set; }
         public string Title { get; set; }
         public bool? IsActive { get; set; }
+        public bool? HasBookPriceChanges { get; set; }
 
         public override Imis.Domain.EF.Search.Criteria<Book> GetExpression()
         {
@@ -36,6 +37,15 @@ namespace EudoxusOsy.BusinessModel
             if (IsActive.HasValue)
             {
                 expression = expression.Where(x => x.IsActive, IsActive);
+            }
+
+            if (HasBookPriceChanges == true)
+            {
+                expression = expression.Where("it.ID in (Select VALUE DISTINCT it2.BookID from BookPriceChanges as it2 where it2.BookID = it.ID)");
+            }
+            else if (HasBookPriceChanges == false)
+            {
+                expression = expression.Where("it.ID not in (Select VALUE DISTINCT it2.BookID from BookPriceChanges as it2 where it2.BookID = it.ID)");
             }
 
             return string.IsNullOrEmpty(expression.CommandText) ? null : expression;

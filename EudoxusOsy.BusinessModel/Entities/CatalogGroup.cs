@@ -1,4 +1,5 @@
-﻿using Imis.Domain;
+﻿using System;
+using Imis.Domain;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -35,7 +36,8 @@ namespace EudoxusOsy.BusinessModel
                     Department = EudoxusOsyCacheManager<Department>.Current.Get(catalog.DepartmentID).Name,
                     TotalAmount = catalog.Amount.HasValue ? catalog.Amount : 0m,
                     Price = catalog.BookPrice != null ? catalog.BookPrice.Price : 0m,
-                    PaymentPrice = catalog.BookCount > 0 && catalog.Amount != null ? (decimal)catalog.Amount / catalog.BookCount : 0m,
+                    //PaymentPrice = catalog.BookPrice != null ? Math.Round(catalog.BookPrice.Price * catalog.Discount.DiscountPercentage ,2 , MidpointRounding.AwayFromZero): 0m,
+                    PaymentPrice = catalog.BookPrice != null ? Math.Round((decimal)(catalog.Amount/catalog.BookCount), 2, MidpointRounding.AwayFromZero) : 0m,
                     ISBN = catalog.Book.ISBN,
                     Publisher = catalog.Book.Publisher
                 };
@@ -43,6 +45,52 @@ namespace EudoxusOsy.BusinessModel
             }
 
             return bookInfos;
+        }
+
+        public List<BookInCatalogInfo> GetBooksInCatalogGroupByBook(int groupID, IUnitOfWork uow)
+        {
+
+            var catalogs = new CatalogRepository(uow).FindByGroupIDWithBooks(groupID);
+
+            List<BookInCatalogInfo> bookInfos = new List<BookInCatalogInfo>();
+
+            foreach (var catalog in catalogs)
+            {
+                var bookInfo = new BookInCatalogInfo()
+                {
+                    ID = catalog.BookID,
+                    BookKpsID = catalog.Book.BookKpsID,
+                    BookCount = catalog.BookCount,
+                    Title = catalog.Book.Title,
+                    Author = catalog.Book.Author,                    
+                    TotalAmount = catalog.Amount.HasValue ? catalog.Amount : 0m,
+                    Price = catalog.BookPrice != null ? catalog.BookPrice.Price : 0m,
+                    //PaymentPrice = catalog.BookPrice != null ? Math.Round(catalog.BookPrice.Price * catalog.Discount.DiscountPercentage ,2 , MidpointRounding.AwayFromZero): 0m,
+                    PaymentPrice = catalog.BookPrice != null ? Math.Round((decimal)(catalog.Amount / catalog.BookCount), 2, MidpointRounding.AwayFromZero) : 0m,
+                    ISBN = catalog.Book.ISBN,
+                    Publisher = catalog.Book.Publisher,
+                    DiscountID = catalog.DiscountID
+                };
+                bookInfos.Add(bookInfo);
+            }
+
+            bookInfos = bookInfos
+                .GroupBy(l => new { l.BookKpsID, l.DiscountID })                     
+                .Select(cl => new BookInCatalogInfo()
+                {
+                    ID = cl.First().ID,
+                    BookKpsID = cl.First().BookKpsID,
+                    BookCount = cl.Sum(c => c.BookCount),
+                    Title = cl.First().Title,
+                    Author = cl.First().Author,
+                    TotalAmount = cl.Sum(c => c.TotalAmount),
+                    Price = cl.First().Price,
+                    PaymentPrice = cl.First().PaymentPrice,
+                    ISBN = cl.First().ISBN,
+                    Publisher = cl.First().Publisher
+                }).ToList();
+
+            return bookInfos.OrderBy(x => x.Title).ToList();
         }
 
         public decimal? TotalAmount
@@ -84,7 +132,20 @@ namespace EudoxusOsy.BusinessModel
             }
         }
 
-        public bool? ContainsPendingPriceVerificationCatalogs
+        public bool DoesNotHavePendingPrices
+        {
+            get
+            {
+                bool condition = (!ContainsCommitteePendingPrices.HasValue ||
+                                 !ContainsCommitteePendingPrices.Value)
+                                &&
+                                (!ContainsUnexpectedPendingPrices.HasValue ||
+                                 !ContainsUnexpectedPendingPrices.Value);
+                return condition;
+            }
+        }
+
+        public bool? ContainsCommitteePendingPrices
         {
             get
             {
@@ -97,7 +158,7 @@ namespace EudoxusOsy.BusinessModel
             }
         }
 
-        public bool? ContainsCatalogsWithUnexpectedPriceChanges
+        public bool? ContainsUnexpectedPendingPrices
         {
             get
             {

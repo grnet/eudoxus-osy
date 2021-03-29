@@ -14,7 +14,7 @@ using DevExpress.Web;
 
 namespace EudoxusOsy.Portal.Secure.EditorPopups
 {
-    public partial class SetBankTransfer : BaseEntityPortalPage<CatalogGroup>
+    public partial class SetBankTransfer : BaseSecureEntityPortalPage<CatalogGroup>
     {
         #region [ Entity Fill ]
 
@@ -23,9 +23,24 @@ namespace EudoxusOsy.Portal.Secure.EditorPopups
             int groupID;
             if (int.TryParse(Request.QueryString["id"], out groupID) && groupID > 0)
             {
-                Entity = new CatalogGroupRepository(UnitOfWork).Load(groupID);
+                Entity = new CatalogGroupRepository(UnitOfWork).Load(groupID, x=> x.Supplier);
             }
             else
+            {
+                ClientScript.RegisterStartupScript(GetType(), "hidePopup", "window.parent.popUp.hide();", true);
+            }
+        }
+
+        protected override bool Authorize()
+        {
+            return (EudoxusOsyRoleProvider.IsAuthorizedEditorUser()
+                || Entity.Supplier.ReporterID == User.Identity.ReporterID)
+                && CatalogGroupHelper.CanEditGroup(Entity.ToCatalogGroupInfo());
+        }
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if(!IsAuthorized)
             {
                 ClientScript.RegisterStartupScript(GetType(), "hidePopup", "window.parent.popUp.hide();", true);
             }
@@ -49,12 +64,15 @@ namespace EudoxusOsy.Portal.Secure.EditorPopups
             if (!ASPxEdit.ValidateEditorsInContainer(Page, "vgBankTransfer"))
                 return;
 
-            Entity.IsTransfered = true;
-            Entity.BankID = ddlBank.GetSelectedInteger().Value;
+            if (IsAuthorized)
+            {
+                Entity.IsTransfered = true;
+                Entity.BankID = ddlBank.GetSelectedInteger().Value;
 
-            UnitOfWork.Commit();
+                UnitOfWork.Commit();
 
-            ClientScript.RegisterStartupScript(GetType(), "refreshParent", "window.parent.popUp.hide();", true);
+                ClientScript.RegisterStartupScript(GetType(), "refreshParent", "window.parent.popUp.hide();", true);
+            }
         }
 
         #endregion

@@ -17,7 +17,7 @@
         <td>
             <dx:ASPxSpinEdit ID="txtKpsID" runat="server" Width="100%" TabIndex="1" />
         </td>
-        <th>Τίτλος:
+        <th>Τίτλος Βιβλίου:
         </th>
         <td>
             <dx:ASPxTextBox ID="txtTitle" runat="server" TabIndex="4" />
@@ -41,10 +41,13 @@
         <td>
             <dx:ASPxTextBox ID="txtISBN" runat="server" TabIndex="3" />
         </td>
-        <th>Δυνατότητα τιμολόγησης και αποζημίωσης:
+        <th><span id="spanIsActive" runat="server">Δυνατότητα τιμολόγησης και αποζημίωσης:</span>
+            <span id="spanHasBookPriceChanges" runat="server">Έχει έρθει τιμή Υπουργείου:</span>
         </th>
         <td>
             <dx:ASPxComboBox ID="ddlIsActive" runat="server" ValueType="System.Int32" OnInit="ddlIsActive_Init" Width="120px" TabIndex="6" />
+            <dx:ASPxComboBox ID="ddlHasBookPriceChanges" runat="server"
+                ValueType="System.Int32" OnInit="ddlHasBookPriceChanges_Init" Width="120px" TabIndex="6" />
         </td>
     </tr>
 </table>

@@ -28,12 +28,18 @@
                 <table>
                     <tr>
                         <td>
-                            <dx:ASPxButton ID="btnCreateOfficeSlip" runat="server" Text="Δημιουργία Διαβιβαστικού" Image-Url="~/_img/iconEmailSend.png">
+                            <dx:ASPxButton ID="ASPxButton1" runat="server" Text="Κατάσταση δαπάνης ανά εκδότη" Image-Url="~/_img/iconExcel.png">
+                                <ClientSideEvents Click="exportOfficeSlipSupplierPopup" />
+                            </dx:ASPxButton>
+                              <dx:ASPxButton ID="ASPxButton2" runat="server" Text="Διαβιβαστικό ανά εκδότη" Image-Url="~/_img/iconExcel.png">
+                                <ClientSideEvents Click="exportTransferPerIssuerPopup" />
+                            </dx:ASPxButton>
+                           <%-- <dx:ASPxButton ID="btnCreateOfficeSlip" runat="server" Text="Διαβιβαστικό εκδοτών ανά ημέρα (pdf)" Image-Url="~/_img/iconEmailSend.png">
                                 <ClientSideEvents Click="createOfficeSlip" />
-                            </dx:ASPxButton>
-                            <dx:ASPxButton ID="btnExportOfficeSlip" runat="server" Text="Εξαγωγή σε Excel" Image-Url="~/_img/iconExcel.png">
+                            </dx:ASPxButton>--%>
+                           <%-- <dx:ASPxButton ID="btnExportOfficeSlip" runat="server" Text="Διαβιβαστικό εκδοτών ανά ημέρα (excel)" Image-Url="~/_img/iconExcel.png">
                                 <ClientSideEvents Click="exportOfficeSlipPopup" />
-                            </dx:ASPxButton>
+                            </dx:ASPxButton>    --%>                        
                         </td>
                     </tr>
                 </table>
@@ -121,9 +127,9 @@
 
         <asp:View ID="vManagePaymentOrders" runat="server">
 
-            <script type="text/javascript">
-                function IncludeInPayment(catalogID) {
-                    gvCatalogGroups.PerformCallback('include:' + catalogID);
+            <script type="text/javascript">                
+                function IncludeInPayment(catalogID, previousState) {
+                    gvCatalogGroups.PerformCallback('include:' + catalogID + ":"+previousState);
                 }
 
                 function confirmUngroup(s, e) {
@@ -140,7 +146,12 @@
                         btnExportPDFHidden.DoClick();
                     }
                     else {
+                       if (gvCatalogGroups.cpMessage)
+                        {
+                            showAlertBox(gvCatalogGroups.cpMessage);
+                        }
                         cbpStatistics.PerformCallback();
+                        gvCatalogGroups.cpMessage = null;
                     }
                 }
 
@@ -170,9 +181,9 @@
                 </PanelCollection>
             </dx:ASPxCallbackPanel>
 
-            <dx:ASPxButton runat="server" ID="btnUngroupHidden" ClientInstanceName="btnUngroupHidden" ClientVisible="false" Image-Url="~/_img/iconDelete.png" OnClick="btnUngroupCatalogs_Click" />
-            <dx:ASPxButton runat="server" ID="btnExportHidden" ClientInstanceName="btnExportHidden" ClientVisible="false" Image-Url="~/_img/iconDelete.png" OnClick="btnExportHidden_Click" />
-            <dx:ASPxButton runat="server" ID="btnExportPDFHidden" ClientInstanceName="btnExportPDFHidden" ClientVisible="false" Image-Url="~/_img/iconDelete.png" OnClick="btnExportPDFHidden_Click" />
+            <dx:ASPxButton runat="server" ID="btnUngroupHidden" ClientInstanceName="btnUngroupHidden" ClientVisible="false" OnClick="btnUngroupCatalogs_Click" />
+            <dx:ASPxButton runat="server" ID="btnExportHidden" ClientInstanceName="btnExportHidden" ClientVisible="false" OnClick="btnExportHidden_Click" />
+            <dx:ASPxButton runat="server" ID="btnExportPDFHidden" ClientInstanceName="btnExportPDFHidden" ClientVisible="false" OnClick="btnExportPDFHidden_Click" />
             <input type="hidden" runat="server" id="hfExportCatalogID" />
 
             <div class="br"></div>
@@ -215,10 +226,10 @@
                                     <table>
                                         <tr>
                                             <td>
-                                                <dx:ASPxButton ID="btnGroupCatalogs" runat="server" ClientInstanceName="btnGroupCatalogs" Text="Ομαδοποίηση διανομών ανά Ίδρυμα" Image-Url="~/_img/iconEdit.png" OnClick="btnGroupCatalogs_Click" />
+                                                <dx:ASPxButton ID="btnGroupCatalogs" runat="server" ClientInstanceName="btnGroupCatalogs" Text="Ομαδοποίηση διανομών ανά Ίδρυμα" OnClick="btnGroupCatalogs_Click" />
                                             </td>
                                             <td>
-                                                <dx:ASPxButton runat="server" ClientInstanceName="btnUngroupCatalogs" ID="btnUngroupCatalogs" Text="Αποσύνδεση Διανομών" Image-Url="~/_img/iconDelete.png">
+                                                <dx:ASPxButton runat="server" ClientInstanceName="btnUngroupCatalogs" ID="btnUngroupCatalogs" Text="Αποσύνδεση Διανομών">
                                                     <ClientSideEvents Click="confirmUngroup" />
                                                 </dx:ASPxButton>
                                             </td>
@@ -258,7 +269,7 @@
                                     <CellStyle HorizontalAlign="Center" />
                                     <DataItemTemplate>
                                         <input type="checkbox" runat="server"
-                                            onclick='<%# string.Format("IncludeInPayment({0})", ((CatalogGroupInfo)Container.DataItem).ID) %>'
+                                            onclick='<%# string.Format("IncludeInPayment({0},{1})", ((CatalogGroupInfo)Container.DataItem).ID, ((CatalogGroupInfo)Container.DataItem).GroupStateInt) %>'
                                             checked="<%# ((CatalogGroupInfo)Container.DataItem).GroupStateInt >= (int)enCatalogGroupState.Selected %>" />
                                     </DataItemTemplate>
                                 </dx:GridViewDataTextColumn>
@@ -271,7 +282,7 @@
                                             href='javascript:void(0);'
                                             onclick='<%# string.Format("showViewBankTransferPopup({0})", Eval("ID")) %>'
                                             visible='<%# (bool)Eval("IsTransfered") %>'>
-                                            <img src="/_img/iconView.png" alt="Προβολή Στοιχείων Εκχώρηση" /></a>
+                                            <img src="/_img/iconView.png" alt="Προβολή Στοιχείων Εκχώρησης" /></a>
                                     </DataItemTemplate>
                                 </dx:GridViewDataTextColumn>
                                 <dx:GridViewDataTextColumn Name="GroupDeduction" Settings-AllowSort="True" FieldName="DeductionVatType" Caption="Καθεστώς Φ.Π.Α." Width="100px" VisibleIndex="5">
@@ -282,7 +293,8 @@
                                             <tr>
                                                 <td>
                                                     <a runat="server" href="javascript:void(0)" class="img-btn tooltip" title="Καθεστώς Φ.Π.Α."
-                                                        onclick='<%# string.Format("showEditGroupDeductionPopup({0})", Eval("ID")) %>'>
+                                                        onclick='<%# string.Format("showEditGroupDeductionPopup({0})", Eval("ID")) %>'
+                                                        Visible="<%# !IsZeroVatElegible() %>">
                                                         <img src="/_img/iconPencilAdd.png" alt="Καθεστώς Φ.Π.Α." /></a>
                                                 </td>
                                                 <td style="padding-left: 10px;">
@@ -438,6 +450,13 @@
                                                 OnCustomDataCallback="gvCatalogs_CustomDataCallback"
                                                  OnCustomCallback="gvCatalogs_CustomCallback">
                                                 <Columns>
+                                                     <dx:GridViewDataTextColumn Name="Warnings" Caption=" " Width="30px" VisibleIndex="0">
+                                                        <CellStyle HorizontalAlign="Center" />
+                                                        <DataItemTemplate>
+                                                            <img runat="server" class="img-btn tooltip" src="~/_img/iconWarning.png" alt="Warning" title='<%# InabilityToCreateGroup((Catalog)Container.Grid.GetRow(Container.VisibleIndex)) %>'
+                                                                visible='<%# InabilityToCreateGroup((Catalog)Container.Grid.GetRow(Container.VisibleIndex)) != "" %>' />                                                                                                                    
+                                                        </DataItemTemplate>
+                                                    </dx:GridViewDataTextColumn>
                                                     <dx:GridViewDataTextColumn Name="CreateGroup" Caption="Δημιουργία Καστάστασης" Width="50px" VisibleIndex="8">
                                                         <HeaderStyle HorizontalAlign="Center" Wrap="true" />
                                                         <CellStyle HorizontalAlign="Center" />

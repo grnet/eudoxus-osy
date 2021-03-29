@@ -31,9 +31,12 @@
     <dx:ASPxButton runat="server" ClientInstanceName="btnSubmit" ClientVisible="false" CausesValidation="true" OnClick="btnSubmit_Click" ValidationGroup="vgSentDate" />
 
     <script type="text/javascript">
+        var clickYDECounter = 0;
+
         function doSubmit(s, e) {
             ASPxClientEdit.ValidateGroup("vgSentDate");
-            if (ASPxClientEdit.AreEditorsValid()) {
+            if (ASPxClientEdit.AreEditorsValid() && clickYDECounter ==0) {
+                clickYDECounter = 1;
                 btnSubmit.DoClick();
             }
             else

@@ -41,8 +41,7 @@ namespace EudoxusOsy.BusinessModel
         public string TotalAmount
         {
             get
-            {
-                decimal amount = 0m;
+            {                
                 if(CatalogGroup.Supplier.HasLogisticBooks == true)
                 {
                     if(CatalogGroup.Vat > 0m)
@@ -51,11 +50,11 @@ namespace EudoxusOsy.BusinessModel
                     }
                     else
                     {
-                        return ((decimal)Amount * (1 + Math.Round((decimal)(CatalogGroup.Deduction.Vat / 100), 2))).ToString("c");
+                        return ((decimal)Amount * (1 + Math.Round((decimal)(CatalogGroup.Deduction.Vat / 100), 2, MidpointRounding.AwayFromZero))).ToString("c");
                     }
                 }
 
-                return amount.ToString("c");
+                return Amount.ToString("c");
             }
 
         }
@@ -64,20 +63,19 @@ namespace EudoxusOsy.BusinessModel
         {
             get
             {
-                decimal amount = 0m;
                 if (CatalogGroup.Supplier.HasLogisticBooks == true)
                 {
                     if (CatalogGroup.Vat > 0m)
                     {
-                        return ((decimal)Amount + CatalogGroup.Vat).Value;
+                        return ((decimal) Amount + CatalogGroup.Vat).Value;
                     }
                     else
                     {
-                        return ((decimal)Amount * (1 + Math.Round((decimal)(CatalogGroup.Deduction.Vat / 100), 2)));
+                        return ((decimal) Amount * (1 + Math.Round((decimal) (CatalogGroup.Deduction.Vat / 100), 2)));
                     }
-                }
+                }                
 
-                return amount;
+                return (decimal)Amount;
             }
 
         }

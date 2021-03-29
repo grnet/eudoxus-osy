@@ -17,7 +17,8 @@
         </dx:GridViewDataTextColumn>
         <dx:GridViewDataTextColumn FieldName="StartDate" Name="UpdatedAt" Caption="Ημ/νία Έναρξης" PropertiesTextEdit-DisplayFormatString="{0:dd/MM/yyyy}" />
         <dx:GridViewDataTextColumn FieldName="EndDate" Name="EndDate" Caption="Ημ/νία Λήξης" PropertiesTextEdit-DisplayFormatString="{0:dd/MM/yyyy}" />
-        <dx:GridViewDataTextColumn FieldName="PhaseAmount" Name="PhaseAmount" Caption="Ποσό Ανάθεσης" PropertiesTextEdit-DisplayFormatString="{0:c}" />
+        <dx:GridViewDataTextColumn FieldName="PhaseAmount" Name="PhaseAmount" Caption="Συνολικό ποσό ανάθεσης - ΠΣ" PropertiesTextEdit-DisplayFormatString="{0:c}" />
+        <dx:GridViewDataTextColumn FieldName="PhaseAmountMinistry" Name="PhaseAmountMinistry" Caption="Ανάθεση ποσού - ΥΠΕΠΘ" PropertiesTextEdit-DisplayFormatString="{0:c}" />
         <dx:GridViewDataTextColumn FieldName="TotalDebt" Name="TotalDebt" Caption="Οφειλή φάσης" PropertiesTextEdit-DisplayFormatString="{0:c}" />
     </Columns>
 </dx:ASPxGridView>
